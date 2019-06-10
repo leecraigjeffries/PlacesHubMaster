@@ -1,0 +1,96 @@
+<?php
+
+    namespace Tests\Unit\Import\Importers\Places;
+
+    use App\Models\Import\GeoPlace;
+    use App\Services\Import\GeoImportService;
+    use Tests\TestCase;
+    use Illuminate\Foundation\Testing\RefreshDatabase;
+
+    class GeoTest extends TestCase
+    {
+        use RefreshDatabase;
+
+        /**
+         * @var GeoImportService
+         */
+        private $importer;
+
+        /**
+         * @var GeoPlace
+         */
+        private $geoPlace;
+
+        public function setUp(): void
+        {
+            parent::setUp();
+
+            $this->geoPlace = new GeoPlace;
+            $this->importer = new GeoImportService($this->geoPlace);
+        }
+
+        /** @test */
+        public function it_imports_to_the_db(): void
+        {
+            $this->importer->setLimit(10)->import();
+
+            $this->assertCount(10, $this->geoPlace::all());
+        }
+
+        /** @test */
+        public function a_geo_place_has_a_name(): void
+        {
+            $place = new GeoPlace(['name' => 'England']);
+
+            $this->assertEquals('England', $place->name);
+        }
+
+        /** @test */
+        public function it_requires_the_gb_text_file(): void
+        {
+            $fileExists = $this->importer
+                ->setFilePath('non\existent\file.txt')
+                ->fileOrDirExists();
+
+            $this->assertFalse($fileExists);
+
+            $fileExists = $this->importer
+                ->setFilePath('app\import\geonames\GB.txt')
+                ->fileOrDirExists();
+
+            $this->assertTrue($fileExists);
+        }
+
+        /** @test */
+        public function it_updates_geonames_parent_columns(): void
+        {
+            GeoPlace::truncate();
+
+            $region = factory(GeoPlace::class)->create([
+                'name' => 'A Region',
+                'type' => 'ADM1',
+                'adm1_code' => 'ar'
+            ]);
+
+            $district = factory(GeoPlace::class)->create([
+                'name' => 'A District',
+                'type' => 'ADM3',
+                'adm1_code' => 'ar',
+                'adm3_code' => 'ad'
+            ]);
+
+            $this->importer->updateParents();
+
+            $this->assertDatabaseHas('geo_places', [
+                'name' => $district->name,
+                'adm1_name' => $region->name,
+                'adm1_id' => $region->id
+            ]);
+
+            $this->assertDatabaseHas('geo_places', [
+                'name' => $region->name,
+                'adm3_name' => null,
+                'adm3_id' => null
+            ]);
+        }
+    }
