@@ -3,9 +3,11 @@
     namespace Tests\Unit\Import\Importers\Places;
 
     use App\Models\Import\GeoPlace;
-    use App\Services\Import\GeoImportService;
-    use Tests\TestCase;
+    use App\Models\User;
+    use App\Services\Import\Importers\Places\GeoImportService;
     use Illuminate\Foundation\Testing\RefreshDatabase;
+    use RolesAndPermissionsSeeder;
+    use Tests\TestCase;
 
     class GeoTest extends TestCase
     {
@@ -32,7 +34,10 @@
         /** @test */
         public function it_imports_to_the_db(): void
         {
-            $this->importer->setLimit(10)->import();
+            $this->importer
+                ->setLimit(10)
+                ->setDeleteOrphans(false)
+                ->import(true);
 
             $this->assertCount(10, $this->geoPlace::all());
         }
@@ -64,8 +69,6 @@
         /** @test */
         public function it_updates_geonames_parent_columns(): void
         {
-            GeoPlace::truncate();
-
             $region = factory(GeoPlace::class)->create([
                 'name' => 'A Region',
                 'type' => 'ADM1',
@@ -92,5 +95,36 @@
                 'adm3_name' => null,
                 'adm3_id' => null
             ]);
+        }
+
+        /** @test */
+        public function users_cannot_view_create_page(): void
+        {
+            $response = $this->get('admin/import/geo-places');
+
+            $response->assertStatus(403);
+        }
+
+        /** @test */
+        public function users_cannot_run_import(): void
+        {
+            $response = $this->post('admin/import/geo-places');
+
+            $response->assertStatus(403);
+        }
+
+        /** @test */
+        public function admin_can_view_create_page(): void
+        {
+            $this->withoutExceptionHandling();
+
+            $this->seed(RolesAndPermissionsSeeder::class);
+
+            $admin = factory(User::class)->create()
+                ->assignRole('admin');
+
+            $this->actingAs($admin)
+                ->get('admin/import/geo-places')
+                ->assertStatus(200);
         }
     }

@@ -47,12 +47,13 @@
         /**
          * Import.
          *
+         * @param bool $truncate
          * @return bool
          */
-        public function import(): bool
+        public function import(bool $truncate): bool
         {
             if ($this->fileOrDirExists()) {
-                return $this->importToDb();
+                return $this->importToDb($truncate);
             }
 
             return false;

@@ -1,11 +1,16 @@
 <?php
 
-    namespace App\Services\Import;
+    namespace App\Services\Import\Importers\Places;
 
     use App\Models\Import\GeoPlace;
+    use App\Services\Import\ImporterAbstract;
     use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialExpression;
     use Grimzy\LaravelMysqlSpatial\Types\Point;
 
+    /**
+     * Class GeoImportService
+     * @package App\Services\Import
+     */
     final class GeoImportService extends ImporterAbstract
     {
         /**
@@ -57,12 +62,10 @@
             'PPLA3',
             'PPLA4',
             'PPLC',
-            'PPLCH',
             'PPLF',
             'PPLL',
             'PPLQ',
             'PPLR',
-            'STLMT',
             'ADMD',
             'PPLS',
             'PPLX',
@@ -73,13 +76,18 @@
             'PCLH',
             'PCLI',
             'PCLIX',
-            'PCLS',
+            'PCLS'
         ];
 
         /**
          * @var int
          */
         protected $count = 0;
+
+        /**
+         * @var bool
+         */
+        protected $deleteOrphans = true;
 
         /**
          * GeoImportService constructor.
@@ -89,6 +97,25 @@
         public function __construct(GeoPlace $model)
         {
             $this->model = $model;
+        }
+
+        /**
+         * @return bool
+         */
+        public function isDeleteOrphans(): bool
+        {
+            return $this->deleteOrphans;
+        }
+
+        /**
+         * @param bool $deleteOrphans
+         * @return GeoImportService
+         */
+        public function setDeleteOrphans(bool $deleteOrphans): self
+        {
+            $this->deleteOrphans = $deleteOrphans;
+
+            return $this;
         }
 
         /**
@@ -135,7 +162,7 @@
          * @param int $limit
          * @return GeoImportService
          */
-        public function setLimit(int $limit): GeoImportService
+        public function setLimit(int $limit): self
         {
             $this->limit = $limit;
 
@@ -162,7 +189,7 @@
          * @param array $validTypes
          * @return GeoImportService
          */
-        public function setValidTypes(array $validTypes): GeoImportService
+        public function setValidTypes(array $validTypes): self
         {
             $this->validTypes = $validTypes;
 
@@ -181,7 +208,7 @@
          * @param GeoPlace $model
          * @return GeoImportService
          */
-        public function setModel(GeoPlace $model): GeoImportService
+        public function setModel(GeoPlace $model): self
         {
             $this->model = $model;
 
@@ -200,7 +227,7 @@
          * @param int $insertChunks
          * @return GeoImportService
          */
-        public function setInsertChunks(int $insertChunks): GeoImportService
+        public function setInsertChunks(int $insertChunks): self
         {
             $this->insertChunks = $insertChunks;
 
@@ -222,13 +249,16 @@
         /**
          * Import to Database.
          *
+         * @param bool $truncate
          * @return bool
          */
-        protected function importToDb(): bool
+        protected function importToDb(bool $truncate = false): bool
         {
             app('debugbar')->disable();
 
-            $this->model->truncate();
+            if ($truncate === true) {
+                $this->model->truncate();
+            }
 
             if (($handle = fopen($this->getFilePath(), 'rb')) !== false) {
                 $i = 0;
@@ -245,6 +275,7 @@
                     if (in_array($line[7], $this->getValidTypes(), true)) {
 
                         $this->count++;
+
                         $inserts[] = [
                             'id' => $line[0],
                             'name' => $line[1],
@@ -258,7 +289,7 @@
                             'point' => new SpatialExpression(new Point($line[4], $line[5])),
                             'type' => $line[7],
                             'geo_code' => in_array($line[7], $this->getAdminTypesUppercase(), true)
-                                ? $line[14] ?: $line[13] ?: $line[12] ?: $line[11] ?: $line[10] ?: $line[8] : null,
+                                ? $this->getGeoCodeFromLine($line) : null,
                             'geo_code_full' => in_array($line[7], $this->getAdminTypesUppercase(), true)
                                 ? implode('-', array_filter([
                                     $line[8],
@@ -290,9 +321,18 @@
 
             $this->updateParents();
 
+            if($this->deleteOrphans === true) {
+                $this->deleteOrphans();
+            }
+
             return true;
         }
 
+        /**
+         * Update Parents
+         *
+         * @return void
+         */
         public function updateParents(): void
         {
             foreach ($this->getAdminTypes() as $type) {
@@ -307,5 +347,24 @@
                         ]);
                 }
             }
+        }
+
+        /**
+         * @param array $line
+         * @return mixed
+         */
+        private function getGeoCodeFromLine(array $line): ?string
+        {
+            return $line[14] ?: $line[13] ?: $line[12] ?: $line[11] ?: $line[10] ?: $line[8] ?: null;
+        }
+
+        /**
+         * @return void
+         */
+        private function deleteOrphans(): void
+        {
+            $this->model
+                ->whereNull('adm1_id')
+                ->delete();
         }
     }
