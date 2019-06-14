@@ -23,6 +23,7 @@
         "datatables.net-bs4": "^1.10.19",
         "flatpickr": "^4.5.7",
         "jquery": "^3.4.1",
-        "jsrender": "^1.0.3"
+        "jsrender": "^1.0.3",
+        "paginationjs": "^2.1.4"
     }
 }

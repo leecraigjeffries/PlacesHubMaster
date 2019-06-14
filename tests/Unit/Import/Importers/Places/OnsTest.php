@@ -3,8 +3,10 @@
     namespace Tests\Unit\Import\Importers\Places;
 
     use App\Models\Import\OnsPlace;
+    use App\Models\User;
     use App\Services\Import\Importers\Places\OnsImportService;
     use Illuminate\Foundation\Testing\RefreshDatabase;
+    use RolesAndPermissionsSeeder;
     use Tests\TestCase;
 
     class OnsTest extends TestCase
@@ -36,7 +38,6 @@
 
             $this->assertCount(10, $this->onsPlace::all());
         }
-
 
         /** @test */
         public function a_geo_place_has_a_name(): void
@@ -76,6 +77,21 @@
             $response = $this->post('admin/import/ons-places');
 
             $response->assertStatus(403);
+        }
+
+        /** @test */
+        public function admin_can_view_create_page(): void
+        {
+            $this->withoutExceptionHandling();
+
+            $this->seed(RolesAndPermissionsSeeder::class);
+
+            $admin = factory(User::class)->create()
+                ->assignRole('admin');
+
+            $this->actingAs($admin)
+                ->get('admin/import/ons-places')
+                ->assertStatus(200);
         }
 
     }

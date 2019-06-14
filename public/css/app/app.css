@@ -42,15 +42,9 @@ body #copyright > div ul {
   padding-left: 15px;
 }
 
-a {
-  color: #161F27;
-}
-
-a:hover {
-  color: #424B53;
-}
-
-button {
+button,
+label,
+select {
   cursor: pointer;
 }
 
@@ -110,5 +104,39 @@ main > h3 {
   margin: 0;
   padding: 0 15px;
   text-shadow: 1px 1px 0 #d1ecf1;
+}
+
+table th {
+  background-color: #2c3238 !important;
+  border-bottom: 2px solid #ffc24b !important;
+  color: #fff;
+  font-size: 14pt;
+}
+
+#filter {
+  background-color: #f2f2f2;
+  border: 1px solid #dee2e6;
+  margin-bottom: 8px;
+}
+
+#filter legend {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  display: inline-block;
+  font-size: 12pt;
+  margin: 0;
+  margin-left: 15px;
+  padding: 0.25em 0.5em;
+  width: auto;
+}
+
+#filter label {
+  font-size: 11pt;
+  margin: 0;
+}
+
+#filter > div {
+  margin: 0;
+  padding: 8px;
 }
 

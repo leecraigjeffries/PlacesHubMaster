@@ -11,10 +11,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.2/jsrender.min.js"
             integrity="sha256-hd/uw4FMRrVcuSBTkik17X3zMo4cASwOARGQqDrazFo="
             crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"
+            integrity="sha256-E+fw0vUbuPq4p3FWWtX7FzzlcMTe7hvrgZxOk8LPAh4="
+            crossorigin="anonymous"></script>
 @else
     <script src="{{ asset('js/vendor/jquery.js') }}"></script>
     <script src="{{ asset('js/vendor/bootstrap.js') }}"></script>
     <script src="{{ asset('js/vendor/jsrender.js') }}"></script>
+    <script src="{{ asset('js/vendor/pagination.js') }}"></script>
 @endif
 
 <script id="search-template" type="text/x-jsrender">

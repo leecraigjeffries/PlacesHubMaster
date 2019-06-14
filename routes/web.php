@@ -8,6 +8,9 @@
 
     Route::get('/home', 'HomeController@index')->name('home');
 
+    /**
+     * Admin
+     */
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => 'role:admin'],
         static function () {
             Route::get('', ['uses' => 'AdminController@home', 'as' => 'home']);
@@ -34,4 +37,12 @@
         static function () {
             Route::get('{place}', ['uses' => 'PlacesController@show', 'as' => 'show']);
             Route::get('', ['uses' => 'PlacesController@index', 'as' => 'index']);
+        });
+
+    /**
+     * Import
+     */
+    Route::group(['prefix' => 'import', 'as' => 'import.', 'namespace' => 'Import'],
+        static function () {
+            Route::get('geo-places', ['uses' => 'GeoPlacesController@index', 'as' => 'geo-places.index']);
         });

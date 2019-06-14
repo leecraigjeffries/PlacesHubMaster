@@ -6,6 +6,7 @@
     "/js/vendor/jsrender.js": "/js/vendor/jsrender.js",
     "/js/vendor/data-tables-bs4.js": "/js/vendor/data-tables-bs4.js",
     "/js/vendor/flatpickr.js": "/js/vendor/flatpickr.js",
+    "/js/vendor/pagination.js": "/js/vendor/pagination.js",
     "/js/vendor/data-tables.js": "/js/vendor/data-tables.js",
     "/js/app/app.js": "/js/app/app.js"
 }

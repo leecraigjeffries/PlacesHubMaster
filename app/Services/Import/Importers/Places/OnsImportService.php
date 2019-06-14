@@ -10,7 +10,7 @@
 
     /**
      * Class OnsImportService
-     * @package App\Services\Import
+     * @package App\Services\Import\Importers\Places
      */
     final class OnsImportService extends ImporterAbstract
     {
@@ -184,7 +184,7 @@
         {
             app('debugbar')->disable();
 
-            if($truncate === true) {
+            if ($truncate === true) {
                 $this->model->truncate();
             }
 
@@ -200,7 +200,7 @@
                         continue;
                     }
 
-                    if(in_array($line[6], $this->validTypes, true)) {
+                    if (in_array($line[6], $this->validTypes, true)) {
 
                         $this->count++;
 
@@ -240,18 +240,18 @@
             return true;
         }
 
-        protected function getOnsId(array $line):?string
+        protected function getOnsId(array $line): ?string
         {
-            if (in_array($line[10], ['COM', 'PAR'], true)) {
-                $ons_id = $line[20];
-            } elseif (in_array($line[10], ['CA', 'UA', 'NMD', 'MD'], true)) {
+            if (in_array($line[6], ['COM', 'PAR'], true)) {
                 $ons_id = $line[16];
-            } elseif ($line[10] === 'RGN') {
+            } elseif (in_array($line[6], ['CA', 'UA', 'NMD', 'MD', 'LONB'], true)) {
+                $ons_id = $line[12];
+            } elseif ($line[6] === 'RGN') {
+                $ons_id = $line[21];
+            } elseif ($line[6] === 'CTY') {
+                $ons_id = $line[10];
+            } elseif (in_array($line[6], ['BUA', 'BUASD'], true)) {
                 $ons_id = $line[25];
-            } elseif ($line[10] === 'CTY') {
-                $ons_id = $line[14];
-            } elseif (in_array($line[10], ['BUA', 'BUASD'], true)) {
-                $ons_id = $line[29];
             }
 
             return $ons_id ?? null;
