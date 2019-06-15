@@ -43,6 +43,12 @@
                     'string',
                     'max:191'
                 ],
+                'geo_code_full' => [
+                    'sometimes',
+                    'nullable',
+                    'string',
+                    'max:191'
+                ],
                 'type' => [
                     Rule::in($service->getValidTypes()),
                     'nullable'

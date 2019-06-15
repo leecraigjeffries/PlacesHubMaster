@@ -5,6 +5,9 @@
         'name' => 'Name',
         'type' => 'Type',
 
+        'geo_code' => 'Geonames Code',
+        'geo_code_full' => 'Geonames Full Code',
+
         'order_by' => 'Sort By',
 
         'geo_data' => 'Geonames Data',

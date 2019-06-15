@@ -26,8 +26,15 @@
                     $query->orderBy($geoSearch->getDefaultOrderBy(), $geoSearch->getDefaultOrder());
                 })
                 ->when($request->input('name') !== null, static function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->input('name') . '%');
-                })->when($request->input('type') !== null, static function ($query) use ($request) {
+                    $query->where('geo_places.name', 'like', '%' . $request->input('name') . '%');
+                })
+                ->when($request->input('geo_code') !== null, static function ($query) use ($request) {
+                    $query->where('geo_places.geo_code', 'like', '%' . $request->input('geo_code') . '%');
+                })
+                ->when($request->input('geo_code_full') !== null, static function ($query) use ($request) {
+                    $query->where('geo_places.geo_code_full', 'like', '%' . $request->input('geo_code_full') . '%');
+                })
+                ->when($request->input('type') !== null, static function ($query) use ($request) {
                     $query->where('geo_places.type', $request->input('type'));
                 })
                 ->with($geoPlace->getAdminTypes());

@@ -194,3 +194,8 @@ table th a:hover {
   margin: 0;
 }
 
+.case-sensitive {
+  color: #b23942;
+  font-size: 0.75em;
+}
+

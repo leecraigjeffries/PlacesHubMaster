@@ -28,6 +28,17 @@
                                value="{{ $request->input($field) ?: old($field) }}">
                     </div>
                 @endforeach
+                @foreach(['geo_code', 'geo_code_full'] as $field)
+                    <div class="col-sm-6 col-md-4 col-lg-3 p-2">
+                        <label for="{{ $field }}">@lang("placeshub.{$field}") <span class="case-sensitive">(Case Sensitive [A-Z0-9-])</span></label>
+                        <input name="{{ $field }}"
+                               id="{{ $field }}"
+                               class="form-control form-control-sm"
+                               placeholder="Search&hellip;"
+                               value="{{ $request->input($field) ?: old($field) }}"
+                               pattern="[A-Z0-9-]*">
+                    </div>
+                @endforeach
                 <div class="col-sm-6 col-md-4 col-lg-3 p-2">
                     <label for="type">@lang('placeshub.type')</label>
                     <select class="custom-select custom-select-sm" name="type" id="type">
@@ -50,7 +61,8 @@
             </div>
             <div class="row">
                 <div class="col text-center">
-                    <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                    <button type="submit" class="btn btn-sm btn-primary mr-3">Filter</button>
+                    <a href="{{ route('import.geo-places.index') }}">Clear</a>
                 </div>
             </div>
         </fieldset>
