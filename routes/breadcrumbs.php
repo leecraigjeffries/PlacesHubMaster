@@ -1,7 +1,7 @@
 <?php
 
     Breadcrumbs::for('home', static function ($trail) {
-        $trail->push(__('places.home'), route('home'));
+        $trail->push(__('placeshub.home'), route('home'));
     });
 
     Breadcrumbs::for('places.show', static function ($trail, $place) {
@@ -36,4 +36,9 @@
     Breadcrumbs::for('admin.import.ons-places.store', static function ($trail) {
         $trail->parent('admin.home');
         $trail->push(__('admin.import_ons_places'));
+    });
+
+    Breadcrumbs::for('import.places.geo.index', static function ($trail) {
+        $trail->parent('home');
+        $trail->push(__('placeshub.geo_data'), route('import.geo-places.index'));
     });

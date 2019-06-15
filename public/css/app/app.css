@@ -113,6 +113,19 @@ table th {
   font-size: 14pt;
 }
 
+table th.active a {
+  color: #ffc24b;
+}
+
+table th a {
+  color: #f2f2f2;
+}
+
+table th a:hover {
+  color: #c1c5c8;
+  text-decoration: none;
+}
+
 #filter {
   background-color: #f2f2f2;
   border: 1px solid #dee2e6;
@@ -138,5 +151,46 @@ table th {
 #filter > div {
   margin: 0;
   padding: 8px;
+}
+
+#table-geo-places col[data-name="geo_places.name"] {
+  width: 40%;
+}
+
+#table-geo-places col[data-name="geo_places.type"] {
+  width: 15%;
+}
+
+#table-geo-places col[data-name="geo_places.geo_code"] {
+  width: 15%;
+}
+
+#table-geo-places col[data-name="geo_places.geo_code_full"] {
+  width: 30%;
+}
+
+#table-geo-places ul {
+  font-size: 0.675em;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+#table-geo-places ul a {
+  color: #57636e;
+}
+
+#table-geo-places ul li {
+  display: inline;
+  margin: 0;
+}
+
+#table-geo-places ul li:before {
+  content: ">";
+  margin: 0 4px;
+}
+
+#table-geo-places ul li:first-child:before {
+  content: "";
+  margin: 0;
 }
 

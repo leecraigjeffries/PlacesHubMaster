@@ -5,16 +5,25 @@
     use App\Http\Controllers\Controller;
     use App\Http\Controllers\Import\Places\Geo\IndexRequest;
     use App\Models\Import\GeoPlace;
+    use App\Services\Import\Search\Places\GeoSearch;
+    use Illuminate\View\View;
 
     class GeoPlacesController extends Controller
     {
-        public function index(GeoPlace $geoPlace, IndexRequest $request)
+        /**
+         * @param GeoPlace $geoPlace
+         * @param IndexRequest $request
+         * @return View
+         */
+        public function index(GeoPlace $geoPlace, IndexRequest $request):View
         {
+            $geoSearch = app(GeoSearch::class, ['inputs' => $request->all()]);
+
             $results = $geoPlace
                 ->select(['geo_places.*'])
-
-                ->when($request->input('order_by') !== null, static function($query) use ($request){
-                    $query->orderBy($request->input('order_by'), $request->input('order') ?: 'asc');
+                ->orderBy($geoSearch->getOrderBy(), $geoSearch->getOrder())
+                ->when($geoSearch->getOrderBy() !== $geoSearch->getDefaultOrderBy(), static function ($query) use ($geoSearch) {
+                    $query->orderBy($geoSearch->getDefaultOrderBy(), $geoSearch->getDefaultOrder());
                 })
                 ->when($request->input('name') !== null, static function ($query) use ($request) {
                     $query->where('name', 'like', '%' . $request->input('name') . '%');
@@ -31,13 +40,12 @@
                         $q->where('name', 'like', '%' . $request->input("{$type}_name") . '%');
                     });
                 }
-
             }
 
             $results = $results->paginate(50);
 
             $types = $geoPlace->distinct('type')->pluck('type', 'type')->sort();
 
-            return view('import.places.geo.index', compact('results', 'types', 'request'));
+            return view('import.places.geo.index', compact('results', 'types', 'request', 'geoSearch'));
         }
     }

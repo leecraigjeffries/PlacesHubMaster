@@ -34,9 +34,6 @@ class CreateGeoPlaceTable extends Migration
             $table->integer('adm4_id')->unsigned()->index()->nullable();
             $table->string('adm4_code')->collation('ascii_bin')->nullable();
             $table->string('adm4_name')->nullable();
-            $table->integer('adm5_id')->unsigned()->index()->nullable();
-            $table->string('adm5_code')->collation('ascii_bin')->nullable();
-            $table->string('adm5_name')->nullable();
         });
     }
 

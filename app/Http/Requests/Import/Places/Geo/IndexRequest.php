@@ -3,7 +3,9 @@
 
     namespace App\Http\Controllers\Import\Places\Geo;
 
+    use App\Rules\Order;
     use App\Services\Import\Importers\Places\GeoImportService;
+    use App\Services\Import\Search\Places\GeoSearch;
     use Illuminate\Foundation\Http\FormRequest;
     use Illuminate\Validation\Rule;
 
@@ -42,13 +44,23 @@
                     'max:191'
                 ],
                 'type' => [
-                    Rule::in($service->getValidTypes())
+                    Rule::in($service->getValidTypes()),
+                    'nullable'
                 ],
                 'order_by' => [
-                    Rule::in(['name', 'adm1.name', 'adm2.name', 'adm3.name', 'adm4.name', 'adm5.name'])
+                    Rule::in([
+                        'geo_places.name',
+                        'geo_places.type',
+                        'geo_places.geo_code',
+                        'geo_places.geo_code_full',
+                        'adm1.name',
+                        'adm2.name',
+                        'adm3.name',
+                        'adm4.name'
+                    ])
                 ],
                 'order' => [
-                    Rule::in(['asc', 'desc'])
+                    new Order
                 ]
             ];
 

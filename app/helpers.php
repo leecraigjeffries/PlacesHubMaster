@@ -48,14 +48,39 @@
         return false;
     }
 
+    /**
+     * Translate an array.
+     *
+     * @param array $keys
+     * @param string $prefix
+     * @return array
+     */
+    function transArray(array $keys, string $prefix = 'placeshub'): array
+    {
+        foreach ($keys as $key){
+            $langKey = str_replace('.', '_', $key);
+
+            if($prefix !== ''){
+                $langKey = "{$prefix}.{$langKey}";
+            }
+
+            $transArray[$key] = __($langKey);
+        }
+
+        return $transArray ?? [];
+    }
+
+    /**
+     * @param string|null $name
+     * @return string
+     */
     function prepare_name_for_search(?string $name): string
     {
         if (!$name) {
             return '';
         }
 
-        $name = str_replace(['.', '!'], '', $name);
-        $name = str_replace(['-', ' '], '%', $name);
+        $name = str_replace(['.', '!', '-', ' '], ['', '', '%', '%'], $name);
 
         return "%{$name}%";
     }

@@ -29,7 +29,7 @@
     <div class="row">
         <div class="col text-center">
             @if($importSuccess)
-                <a href="#TODO">@lang('admin.click_to_view_data')</a>
+                <a href="{{ route('import.geo-places.index') }}">@lang('admin.click_to_view_data')</a>
             @else
                 <a href="{{ route('admin.import.geo-places.create') }}">@lang('admin.click_to_return')</a>
             @endif

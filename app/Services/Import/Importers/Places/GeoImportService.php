@@ -42,8 +42,7 @@
             'adm1',
             'adm2',
             'adm3',
-            'adm4',
-            'adm5'
+            'adm4'
         ];
 
         /**
@@ -285,7 +284,6 @@
                             'adm2_code' => $line[11] ?: null,
                             'adm3_code' => $line[12] ?: null,
                             'adm4_code' => $line[13] ?: null,
-                            'adm5_code' => $line[14] ?: null,
                             'point' => new SpatialExpression(new Point($line[4], $line[5])),
                             'type' => $line[7],
                             'geo_code' => in_array($line[7], $this->getAdminTypesUppercase(), true)
@@ -355,7 +353,7 @@
          */
         private function getGeoCodeFromLine(array $line): ?string
         {
-            return $line[14] ?: $line[13] ?: $line[12] ?: $line[11] ?: $line[10] ?: $line[8] ?: null;
+            return $line[13] ?: $line[12] ?: $line[11] ?: $line[10] ?: $line[8] ?: null;
         }
 
         /**
