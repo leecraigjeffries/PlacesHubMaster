@@ -118,6 +118,12 @@
             return $this->childTypes[$type ?: $this->type];
         }
 
+        public function juniorAdminTypes(bool $include = false): array
+        {
+            return array_slice($this->getAdminTypes(),
+                array_search($this->type, $this->getAdminTypes(), true) + ($include === false ? 1 : 0));
+        }
+
 
         public function parentTypes(?string $type = null): array
         {

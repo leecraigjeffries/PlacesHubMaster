@@ -317,10 +317,6 @@
 
             $this->updateParents();
 
-            if ($this->deleteOrphans === true) {
-                $this->deleteOrphans();
-            }
-
             return true;
         }
 
@@ -331,13 +327,15 @@
          */
         public function updateParents(): void
         {
-            foreach ($this->getAdminTypes() as $type) {
-                $admGeoPlace = $this->model->where('type', $type)->get();
+            foreach ($this->getAdminTypes() as $adminType) {
+
+                $admGeoPlace = $this->model->where('type', $adminType)->get();
 
                 foreach ($admGeoPlace as $result) {
-                    $this->updateParentColumns($type, $result);
-                    $this->updateAdmIdenticalColumns($type);
+                    $this->updateParentColumns($adminType, $result);
                 }
+
+                $this->updateAdmIdenticalColumns($adminType);
             }
         }
 
@@ -348,16 +346,6 @@
         private function getGeoCodeFromLine(array $line): ?string
         {
             return $line[13] ?: $line[12] ?: $line[11] ?: $line[10] ?: $line[8] ?: null;
-        }
-
-        /**
-         * Delete orphans
-         *
-         * @return void
-         */
-        public function deleteOrphans(): void
-        {
-            $this->model->whereNull('adm1_id')->delete();
         }
 
         /**
@@ -382,7 +370,9 @@
         {
             $this->model->whereRaw("{$type}_id = id")
                 ->update([
-                    "{$type}_name" => null
+                    "{$type}_name" => null,
+                    "{$type}_id" => null,
+                    "{$type}_code" => null
                 ]);
         }
     }
