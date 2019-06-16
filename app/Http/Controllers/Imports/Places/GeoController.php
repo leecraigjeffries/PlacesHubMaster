@@ -15,16 +15,17 @@
          * @param IndexRequest $request
          * @return View
          */
-        public function index(GeoPlace $geoPlace, IndexRequest $request):View
+        public function index(GeoPlace $geoPlace, IndexRequest $request): View
         {
             $geoSearch = app(GeoSearch::class, ['inputs' => $request->all()]);
 
             $results = $geoPlace
                 ->select(['geo_places.*'])
                 ->orderBy($geoSearch->getOrderBy(), $geoSearch->getOrder())
-                ->when($geoSearch->getOrderBy() !== $geoSearch->getDefaultOrderBy(), static function ($query) use ($geoSearch) {
-                    $query->orderBy($geoSearch->getDefaultOrderBy(), $geoSearch->getDefaultOrder());
-                })
+                ->when($geoSearch->getOrderBy() !== $geoSearch->getDefaultOrderBy(),
+                    static function ($query) use ($geoSearch) {
+                        $query->orderBy($geoSearch->getDefaultOrderBy(), $geoSearch->getDefaultOrder());
+                    })
                 ->when($request->input('name') !== null, static function ($query) use ($request) {
                     $query->where('geo_places.name', 'like', '%' . $request->input('name') . '%');
                 })
@@ -56,7 +57,11 @@
             return view('imports.places.geo.index', compact('results', 'types', 'request', 'geoSearch'));
         }
 
-        public function show(GeoPlace $geoPlace)
+        /**
+         * @param GeoPlace $geoPlace
+         * @return View
+         */
+        public function show(GeoPlace $geoPlace): View
         {
             return view('imports.places.geo.show', compact('geoPlace'));
         }

@@ -14,6 +14,12 @@ class GeoDataTableCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        foreach ($this->collection as $item) {
+            $item->link = route('imports.places.geo.show', ['geoPlace' => $item]);
+        }
+
+        return [
+            'data' => $this->collection,
+        ];
     }
 }

@@ -268,7 +268,7 @@
                         $this->count++;
 
                         $type = $line[7];
-                        if(strpos($type, 'PPL') === 0){
+                        if (strpos($type, 'PPL') === 0) {
                             $type = 'PPL';
                         }
 
@@ -317,7 +317,7 @@
 
             $this->updateParents();
 
-            if($this->deleteOrphans === true) {
+            if ($this->deleteOrphans === true) {
                 $this->deleteOrphans();
             }
 
@@ -332,15 +332,11 @@
         public function updateParents(): void
         {
             foreach ($this->getAdminTypes() as $type) {
-                $results = $this->model->where('type', $type)->get();
+                $admGeoPlace = $this->model->where('type', $type)->get();
 
-                foreach ($results as $result) {
-                    $this->model
-                        ->where("{$type}_code", $result->{"{$type}_code"} ?: null)
-                        ->update([
-                            "{$type}_id" => $result->id,
-                            "{$type}_name" => $result->name
-                        ]);
+                foreach ($admGeoPlace as $result) {
+                    $this->updateParentColumns($type, $result);
+                    $this->updateAdmIdenticalColumns($type);
                 }
             }
         }
@@ -361,8 +357,32 @@
          */
         public function deleteOrphans(): void
         {
+            $this->model->whereNull('adm1_id')->delete();
+        }
+
+        /**
+         * @param $type
+         * @param $geoPlace
+         */
+        public function updateParentColumns(string $type, GeoPlace $geoPlace): void
+        {
             $this->model
-                ->whereNull('adm1_id')
-                ->delete();
+                ->where("{$type}_code", $geoPlace->{"{$type}_code"} ?: null)
+                ->update([
+                    "{$type}_id" => $geoPlace->id,
+                    "{$type}_name" => $geoPlace->name
+                ]);
+        }
+
+        /**
+         * @param $type
+         * @return void
+         */
+        public function updateAdmIdenticalColumns(string $type): void
+        {
+            $this->model->whereRaw("{$type}_id = id")
+                ->update([
+                    "{$type}_name" => null
+                ]);
         }
     }

@@ -18,7 +18,7 @@
         $(document).ready(function () {
             $('#list_{!! $type !!}').DataTable({
                 ajax: {
-                    url: "{!! route('api.imports.places.geo.data-table', ['place' => $place, 'type' => $type]) !!}",
+                    url: "{{ route('api.imports.places.geo.data-table', ['geoPlace' => $geoPlace, 'placesHubGeoType' => $type]) }}",
                     type: "GET"
                 },
                 columns: columns

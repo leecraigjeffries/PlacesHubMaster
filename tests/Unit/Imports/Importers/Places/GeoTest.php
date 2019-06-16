@@ -71,13 +71,15 @@
         {
             $region = factory(GeoPlace::class)->create([
                 'name' => 'A Region',
-                'type' => 'ADM1',
+                'type' => 'adm1',
+                'geo_type' => 'ADM1',
                 'adm1_code' => 'ar'
             ]);
 
             $district = factory(GeoPlace::class)->create([
                 'name' => 'A District',
-                'type' => 'ADM3',
+                'type' => 'adm3',
+                'geo_type' => 'ADM3',
                 'adm1_code' => 'ar',
                 'adm3_code' => 'ad'
             ]);
@@ -126,5 +128,27 @@
             $this->actingAs($admin)
                 ->get('admin/imports/places/geo')
                 ->assertStatus(200);
+        }
+
+        /** @test */
+        public function it_updates_adms_to_nullify_their_identical_adm_columns(): void
+        {
+            factory(GeoPlace::class)->create([
+                'id' => 1,
+                'type' => 'adm3',
+                'geo_type' => 'ADM3',
+                'adm3_name' => 'England',
+                'adm3_code' => 'XYZ',
+                'adm3_id' => 1
+            ]);
+
+            $this->importer->updateAdmIdenticalColumns('adm3');
+
+            $this->assertDatabaseHas('geo_places', [
+                'id' => 1,
+                'adm3_name' => null,
+                'adm3_code' => null,
+                'adm3_id' => null
+            ]);
         }
     }

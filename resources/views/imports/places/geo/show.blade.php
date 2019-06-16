@@ -35,7 +35,7 @@
     </div>
 
     @foreach($geoPlace->childTypes() as $childType)
-        @include('imports.places.geo._data-table', ['type' => $childType, 'place' => $geoPlace])
+        @include('imports.places.geo._data-table', ['type' => $childType, 'geoPlace' => $geoPlace])
     @endforeach
 
 @endsection
