@@ -52,11 +52,28 @@
          * @var array
          */
         protected $childTypes = [
-            'adm1' => ['adm2', 'rgn', 'ppl', 'admd'],
-            'adm2' => ['adm3', 'ppl', 'admd'],
+            'adm1' => ['adm2', 'rgn', 'admd', 'ppl'],
+            'adm2' => ['adm3', 'admd', 'ppl'],
             'adm3' => ['adm4', 'ppl'],
             'adm4' => ['adm5', 'ppl'],
+            'adm5' => [],
+            'rgn' => [],
+            'admd' => [],
             'ppl' => []
+        ];
+
+        /**
+         * @var array
+         */
+        protected $ratios = [
+            'adm1' => 4,
+            'adm2' => 3,
+            'adm3' => 0.5,
+            'adm4' => 0.4,
+            'adm5' => 0.3,
+            'admd' => 1,
+            'rgn' => 2,
+            'ppl' => 0.05
         ];
 
         /**
@@ -165,6 +182,25 @@
         public function setTypes(array $types): void
         {
             $this->types = $types;
+        }
+
+        /**
+         * @return float
+         */
+        public function getRatio(): float
+        {
+            return $this->ratios[$this->type];
+        }
+
+        /**
+         * @param array $ratios
+         * @return GeoPlace
+         */
+        public function setRatios(array $ratios): self
+        {
+            $this->ratios = $ratios;
+
+            return $this;
         }
 
 

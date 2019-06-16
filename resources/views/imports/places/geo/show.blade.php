@@ -30,7 +30,7 @@
         </dl>
         </div>
         <div class="col">
-
+            @include('app._map', ['place' => $geoPlace])
         </div>
     </div>
 
