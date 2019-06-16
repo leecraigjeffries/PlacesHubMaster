@@ -19,6 +19,7 @@ class CreateGeoPlaceTable extends Migration
             $table->string('geo_code_full')->collation('ascii_bin')->nullable();
             $table->string('name');
             $table->string('type', 5)->collation('ascii_bin');
+            $table->string('geo_type', 5)->collation('ascii_bin');
             $table->decimal('lat', 8, 6);
             $table->decimal('lon', 9, 6);
             $table->point('point')->nullable();

@@ -2,8 +2,8 @@
 
     /** @var Factory $factory */
 
-    use App\Models\Import\GeoPlace;
-    use App\Services\Import\Importers\Places\GeoImportService;
+    use App\Models\Imports\GeoPlace;
+    use App\Services\Imports\Importers\Places\GeoImportService;
     use Faker\Generator as Faker;
     use Illuminate\Database\Eloquent\Factory;
 

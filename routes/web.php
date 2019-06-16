@@ -1,6 +1,7 @@
 <?php
 
-    Route::get('/', function () {
+
+    Route::get('/', static function () {
         return view('welcome');
     });
 
@@ -15,18 +16,18 @@
         static function () {
             Route::get('', ['uses' => 'AdminController@home', 'as' => 'home']);
 
-            Route::group(['prefix' => 'import', 'as' => 'import.', 'namespace' => 'Import'], static function () {
+            Route::group(['prefix' => 'imports', 'as' => 'imports.', 'namespace' => 'Imports'], static function () {
                 // Geonames
-                Route::post('geo-places',
-                    ['uses' => 'GeoPlacesController@store', 'as' => 'geo-places.store']);
-                Route::get('geo-places',
-                    ['uses' => 'GeoPlacesController@create', 'as' => 'geo-places.create']);
+                Route::post('places/geo',
+                    ['uses' => 'Places\GeoController@store', 'as' => 'places.geo.store']);
+                Route::get('places/geo',
+                    ['uses' => 'Places\GeoController@create', 'as' => 'places.geo.create']);
 
                 // ONS
-                Route::post('ons-places',
-                    ['uses' => 'OnsPlacesController@store', 'as' => 'ons-places.store']);
-                Route::get('ons-places',
-                    ['uses' => 'OnsPlacesController@create', 'as' => 'ons-places.create']);
+                Route::post('places/ons',
+                    ['uses' => 'Places\OnsController@store', 'as' => 'places.ons.store']);
+                Route::get('places/ons',
+                    ['uses' => 'Places\OnsController@create', 'as' => 'places.ons.create']);
             });
         });
 
@@ -42,7 +43,8 @@
     /**
      * Import
      */
-    Route::group(['prefix' => 'import', 'as' => 'import.', 'namespace' => 'Import'],
+    Route::group(['prefix' => 'imports', 'as' => 'imports.', 'namespace' => 'Imports'],
         static function () {
-            Route::get('geo-places', ['uses' => 'GeoPlacesController@index', 'as' => 'geo-places.index']);
+            Route::get('places/geo', ['uses' => 'Places\GeoController@index', 'as' => 'places.geo.index']);
+            Route::get('places/geo/{geoPlace}', ['uses' => 'Places\GeoController@show', 'as' => 'places.geo.show']);
         });

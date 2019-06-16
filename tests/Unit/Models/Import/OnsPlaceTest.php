@@ -2,7 +2,7 @@
 
     namespace Tests\Unit\Import\Importers\Places;
 
-    use App\Models\Import\OnsPlace;
+    use App\Models\Imports\OnsPlace;
     use Illuminate\Foundation\Testing\RefreshDatabase;
     use Tests\TestCase;
 

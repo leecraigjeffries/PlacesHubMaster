@@ -7,14 +7,18 @@
 
         'geo_code' => 'Geonames Code',
         'geo_code_full' => 'Geonames Full Code',
+        'geo_type' => 'Geonames Type',
 
         'order_by' => 'Sort By',
+        'order' => 'Order',
+        'asc' => 'Ascending',
+        'desc' => 'Descending',
 
         'geo_data' => 'Geonames Data',
         'geo_places_name' => 'Name',
         'geo_places_geo_code' => 'Code',
         'geo_places_geo_code_full' => 'Full Code',
-        'geo_places_type' => 'Type',
+        'geo_places_geo_type' => 'Geonames Type',
         'adm1_name' => 'ADM1 Name',
         'adm2_name' => 'ADM2 Name',
         'adm3_name' => 'ADM3 Name',

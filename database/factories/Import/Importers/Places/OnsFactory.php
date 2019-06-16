@@ -2,8 +2,8 @@
 
     /** @var Factory $factory */
 
-    use App\Models\Import\OnsPlace;
-    use App\Services\Import\Importers\Places\OnsImportService;
+    use App\Models\Imports\OnsPlace;
+    use App\Services\Imports\Importers\Places\OnsImportService;
     use Faker\Generator as Faker;
     use Illuminate\Database\Eloquent\Factory;
 
