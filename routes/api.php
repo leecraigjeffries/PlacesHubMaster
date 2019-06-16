@@ -25,4 +25,9 @@
                 'middleware' => 'auth',
             ]);
 
+            Route::get('imports/places/geo/{geoPlace}/{placesHubGeoType}', [
+                'uses' => 'Imports\Places\GeoController@dataTable',
+                'as' => 'imports.places.geo.data-table'
+            ]);
+
         });

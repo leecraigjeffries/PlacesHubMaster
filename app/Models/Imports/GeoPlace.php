@@ -36,20 +36,43 @@
          */
         public $timestamps = false;
 
+        /**
+         * @var array
+         */
+        protected $types = [
+            'adm1',
+            'adm2',
+            'adm3',
+            'adm4',
+            'adm5',
+            'ppl'
+        ];
 
+        /**
+         * @var array
+         */
         protected $childTypes = [
-            'adm1' => ['adm2', 'rgn', 'ppl'],
-            'adm2' => ['adm3', 'ppl'],
+            'adm1' => ['adm2', 'rgn', 'ppl', 'admd'],
+            'adm2' => ['adm3', 'ppl', 'admd'],
             'adm3' => ['adm4', 'ppl'],
             'adm4' => ['adm5', 'ppl'],
             'ppl' => []
         ];
 
         /**
+         * @param bool $withId
          * @return array
          */
-        public function getAdminTypes(): array
+        public function getAdminTypes(bool $withId = false): array
         {
+            if ($withId === true) {
+                foreach ($this->adminTypes as $type) {
+                    $withIds[] = $type . '_id';
+                }
+
+                return $withIds ?? [];
+            }
+
             return $this->adminTypes;
         }
 
@@ -120,6 +143,22 @@
         public function getTypeColumnAttribute(): string
         {
             return $this->type . '_id';
+        }
+
+        /**
+         * @return array
+         */
+        public function getTypes(): array
+        {
+            return $this->types;
+        }
+
+        /**
+         * @param array $types
+         */
+        public function setTypes(array $types): void
+        {
+            $this->types = $types;
         }
 
 

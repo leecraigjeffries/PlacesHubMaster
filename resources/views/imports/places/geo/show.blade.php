@@ -17,8 +17,8 @@
     <div class="row">
         <div class="col">
         <dl>
-            <dt>@lang('placeshub.type')</dt>
-            <dd>{{ $geoPlace->type }}</dd>
+            <dt>@lang('placeshub.geo_type')</dt>
+            <dd>{{ $geoPlace->geo_type }}</dd>
         </dl>
         <dl>
             <dt>@lang('placeshub.geo_code')</dt>
@@ -32,8 +32,38 @@
         <div class="col">
 
         </div>
-
     </div>
 
+    @foreach($geoPlace->childTypes() as $childType)
+        @include('imports.places.geo._data-table', ['type' => $childType, 'place' => $geoPlace])
+    @endforeach
 
+@endsection
+
+@section('javascript')
+    @parent
+    @if(app()->environment('production'))
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+    @else
+        <script src="{{ asset('js/vendor/data-tables.js') }}"></script>
+        <script src="{{ asset('js/vendor/data-tables-bs4.js') }}"></script>
+    @endif
+
+    <script>
+        let columns = [
+            {
+                data: 'name',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html("<a href=\"" + oData.link + "\">" + oData.name + "</a>");
+                }
+            },
+            {
+                data: 'geo_type',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(oData.geo_type);
+                }
+            }
+        ];
+    </script>
 @endsection
