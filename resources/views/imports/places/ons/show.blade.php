@@ -1,15 +1,15 @@
 @extends('app.content')
 
 @section('heading')
-    {{ $geoPlace->name }}
+    {{ $onsPlace->name }}
 @endsection
 
 @section('title')
-    {!! Breadcrumbs::view('app._title', 'imports.places.geo.show', $geoPlace) !!}
+    {!! Breadcrumbs::view('app._title', 'imports.places.ons.show', $onsPlace) !!}
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('imports.places.geo.show', $geoPlace) !!}
+    {!! Breadcrumbs::render('imports.places.ons.show', $onsPlace) !!}
 @endsection
 
 @section('app.content')
@@ -18,26 +18,26 @@
         <div class="col">
             <dl>
                 <dt>@lang('placeshub.id')</dt>
-                <dd><a href="https://www.geonames.org/{{ $geoPlace->id }}" target="_blank">{{ $geoPlace->id }}</a></dd>
-                <dt>@lang('placeshub.geo_type')</dt>
-                <dd>{{ $geoPlace->geo_type }}</dd>
-                @if($geoPlace->geo_code)
-                    <dt>@lang('placeshub.geo_code')</dt>
-                    <dd>{{ $geoPlace->geo_code }}</dd>
+                <dd><a href="https://www.onsnames.org/{{ $onsPlace->id }}" target="_blank">{{ $onsPlace->id }}</a></dd>
+                <dt>@lang('placeshub.ons_type')</dt>
+                <dd>{{ $onsPlace->ons_type }}</dd>
+                @if($onsPlace->ons_code)
+                    <dt>@lang('placeshub.ons_code')</dt>
+                    <dd>{{ $onsPlace->ons_code }}</dd>
                 @endif
-                @if($geoPlace->geo_code_full)
-                    <dt>@lang('placeshub.geo_code_full')</dt>
-                    <dd>{{ $geoPlace->geo_code_full }}</dd>
+                @if($onsPlace->ons_code_full)
+                    <dt>@lang('placeshub.ons_code_full')</dt>
+                    <dd>{{ $onsPlace->ons_code_full }}</dd>
                 @endif
             </dl>
         </div>
         <div class="col">
-            @include('app._map', ['place' => $geoPlace])
+            @include('app._map', ['place' => $onsPlace])
         </div>
     </div>
 
-    @foreach($geoPlace->childTypes() as $childType)
-        @include('imports.places.geo._data-table', ['type' => $childType, 'geoPlace' => $geoPlace])
+    @foreach($onsPlace->childTypes() as $childType)
+        @include('imports.places.ons._data-table', ['type' => $childType, 'onsPlace' => $onsPlace])
     @endforeach
 
 @endsection
@@ -61,21 +61,21 @@
                 }
             },
             {
-                data: 'geo_type',
+                data: 'ons_type',
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(oData.geo_type);
+                    $(nTd).html(oData.ons_type);
                 }
             },
             {
-                data: 'geo_code',
+                data: 'ons_code',
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(oData.geo_code);
+                    $(nTd).html(oData.ons_code);
                 }
             },
             {
-                data: 'geo_code_full',
+                data: 'ons_code_full',
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(oData.geo_code_full);
+                    $(nTd).html(oData.ons_code_full);
                 }
             },
             {

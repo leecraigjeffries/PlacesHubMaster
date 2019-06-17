@@ -25,7 +25,7 @@
                                id="{{ $field }}"
                                class="form-control form-control-sm"
                                placeholder="Search&hellip;"
-                               value="{{ $request->input($field) ?: old($field) }}">
+                               value="{{ old($field) ?: $request->input($field) }}">
                     </div>
                 @endforeach
                 @foreach(['geo_code', 'geo_code_full'] as $field)
@@ -35,7 +35,7 @@
                                id="{{ $field }}"
                                class="form-control form-control-sm"
                                placeholder="Search&hellip;"
-                               value="{{ $request->input($field) ?: old($field) }}"
+                               value="{{ old($field) ?: $request->input($field) }}"
                                pattern="[A-Z0-9-]*">
                     </div>
                 @endforeach
@@ -45,7 +45,7 @@
                         <option value="">All</option>
                         @foreach($types as $key => $val)
                             <option
-                                value="{{ $key }}" {{ (($request->input('geo_type') ?: old('geo_type')) === $key ? 'selected' : '') }}>{{ $val }}</option>
+                                value="{{ $key }}" {{ ((old('geo_type') ?: $request->input('geo_type')) === $key ? 'selected' : '') }}>{{ $val }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -54,7 +54,7 @@
                         <select class="custom-select custom-select-sm" name="order_by" id="order_by">
                             @foreach($geoSearch->getOrderByTranslated() as $key => $val)
                                 <option
-                                    value="{{ $key }}" {{ (($geoSearch->getOrderBy() ?: old('order_by') ?: $geoSearch->getDefaultOrderBy()) === $key ? 'selected' : '') }}>{{ $val }}</option>
+                                    value="{{ $key }}" {{ ((old('order_by') ?: $geoSearch->getOrderBy() ?: $geoSearch->getDefaultOrderBy()) === $key ? 'selected' : '') }}>{{ $val }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -63,7 +63,7 @@
                         <select class="custom-select custom-select-sm" name="order" id="order">
                             @foreach($geoSearch->getOrderTranslated() as $key => $val)
                                 <option
-                                    value="{{ $key }}" {{ (($geoSearch->getOrder() ?: old('order') ?: $geoSearch->getDefaultOrder()) === $key ? 'selected' : '') }}>{{ $val }}</option>
+                                    value="{{ $key }}" {{ ((old('order') ?: $geoSearch->getOrder() ?: $geoSearch->getDefaultOrder()) === $key ? 'selected' : '') }}>{{ $val }}</option>
                             @endforeach
                         </select>
                     </div>

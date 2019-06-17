@@ -1,25 +1,21 @@
 <?php
 
-
     namespace App\Services\Imports\Search\Places;
-
 
     use Illuminate\Support\Collection;
 
-    class GeoSearch
+    class OnsSearch
     {
         /**
          * @var array
          */
         protected $validOrderBy = [
             'name',
-            'geo_type',
-            'geo_code',
-            'geo_code_full',
-            'adm1_name',
-            'adm2_name',
-            'adm3_name',
-            'adm4_name'
+            'ons_type',
+            'ipn_id',
+            'ons_id',
+            'district_name',
+            'county_name'
         ];
 
         /**
@@ -32,9 +28,9 @@
          */
         protected $headings = [
             'name',
-            'geo_type',
-            'geo_code',
-            'geo_code_full'
+            'ipn_id',
+            'ons_id',
+            'ons_type'
         ];
 
         /**
@@ -159,11 +155,9 @@
             $appends = [
                 'order_by' => $this->getOrderBy(),
                 'order' => $this->getOrder(),
-                'geo_type' => $this->getInput('geo_type'),
-                'adm1_name' => $this->getInput('adm1_name'),
-                'adm2_name' => $this->getInput('adm2_name'),
-                'adm3_name' => $this->getInput('adm3_name'),
-                'adm4_name' => $this->getInput('adm4_name')
+                'ons_type' => $this->getInput('ons_type'),
+                'county_name' => $this->getInput('county_name'),
+                'district_name' => $this->getInput('district_name')
             ];
 
             foreach ($override as $key => $value) {

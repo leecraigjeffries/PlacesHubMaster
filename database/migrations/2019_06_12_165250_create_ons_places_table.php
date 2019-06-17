@@ -18,12 +18,15 @@ class CreateOnsPlacesTable extends Migration
             $table->char('ipn_id', 10)->index()->collation('ascii_bin');
             $table->char('ons_id', 9)->nullable()->index()->collation('utf8mb4_unicode_ci');
             $table->string('name')->collation('utf8mb4_unicode_ci');
+            $table->string('type', 12)->collation('ascii_bin');
+            $table->string('ons_type', 5)->collation('ascii_bin');
             $table->char('district_id', 9)->collation('ascii_bin')->nullable()->index();
+            $table->string('district_name')->collation('utf8mb4_unicode_ci');
             $table->char('county_id', 9)->collation('ascii_bin')->nullable()->index();
+            $table->string('county_name')->collation('utf8mb4_unicode_ci');
             $table->decimal('lat', 8, 6);
             $table->decimal('lon', 9, 6);
             $table->point('point');
-            $table->string('type', 5)->collation('ascii_bin');
         });
     }
 

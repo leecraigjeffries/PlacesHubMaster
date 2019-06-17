@@ -12,16 +12,6 @@
         /**
          * @var array
          */
-        protected $adminTypes = [
-            'adm1',
-            'adm2',
-            'adm3',
-            'adm4'
-        ];
-
-        /**
-         * @var array
-         */
         protected $guarded = [];
 
         /**
@@ -35,6 +25,16 @@
          * @var bool
          */
         public $timestamps = false;
+
+        /**
+         * @var array
+         */
+        protected $adminTypes = [
+            'adm1',
+            'adm2',
+            'adm3',
+            'adm4'
+        ];
 
         /**
          * @var array

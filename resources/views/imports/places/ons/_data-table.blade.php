@@ -5,9 +5,7 @@
             <thead class="thead-dark">
             <tr>
                 <th>@lang('placeshub.name')</th>
-                <th>@lang('placeshub.geo_type')</th>
-                <th>@lang('placeshub.geo_code')</th>
-                <th>@lang('placeshub.geo_code_full')</th>
+                <th>@lang('placeshub.ons_type')</th>
                 <th>@lang('placeshub.coords')</th>
             </tr>
             </thead>
@@ -21,7 +19,7 @@
         $(document).ready(function () {
             $('#list_{!! $type !!}').DataTable({
                 ajax: {
-                    url: "{{ route('api.imports.places.geo.data-table', ['geoPlace' => $geoPlace, 'placesHubGeoType' => $type]) }}",
+                    url: "{{ route('api.imports.places.ons.data-table', ['onsPlace' => $onsPlace, 'placesHubGeoType' => $type]) }}",
                     type: "GET"
                 },
                 columns: columns

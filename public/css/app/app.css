@@ -266,49 +266,113 @@ table th a:hover {
   padding: 8px;
 }
 
-#table-geo-places col[data-name="geo_places.name"] {
-  width: 40%;
-}
-
-#table-geo-places col[data-name="geo_places.type"] {
-  width: 15%;
-}
-
-#table-geo-places col[data-name="geo_places.geo_code"] {
-  width: 15%;
-}
-
-#table-geo-places col[data-name="geo_places.geo_code_full"] {
-  width: 30%;
-}
-
-#table-geo-places ul {
+#table-geo-places ul,
+#table-ons-places ul {
   font-size: 0.675em;
   margin-bottom: 0;
   padding: 0;
 }
 
-#table-geo-places ul a {
+#table-geo-places ul a,
+#table-ons-places ul a {
   color: #57636e;
 }
 
-#table-geo-places ul li {
+#table-geo-places ul li,
+#table-ons-places ul li {
   display: inline;
   margin: 0;
 }
 
-#table-geo-places ul li:before {
+#table-geo-places ul li:before,
+#table-ons-places ul li:before {
   content: ">";
   margin: 0 4px;
 }
 
-#table-geo-places ul li:first-child:before {
+#table-geo-places ul li:first-child:before,
+#table-ons-places ul li:first-child:before {
   content: "";
   margin: 0;
+}
+
+#table-ons-places col[data-name=name] {
+  width: 40%;
+}
+
+#table-ons-places col[data-name=ons_type] {
+  width: 20%;
+}
+
+#table-ons-places col[data-name=ons_id] {
+  width: 20%;
+}
+
+#table-ons-places col[data-name=ipn_id] {
+  width: 20%;
+}
+
+#table-geo-places col[data-name=name] {
+  width: 40%;
+}
+
+#table-geo-places col[data-name=geo_type] {
+  width: 15%;
+}
+
+#table-geo-places col[data-name=geo_code] {
+  width: 15%;
+}
+
+#table-geo-places col[data-name=geo_code_full] {
+  width: 30%;
 }
 
 .case-sensitive {
   color: #b23942;
   font-size: 0.75em;
+}
+
+dl {
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+dt,
+dd {
+  float: left;
+  box-shadow: 4px 4px 2px -2px #f1f5f8;
+  width: 50%;
+  padding: 0.5em;
+  margin-bottom: 0.125em;
+}
+
+.coord-link {
+  font-size: 10pt;
+}
+
+.coord-link i {
+  margin-right: 0.25em;
+}
+
+.has-error label {
+  color: #ff5252;
+}
+
+.has-error input,
+.has-error select {
+  border: 1px solid #b23939;
+  color: #ff5252;
+}
+
+.alert-danger {
+  background-color: #ff5252;
+  border-color: #b23939;
+  border-radius: 0;
+  border-width: 4px 0 0 0;
+  color: #fff;
+  padding: 16px;
 }
 

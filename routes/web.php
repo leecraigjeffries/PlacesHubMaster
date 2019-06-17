@@ -48,3 +48,9 @@
             Route::get('places/geo', ['uses' => 'Places\GeoController@index', 'as' => 'places.geo.index']);
             Route::get('places/geo/{geoPlace}', ['uses' => 'Places\GeoController@show', 'as' => 'places.geo.show']);
         });
+
+    Route::group(['prefix' => 'imports', 'as' => 'imports.', 'namespace' => 'Imports'],
+        static function () {
+            Route::get('places/ons', ['uses' => 'Places\OnsController@index', 'as' => 'places.ons.index']);
+            Route::get('places/ons/{onsPlace}', ['uses' => 'Places\OnsController@show', 'as' => 'places.ons.show']);
+        });

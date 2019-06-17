@@ -1,11 +1,11 @@
 @extends('admin.layout')
 
 @section('title')
-    {!! Breadcrumbs::view('app._title', 'admin.import.ons-places.store') !!}
+    {!! Breadcrumbs::view('app._title', 'admin.imports.places.ons.store') !!}
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('admin.import.ons-places.store') !!}
+    {!! Breadcrumbs::render('admin.imports.places.ons.store') !!}
 @endsection
 
 @section('heading')
@@ -31,7 +31,7 @@
             @if($importSuccess)
                 <a href="#TODO">@lang('admin.click_to_view_data')</a>
             @else
-                <a href="{{ route('admin.import.ons-places.create') }}">@lang('admin.click_to_return')</a>
+                <a href="{{ route('admin.imports.places.ons.create') }}">@lang('admin.click_to_return')</a>
             @endif
         </div>
     </div>

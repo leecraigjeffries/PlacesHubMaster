@@ -5,6 +5,9 @@
         'name' => 'Name',
         'type' => 'Type',
         'coords' => 'Coords',
+        'id' => 'ID',
+
+        'errors' => 'Errors',
 
         'geo_code' => 'Geonames Code',
         'geo_code_full' => 'Geonames Full Code',
@@ -41,4 +44,14 @@
         'adm3_name' => 'ADM3 Name',
         'adm4_name' => 'ADM4 Name',
         'adm5_name' => 'ADM5 Name',
+
+        'ons_data' => 'Office for National Statistics Data',
+        'ons_type' => 'Type',
+        'ons_places_name' => 'Name',
+        'ons_places_ons_type' => 'Type',
+        'county_name' => 'County Name',
+        'district_name' => 'District Name',
+        'ipn_id' => 'IPN ID',
+        'ons_id' => 'ONS ID'
+
     ];

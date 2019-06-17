@@ -13,8 +13,17 @@
         /** @test */
         public function it_can_have_a_county(): void
         {
-            $county = factory(OnsPlace::class)->create(['ons_id' => 'E00000001', 'type' => 'CTY']);
-            $town = factory(OnsPlace::class)->create(['county_id' => 'E00000001']);
+            $county = factory(OnsPlace::class)->create([
+                'ons_id' => 'E00000001',
+                'type' => 'county',
+                'ons_type' => 'CTY'
+            ]);
+
+            $town = factory(OnsPlace::class)->create([
+                'county_id' => 'E00000001',
+                'type' => 'locality',
+                'ons_type' => 'LOC'
+            ]);
 
             $countyName = $town->county->name;
 
@@ -24,36 +33,17 @@
         /** @test */
         public function it_can_have_a_district(): void
         {
-            $district = factory(OnsPlace::class)->create(['ons_id' => 'E00000002', 'type' => 'CA']);
-            $town = factory(OnsPlace::class)->create(['district_id' => 'E00000002']);
+            $district = factory(OnsPlace::class)->create([
+                'ons_id' => 'E00000002',
+                'type' => 'district',
+                'ons_type' => 'CA'
+            ]);
 
-            $districtName = $town->district->name;
-
-            $this->assertEquals($districtName, $district->name);
-
-            $district = factory(OnsPlace::class)->create(['ons_id' => 'E00000003', 'type' => 'LONB']);
-            $town = factory(OnsPlace::class)->create(['district_id' => 'E00000003']);
-
-            $districtName = $town->district->name;
-
-            $this->assertEquals($districtName, $district->name);
-
-            $district = factory(OnsPlace::class)->create(['ons_id' => 'E00000004', 'type' => 'MD']);
-            $town = factory(OnsPlace::class)->create(['district_id' => 'E00000004']);
-
-            $districtName = $town->district->name;
-
-            $this->assertEquals($districtName, $district->name);
-
-            $district = factory(OnsPlace::class)->create(['ons_id' => 'E00000005', 'type' => 'NMD']);
-            $town = factory(OnsPlace::class)->create(['district_id' => 'E00000005']);
-
-            $districtName = $town->district->name;
-
-            $this->assertEquals($districtName, $district->name);
-
-            $district = factory(OnsPlace::class)->create(['ons_id' => 'E00000006', 'type' => 'UA']);
-            $town = factory(OnsPlace::class)->create(['district_id' => 'E00000006']);
+            $town = factory(OnsPlace::class)->create([
+                'district_id' => 'E00000002',
+                'type' => 'locality',
+                'ons_type' => 'LOC'
+            ]);
 
             $districtName = $town->district->name;
 

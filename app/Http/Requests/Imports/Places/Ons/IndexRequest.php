@@ -1,10 +1,10 @@
 <?php
 
 
-    namespace App\Http\Requests\Imports\Places\Geo;
+    namespace App\Http\Requests\Imports\Places\Ons;
 
     use App\Rules\Order;
-    use App\Services\Imports\Importers\Places\GeoImportService;
+    use App\Services\Imports\Importers\Places\OnsImportService;
     use Illuminate\Foundation\Http\FormRequest;
     use Illuminate\Validation\Rule;
 
@@ -27,7 +27,7 @@
          */
         public function rules(): array
         {
-            $service = app(GeoImportService::class);
+            $service = app(OnsImportService::class);
 
             $rules = [
                 'name' => [
@@ -36,32 +36,32 @@
                     'string',
                     'max:191'
                 ],
-                'geo_code' => [
+                'ipn_id' => [
+                    'max:10',
+                    'string',
                     'sometimes',
                     'nullable',
-                    'string',
-                    'max:191'
+                    'regex:/^(IPN)?[0-9]*$/'
                 ],
-                'geo_code_full' => [
+                'ons_id' => [
+                    'max:9',
+                    'string',
                     'sometimes',
                     'nullable',
-                    'string',
-                    'max:191'
+                    'regex:/^(E|W|S)?[0-9]*$/'
                 ],
-                'geo_type' => [
+                'ons_type' => [
                     Rule::in($service->getValidTypes()),
                     'nullable'
                 ],
                 'order_by' => [
                     Rule::in([
                         'name',
-                        'geo_type',
-                        'geo_code',
-                        'geo_code_full',
-                        'adm1_name',
-                        'adm2_name',
-                        'adm3_name',
-                        'adm4_name'
+                        'ons_type',
+                        'ipn_id',
+                        'ons_id',
+                        'county_name',
+                        'district_name'
                     ])
                 ],
                 'order' => [
