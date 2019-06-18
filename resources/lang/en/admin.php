@@ -7,6 +7,7 @@
         'import' => 'Import',
         'import_geo_places' => 'Import Geonames Places',
         'import_ons_places' => 'Import ONS Places',
+        'import_os_places' => 'Import OS Places',
         'import_success' => 'Import Success',
         'rows_added' => ':rows rows added',
         'file_exists_title' => 'File Found',

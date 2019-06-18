@@ -262,7 +262,7 @@
                                 'region_id' => $this->endOfString($line[28]),
                                 'region_name' => $line[27],
                                 'region_type' => 'Region',
-                                'macro_region_id' => $this->endOfString($line[30]),
+                                'macro_region_id' => 'country/' . $this->endOfString($line[30]),
                                 'macro_region_name' => $line[29],
                                 'macro_region_type' => 'Country',
                                 'lat' => $lat,
@@ -362,6 +362,7 @@
 
                 case 'District':
                 case 'MetropolitanDistrict':
+                case 'LondonBorough':
                     return 'district';
 
                 default:
