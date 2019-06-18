@@ -2,9 +2,10 @@
 
     namespace App\Services\Imports\Importers\Places;
 
-    use App\Models\Imports\GeoPlace;
     use App\Models\Imports\OnsPlace;
     use App\Services\Imports\Importers\ImporterAbstract;
+    use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialExpression;
+    use Grimzy\LaravelMysqlSpatial\Types\Point;
 
     /**
      * Class OnsImportService
@@ -13,7 +14,7 @@
     final class OnsImportService extends ImporterAbstract
     {
         /**
-         * @var GeoPlace
+         * @var OnsPlace
          */
         protected $model;
 
@@ -67,7 +68,7 @@
         ];
 
         /**
-         * GeoImportService constructor.
+         * OnsImportService constructor.
          *
          * @param OnsPlace $model
          */
@@ -131,18 +132,18 @@
         }
 
         /**
-         * @return GeoPlace
+         * @return OnsPlace
          */
-        public function getModel(): GeoPlace
+        public function getModel(): OnsPlace
         {
             return $this->model;
         }
 
         /**
-         * @param GeoPlace $model
+         * @param OnsPlace $model
          * @return OnsImportService
          */
-        public function setModel(GeoPlace $model): self
+        public function setModel(OnsPlace $model): self
         {
             $this->model = $model;
 
@@ -209,57 +210,57 @@
         {
             app('debugbar')->disable();
 
-//            if ($truncate === true) {
-//                $this->model->truncate();
-//            }
-//
-//            if (($handle = fopen($this->getFilePath(), 'rb')) !== false) {
-//                $i = 0;
-//                $inserts = [];
-//
-//                while (($line = fgetcsv($handle)) !== false
-//                    && ($this->count < $this->limit || $this->limit === 0)) {
-//
-//                    if ($i === 0) {
-//                        $i++;
-//                        continue;
-//                    }
-//
-//                    if (in_array($line[6], $this->validTypes, true)) {
-//
-//                        $this->count++;
-//
-//                        $inserts[] = [
-//                            'ipn_id' => $line[1],
-//                            'name' => $line[3],
-//                            'district_id' => $line[12] ?: null,
-//                            'county_id' => $line[10] ?: null,
-//                            'lat' => $line[36],
-//                            'lon' => $line[37],
-//                            'point' => new SpatialExpression(new Point($line[36], $line[37])),
-//                            'type' => $this->getType($line),
-//                            'ons_type' => $line[6],
-//                            'ons_id' => $this->getOnsId($line)
-//                        ];
-//
-//                        if ($i % $this->insertChunks === 0) {
-//                            $this->model->insert($inserts);
-//                            $inserts = [];
-//                        }
-//
-//                        $i++;
-//                    }
-//                }
-//
-//                if ($inserts) {
-//                    $this->model->insert($inserts);
-//                }
-//
-//            } else {
-//                return false;
-//            }
-//
-//            fclose($handle);
+            if ($truncate === true) {
+                $this->model->truncate();
+            }
+
+            if (($handle = fopen($this->getFilePath(), 'rb')) !== false) {
+                $i = 0;
+                $inserts = [];
+
+                while (($line = fgetcsv($handle)) !== false
+                    && ($this->count < $this->limit || $this->limit === 0)) {
+
+                    if ($i === 0) {
+                        $i++;
+                        continue;
+                    }
+
+                    if (in_array($line[6], $this->validTypes, true)) {
+
+                        $this->count++;
+
+                        $inserts[] = [
+                            'ipn_id' => $line[1],
+                            'name' => $line[3],
+                            'district_id' => $line[12] ?: null,
+                            'county_id' => $line[10] ?: null,
+                            'lat' => $line[36],
+                            'lon' => $line[37],
+                            'point' => new SpatialExpression(new Point($line[36], $line[37])),
+                            'type' => $this->getType($line),
+                            'ons_type' => $line[6],
+                            'ons_id' => $this->getOnsId($line)
+                        ];
+
+                        if ($i % $this->insertChunks === 0) {
+                            $this->model->insert($inserts);
+                            $inserts = [];
+                        }
+
+                        $i++;
+                    }
+                }
+
+                if ($inserts) {
+                    $this->model->insert($inserts);
+                }
+
+            } else {
+                return false;
+            }
+
+            fclose($handle);
 
             $this->updateParents();
 

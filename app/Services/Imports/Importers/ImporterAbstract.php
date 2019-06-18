@@ -39,7 +39,7 @@
             return $match[0] ?: null;
         }
 
-        public function fileOrDirExists()
+        public function fileOrDirExists(): bool
         {
             return (is_dir($this->getFilePath()) && !$this->dirIsEmpty()) || (is_file($this->getFilePath()) && file_exists($this->getFilePath()));
         }

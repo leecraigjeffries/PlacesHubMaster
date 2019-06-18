@@ -28,6 +28,12 @@
                     ['uses' => 'Places\OnsController@store', 'as' => 'places.ons.store']);
                 Route::get('places/ons',
                     ['uses' => 'Places\OnsController@create', 'as' => 'places.ons.create']);
+
+                // OS
+                Route::post('places/os',
+                    ['uses' => 'Places\OsController@store', 'as' => 'places.os.store']);
+                Route::get('places/os',
+                    ['uses' => 'Places\OsController@create', 'as' => 'places.os.create']);
             });
         });
 
@@ -53,4 +59,10 @@
         static function () {
             Route::get('places/ons', ['uses' => 'Places\OnsController@index', 'as' => 'places.ons.index']);
             Route::get('places/ons/{onsPlace}', ['uses' => 'Places\OnsController@show', 'as' => 'places.ons.show']);
+        });
+
+    Route::group(['prefix' => 'imports', 'as' => 'imports.', 'namespace' => 'Imports'],
+        static function () {
+            Route::get('places/os', ['uses' => 'Places\OsController@index', 'as' => 'places.os.index']);
+            Route::get('places/os/{osPlace}', ['uses' => 'Places\OsController@show', 'as' => 'places.os.show']);
         });
