@@ -25,6 +25,8 @@
          * @var array
          */
         protected $adminTypes = [
+            'macro_region',
+            'region',
             'county',
             'district'
         ];
@@ -92,6 +94,16 @@
          */
         public $incrementing = false;
 
+
+        public function macro_region()
+        {
+            return $this->belongsTo(static::class)->whereType('macro_region');
+        }
+
+        public function region()
+        {
+            return $this->belongsTo(static::class)->whereType('region');
+        }
 
         public function county()
         {

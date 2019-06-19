@@ -36,9 +36,6 @@
 
         'geo_data' => 'Geonames Data',
         'geo_places_name' => 'Name',
-        'geo_places_geo_code' => 'Code',
-        'geo_places_geo_code_full' => 'Full Code',
-        'geo_places_geo_type' => 'Geonames Type',
         'adm1_name' => 'ADM1 Name',
         'adm2_name' => 'ADM2 Name',
         'adm3_name' => 'ADM3 Name',
@@ -47,11 +44,16 @@
 
         'ons_data' => 'Office for National Statistics Data',
         'ons_type' => 'Type',
-        'ons_places_name' => 'Name',
-        'ons_places_ons_type' => 'Type',
+        'macro_region_name' => 'Country Name',
+        'region_name' => 'Region Name',
         'county_name' => 'County Name',
         'district_name' => 'District Name',
+        'county_type' => 'County Type',
+        'district_type' => 'District Type',
         'ipn_id' => 'IPN ID',
-        'ons_id' => 'ONS ID'
+        'ons_id' => 'ONS ID',
+        'os_data' => 'OS Data',
+        'os_type' => 'Type',
+        'os_id' => 'OS ID'
 
     ];

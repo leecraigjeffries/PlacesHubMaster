@@ -20,7 +20,6 @@
             $geoSearch = app(GeoSearch::class, ['inputs' => $request->all()]);
 
             $results = $geoPlace
-                ->select(['geo_places.*'])
                 ->orderBy($geoSearch->getOrderBy(), $geoSearch->getOrder())
                 ->when($geoSearch->getOrderBy() !== $geoSearch->getDefaultOrderBy(),
                     static function ($query) use ($geoSearch) {

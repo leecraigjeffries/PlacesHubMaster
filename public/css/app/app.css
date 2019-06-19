@@ -266,6 +266,7 @@ table th a:hover {
   padding: 8px;
 }
 
+#table-os-places ul,
 #table-geo-places ul,
 #table-ons-places ul {
   font-size: 0.675em;
@@ -273,23 +274,27 @@ table th a:hover {
   padding: 0;
 }
 
+#table-os-places ul a,
 #table-geo-places ul a,
 #table-ons-places ul a {
   color: #57636e;
 }
 
+#table-os-places ul li,
 #table-geo-places ul li,
 #table-ons-places ul li {
   display: inline;
   margin: 0;
 }
 
+#table-os-places ul li:before,
 #table-geo-places ul li:before,
 #table-ons-places ul li:before {
   content: ">";
   margin: 0 4px;
 }
 
+#table-os-places ul li:first-child:before,
 #table-geo-places ul li:first-child:before,
 #table-ons-places ul li:first-child:before {
   content: "";
@@ -326,6 +331,14 @@ table th a:hover {
 
 #table-geo-places col[data-name=geo_code_full] {
   width: 30%;
+}
+
+#table-os-places col[data-name=name] {
+  width: 60%;
+}
+
+#table-os-places col[data-name=os_type] {
+  width: 40%;
 }
 
 .case-sensitive {

@@ -94,7 +94,7 @@
          * @param bool $withInsertParents
          * @return OsImportService
          */
-        public function setWithInsertParents(bool $withInsertParents):self
+        public function setWithInsertParents(bool $withInsertParents): self
         {
             $this->withInsertParents = $withInsertParents;
 
@@ -291,19 +291,28 @@
                 fclose($handle);
             }
 
-            if($this->getWithInsertParents() === true) {
+            if ($this->getWithInsertParents() === true) {
                 $this->insertParents();
             }
 
             return true;
         }
 
+        /**
+         * Insert Parents.
+         *
+         * @return void
+         */
         public function insertParents(): void
         {
             foreach ($this->getAdminTypes() as $type) {
                 $columns = [];
 
-                foreach (array_slice($this->getAdminTypes(), 0, array_search($type, $this->getAdminTypes(), true)) as $column) {
+                foreach (array_slice(
+                             $this->getAdminTypes(),
+                             0,
+                             array_search($type, $this->getAdminTypes(), true)
+                         ) as $column) {
                     $columns[] = "{$column}_id";
                     $columns[] = "{$column}_name";
                     $columns[] = "{$column}_type";
@@ -364,9 +373,6 @@
                 case 'MetropolitanDistrict':
                 case 'LondonBorough':
                     return 'district';
-
-                default:
-                    dd($osType);
             }
 
             return null;

@@ -6,7 +6,6 @@
     use App\Http\Requests\Imports\Places\Ons\IndexRequest;
     use App\Models\Imports\OnsPlace;
     use App\Services\Imports\Search\Places\OnsSearch;
-    use DB;
     use Illuminate\View\View;
 
     class OnsController extends Controller
@@ -21,7 +20,6 @@
             $onsSearch = app(OnsSearch::class, ['inputs' => $request->all()]);
 
             $results = $onsPlace
-                ->select(['ons_places.*'])
                 ->orderBy($onsSearch->getOrderBy(), $onsSearch->getOrder())
                 ->with($onsPlace->getAdminTypes())
                 ->when($onsSearch->getOrderBy() !== $onsSearch->getDefaultOrderBy(),
@@ -43,9 +41,7 @@
 
             foreach ($onsPlace->getAdminTypes() as $type) {
                 if ($request->input("{$type}_name")) {
-                    $results = $results->whereHas($type, static function ($q) use ($request, $type) {
-                        $q->where('name', 'like', '%' . $request->input("{$type}_name") . '%');
-                    });
+                    $results = $results->where("{$type}_name", 'like', '%' . $request->input("{$type}_name") . '%');
                 }
             }
 

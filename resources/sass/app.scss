@@ -224,6 +224,18 @@ table {
   }
 }
 
+#table-os-places {
+  @extend %table-places;
+
+  col[data-name="name"] {
+    width: 60%;
+  }
+
+  col[data-name="os_type"] {
+    width: 40%;
+  }
+}
+
 .case-sensitive {
   color: #b23942;
   font-size: 0.75em;
