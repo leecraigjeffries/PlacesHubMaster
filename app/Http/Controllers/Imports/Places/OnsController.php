@@ -70,4 +70,11 @@
 
             return view('imports.places.ons.show', compact('onsPlace', 'otherIpnIds', 'otherNames'));
         }
+
+        public function showIpnId(string $ipnId, OnsPlace $onsPlace)
+        {
+            $place = $onsPlace->where('ipn_id', $ipnId)->firstOrFail();
+
+            return $this->show($place);
+        }
     }

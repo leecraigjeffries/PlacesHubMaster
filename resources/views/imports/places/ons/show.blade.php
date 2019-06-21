@@ -26,7 +26,7 @@
                 <dd>{{ $onsPlace->ons_type }}</dd>
                 @if($onsPlace->ipn_id)
                     <dt>@lang('placeshub.ipn_id')</dt>
-                    <dd>{{ $onsPlace->ipn_id }}</dd>
+                        <dd><a href="{{ route('imports.places.ons.show-ipn-id', [$onsPlace->ipn_id]) }}">{{ $onsPlace->ipn_id }}</a></dd>
                 @endif
             </dl>
 
