@@ -36,14 +36,14 @@
         {
             $this->importer
                 ->setLimit(10)
-                ->setWithInsertParents(false)
+                ->setWithUpdateParents(false)
                 ->import(true);
 
             $this->assertCount(10, $this->osPlace::all());
         }
 
         /** @test */
-        public function an_os_place_has_a_name(): void
+        public function an_osm_place_has_a_name(): void
         {
             $place = new OsmPlace(['name' => 'England']);
 
@@ -60,52 +60,12 @@
             $this->assertFalse($fileExists);
 
             $fileExists = $this->importer
-                ->setFilePath('app\imports\places\os')
+                ->setFilePath('app\imports\places\osm\osm.csv')
                 ->fileOrDirExists();
 
             $this->assertTrue($fileExists);
         }
 
-        /** @test */
-        public function it_inserts_parent_records(): void
-        {
-            $city = factory(OsmPlace::class)->create([
-                'id' => 1,
-                'name' => 'Liverpool',
-                'type' => 'city',
-                'os_type' => 'City',
-                'county_id' => '10',
-                'county_name' => 'Merseyside',
-                'county_type' => 'County',
-                'region_id' => 11,
-                'region_name' => 'North West',
-                'region_type' => 'Region'
-            ]);
-
-            $this->importer->insertParents();
-
-            $this->assertDatabaseHas('os_places', [
-                'id' => $city->county_id,
-                'name' => $city->county_name,
-                'type' => 'county',
-                'os_type' => 'County',
-                'county_id' => null,
-                'county_name' => null,
-                'region_id' => $city->region_id,
-                'region_name' => $city->region_name
-            ]);
-
-            $this->assertDatabaseHas('os_places', [
-                'id' => $city->region_id,
-                'name' => $city->region_name,
-                'type' => 'region',
-                'os_type' => 'Region',
-                'county_id' => null,
-                'county_name' => null,
-                'region_id' => null,
-                'region_name' => null
-            ]);
-        }
 
         /** @test */
         public function users_cannot_view_create_page(): void

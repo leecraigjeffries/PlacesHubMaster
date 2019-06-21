@@ -54,46 +54,46 @@
     /**
      * Imports
      */
-    Breadcrumbs::for('imports.places.geo.index', static function ($trail) {
-        $trail->push(__('placeshub.geo_data'), route('imports.places.geo.index'));
+    Breadcrumbs::for('admin.imports.places.geo.index', static function ($trail) {
+        $trail->push(__('placeshub.geo_data'), route('admin.imports.places.geo.index'));
     });
 
-    Breadcrumbs::for('imports.places.geo.show', static function ($trail, $place) {
-        $trail->parent('imports.places.geo.index');
+    Breadcrumbs::for('admin.imports.places.geo.show', static function ($trail, $place) {
+        $trail->parent('admin.imports.places.geo.index');
 
         foreach ($place->getAdminTypes() as $type) {
             if ($place->{$type . '_id'} && $place->{$type . '_id'} !== $place->id) {
-                $trail->push($place->{$type}->name, route('imports.places.geo.show', $place->{$type}));
+                $trail->push($place->{$type}->name, route('admin.imports.places.geo.show', $place->{$type}));
             }
         }
         $trail->push($place->name);
     });
 
-    Breadcrumbs::for('imports.places.ons.index', static function ($trail) {
-        $trail->push(__('placeshub.ons_data'), route('imports.places.ons.index'));
+    Breadcrumbs::for('admin.imports.places.ons.index', static function ($trail) {
+        $trail->push(__('placeshub.ons_data'), route('admin.imports.places.ons.index'));
     });
 
-    Breadcrumbs::for('imports.places.ons.show', static function ($trail, $place) {
-        $trail->parent('imports.places.ons.index');
+    Breadcrumbs::for('admin.imports.places.ons.show', static function ($trail, $place) {
+        $trail->parent('admin.imports.places.ons.index');
 
         foreach ($place->getAdminTypes() as $type) {
             if ($place->{$type . '_id'} && $place->{$type . '_id'} !== $place->id) {
-                $trail->push($place->{$type}->name, route('imports.places.ons.show', $place->{$type}));
+                $trail->push($place->{$type}->name, route('admin.imports.places.ons.show', $place->{$type}));
             }
         }
         $trail->push($place->name);
     });
 
-    Breadcrumbs::for('imports.places.os.index', static function ($trail) {
-        $trail->push(__('placeshub.os_data'), route('imports.places.os.index'));
+    Breadcrumbs::for('admin.imports.places.os.index', static function ($trail) {
+        $trail->push(__('placeshub.os_data'), route('admin.imports.places.os.index'));
     });
 
-    Breadcrumbs::for('imports.places.os.show', static function ($trail, $place) {
-        $trail->parent('imports.places.os.index');
+    Breadcrumbs::for('admin.imports.places.os.show', static function ($trail, $place) {
+        $trail->parent('admin.imports.places.os.index');
 
         foreach ($place->getAdminTypes() as $type) {
             if ($place->{$type . '_id'} && $place->{$type . '_id'} !== $place->id) {
-                $trail->push($place->{$type}->name, route('imports.places.os.show', $place->{$type}));
+                $trail->push($place->{$type}->name, route('admin.imports.places.os.show', $place->{$type}));
             }
         }
         $trail->push($place->name);

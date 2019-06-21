@@ -399,6 +399,7 @@ dd {
   font-weight: normal;
   list-style: none;
   margin: 0;
+  padding: 0;
 }
 
 .siblings .sibling-distance {

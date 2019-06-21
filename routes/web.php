@@ -17,23 +17,108 @@
             Route::get('', ['uses' => 'AdminController@home', 'as' => 'home']);
 
             Route::group(['prefix' => 'imports', 'as' => 'imports.', 'namespace' => 'Imports'], static function () {
-                // Geonames
-                Route::post('places/geo',
-                    ['uses' => 'Places\GeoController@store', 'as' => 'places.geo.store']);
-                Route::get('places/geo',
-                    ['uses' => 'Places\GeoController@create', 'as' => 'places.geo.create']);
+                Route::group(['prefix' => 'places', 'as' => 'places.', 'namespace' => 'Places'],
+                    static function () {
+                        // Geonames
+                        Route::group(['prefix' => 'geo', 'as' => 'geo.'],
+                            static function () {
+                                Route::post('', [
+                                    'uses' => 'GeoController@store',
+                                    'as' => 'store'
+                                ]);
+                                Route::get('', [
+                                    'uses' => 'GeoController@create',
+                                    'as' => 'create'
+                                ]);
+                                Route::get('', [
+                                    'uses' => 'GeoController@index',
+                                    'as' => 'index'
+                                ]);
+                                Route::get('{geoPlace}', [
+                                        'uses' => 'GeoController@show',
+                                    'as' => 'show'
+                                ]);
+                            });
 
-                // ONS
-                Route::post('places/ons',
-                    ['uses' => 'Places\OnsController@store', 'as' => 'places.ons.store']);
-                Route::get('places/ons',
-                    ['uses' => 'Places\OnsController@create', 'as' => 'places.ons.create']);
+                        // ONS
+                        Route::group(['prefix' => 'ons', 'as' => 'ons.'],
+                            static function () {
+                                Route::post('', [
+                                    'uses' => 'OnsController@store',
+                                    'as' => 'store'
+                                ]);
+                                Route::get('create', [
+                                    'uses' => 'OnsController@create',
+                                    'as' => 'create'
+                                ]);
+                                Route::get('', [
+                                    'uses' => 'OnsController@index',
+                                    'as' => 'index'
+                                ]);
+                                Route::get('{onsPlace}', [
+                                    'uses' => 'OnsController@show',
+                                    'as' => 'show'
+                                ]);
+                                Route::get('ipn-id/{ipnId}', [
+                                    'uses' => 'OnsController@showIpnId',
+                                    'as' => 'show-ipn-id',
+                                    'where' => ['ipn_id' => 'IPN[0-9]{7}']
+                                ]);
+                                Route::get('ons-id/{onsId}', [
+                                    'uses' => 'OnsController@showOnsId',
+                                    'as' => 'show-ons-id',
+                                    'where' => ['ons_id' => 'E[0-9]{8}']
+                                ]);
+                            });
 
-                // OS
-                Route::post('places/os',
-                    ['uses' => 'Places\OsController@store', 'as' => 'places.os.store']);
-                Route::get('places/os',
-                    ['uses' => 'Places\OsController@create', 'as' => 'places.os.create']);
+                        // OS
+                        Route::group(['prefix' => 'os', 'as' => 'os.'],
+                            static function () {
+                                Route::post('', [
+                                    'uses' => 'OsController@store',
+                                    'as' => 'store'
+                                ]);
+                                Route::get('create', [
+                                    'uses' => 'OsController@create',
+                                    'as' => 'create'
+                                ]);
+                                Route::get('', [
+                                    'uses' => 'OsController@index',
+                                    'as' => 'index'
+                                ]);
+                                Route::get('{osPlace}', [
+                                    'uses' => 'OsController@show',
+                                    'as' => 'show',
+                                    'where' => [
+                                        'osPlace' => '(.*)'
+                                    ]
+                                ]);
+                            });
+
+                        // OSM
+                        Route::group(['prefix' => 'osm', 'as' => 'osm.'],
+                            static function () {
+                                Route::post('', [
+                                    'uses' => 'OsmController@store',
+                                    'as' => 'store'
+                                ]);
+                                Route::get('create', [
+                                    'uses' => 'OsmController@create',
+                                    'as' => 'create'
+                                ]);
+                                Route::get('', [
+                                    'uses' => 'OsmController@index',
+                                    'as' => 'index'
+                                ]);
+                                Route::get('{osmPlace}', [
+                                    'uses' => 'OsmController@show',
+                                    'as' => 'show',
+                                    'where' => [
+                                        'osmPlace' => '(.*)'
+                                    ]
+                                ]);
+                            });
+                    });
             });
         });
 
@@ -51,34 +136,12 @@
      */
     Route::group(['prefix' => 'imports', 'as' => 'imports.', 'namespace' => 'Imports'],
         static function () {
-            Route::get('places/geo', ['uses' => 'Places\GeoController@index', 'as' => 'places.geo.index']);
-            Route::get('places/geo/{geoPlace}', ['uses' => 'Places\GeoController@show', 'as' => 'places.geo.show']);
         });
 
     Route::group(['prefix' => 'imports', 'as' => 'imports.', 'namespace' => 'Imports'],
         static function () {
-            Route::get('places/ons', ['uses' => 'Places\OnsController@index', 'as' => 'places.ons.index']);
-            Route::get('places/ons/{onsPlace}', ['uses' => 'Places\OnsController@show', 'as' => 'places.ons.show']);
-            Route::get('places/ons/ipn/{ipnId}', [
-                'uses' => 'Places\OnsController@showIpnId',
-                'as' => 'places.ons.show-ipn-id',
-                'where' => ['ipn_id' => 'IPN[0-9]{7}']
-            ]);
         });
 
     Route::group(['prefix' => 'imports', 'as' => 'imports.', 'namespace' => 'Imports'],
         static function () {
-            Route::get('places/os', ['uses' => 'Places\OsController@index', 'as' => 'places.os.index']);
-
-            /**
-             * Thanks to username Gadoma
-             * https://stackoverflow.com/questions/21552604/how-to-define-a-laravel-route-with-a-parameter-that-contains-a-slash-character
-             */
-            Route::get('places/os/{osPlace}', [
-                'uses' => 'Places\OsController@show',
-                'as' => 'places.os.show',
-                'where' => [
-                    'osPlace' => '(.*)'
-                ]
-            ]);
         });

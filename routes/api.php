@@ -25,14 +25,19 @@
                 'middleware' => 'auth',
             ]);
 
-            Route::get('imports/places/geo/{geoPlace}/{placesHubGeoType}', [
-                'uses' => 'Imports\Places\GeoController@dataTable',
-                'as' => 'imports.places.geo.data-table'
+            Route::get('admin/imports/places/geo/{geoPlace}/{placesHubGeoType}', [
+                'uses' => 'Admin\Imports\Places\GeoController@dataTable',
+                'as' => 'admin.imports.places.geo.data-table'
             ]);
 
-            Route::get('imports/places/ons/{onsPlace}/{placesHubOnsType}', [
-                'uses' => 'Imports\Places\OnsController@dataTable',
-                'as' => 'imports.places.ons.data-table'
+            Route::get('admin/imports/places/ons/{onsPlace}/{placesHubOnsType}', [
+                'uses' => 'Admin\Imports\Places\OnsController@dataTable',
+                'as' => 'admin.imports.places.ons.data-table'
+            ]);
+
+            Route::get('admin/imports/places/os/{osPlace}/{placesHubOsType}', [
+                'uses' => 'Admin\Imports\Places\OsController@dataTable',
+                'as' => 'admin.imports.places.os.data-table'
             ]);
 
         });
