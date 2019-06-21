@@ -18,7 +18,7 @@
         <div class="col">
             <dl>
                 <dt>@lang('placeshub.id')</dt>
-                <dd><a href="https://www.osnames.org/{{ $osPlace->id }}" target="_blank">{{ $osPlace->id }}</a></dd>
+                <dd><a href="http://data.ordnancesurvey.co.uk/doc/{{ $osPlace->id }}" target="_blank">{{ $osPlace->id }}</a></dd>
                 <dt>@lang('placeshub.os_type')</dt>
                 <dd>{{ $osPlace->os_type }}</dd>
                 @if($osPlace->os_code)

@@ -3,9 +3,11 @@
 
     namespace App\Http\Requests\Imports\Places\Os;
 
+    use App\Models\Imports\OsPlace;
     use App\Rules\Order;
     use App\Services\Imports\Importers\Places\OsImportService;
     use Illuminate\Foundation\Http\FormRequest;
+    use Illuminate\Support\Facades\Cache;
     use Illuminate\Validation\Rule;
 
     class IndexRequest extends FormRequest
@@ -37,7 +39,9 @@
                     'max:191'
                 ],
                 'os_type' => [
-                    Rule::in($service->getValidTypes()),
+                    Rule::in(Cache::remember('os_search_types', 30, static function () {
+                        return OsPlace::select('os_type')->distinct()->pluck('os_type');
+                    })),
                     'nullable'
                 ],
                 'order_by' => [

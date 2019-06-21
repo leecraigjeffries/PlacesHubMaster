@@ -53,13 +53,6 @@
         ];
 
         /**
-         * @var array
-         */
-        private $validTypes = [
-            'populatedPlace'
-        ];
-
-        /**
          * @var bool
          */
         protected $withInsertParents = true;
@@ -124,25 +117,6 @@
         public function setLimit(int $limit): self
         {
             $this->limit = $limit;
-
-            return $this;
-        }
-
-        /**
-         * @return array
-         */
-        public function getValidTypes(): array
-        {
-            return $this->validTypes;
-        }
-
-        /**
-         * @param array $validTypes
-         * @return OsImportService
-         */
-        public function setValidTypes(array $validTypes): self
-        {
-            $this->validTypes = $validTypes;
 
             return $this;
         }

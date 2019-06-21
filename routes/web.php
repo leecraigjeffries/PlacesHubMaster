@@ -64,5 +64,12 @@
     Route::group(['prefix' => 'imports', 'as' => 'imports.', 'namespace' => 'Imports'],
         static function () {
             Route::get('places/os', ['uses' => 'Places\OsController@index', 'as' => 'places.os.index']);
-            Route::get('places/os/{osPlace}', ['uses' => 'Places\OsController@show', 'as' => 'places.os.show']);
+
+            /**
+             * Thanks to username Gadoma
+             * https://stackoverflow.com/questions/21552604/how-to-define-a-laravel-route-with-a-parameter-that-contains-a-slash-character
+             */
+            Route::get('places/os/{osPlace}', ['uses' => 'Places\OsController@show', 'as' => 'places.os.show', 'where' => [
+                'osPlace' => '(.*)']]);
+//            ]])->where('osPlace', '(.*)');
         });

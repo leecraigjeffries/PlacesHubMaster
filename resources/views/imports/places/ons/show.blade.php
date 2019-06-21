@@ -17,19 +17,44 @@
     <div class="row">
         <div class="col">
             <dl>
-                <dt>@lang('placeshub.id')</dt>
-                <dd><a href="https://www.onsnames.org/{{ $onsPlace->id }}" target="_blank">{{ $onsPlace->id }}</a></dd>
+                @if($onsPlace->ons_id)
+                    <dt>@lang('placeshub.ons_id')</dt>
+                    <dd><a href="http://statistics.data.gov.uk/doc/statistical-geography/{{ $onsPlace->ons_id }}"
+                           target="_blank">{{ $onsPlace->ons_id }}</a></dd>
+                @endif
                 <dt>@lang('placeshub.ons_type')</dt>
                 <dd>{{ $onsPlace->ons_type }}</dd>
-                @if($onsPlace->ons_code)
-                    <dt>@lang('placeshub.ons_code')</dt>
-                    <dd>{{ $onsPlace->ons_code }}</dd>
-                @endif
-                @if($onsPlace->ons_code_full)
-                    <dt>@lang('placeshub.ons_code_full')</dt>
-                    <dd>{{ $onsPlace->ons_code_full }}</dd>
+                @if($onsPlace->ipn_id)
+                    <dt>@lang('placeshub.ipn_id')</dt>
+                    <dd>{{ $onsPlace->ipn_id }}</dd>
                 @endif
             </dl>
+
+            @if(count($otherIpnIds))
+                <h3>@lang('placeshub.other_ipn_ids')</h3>
+                <div class="siblings">
+                    <ul>
+                        @foreach($otherIpnIds as $place)
+                            <li>
+                                {{ $place->ipn_id }}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            @if(count($otherNames))
+                <h3>@lang('placeshub.other_names')</h3>
+                <div class="siblings">
+                    <ul>
+                        @foreach($otherNames as $place)
+                            <li>
+                                {{ $place->name }}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </div>
         <div class="col">
             @include('app._map', ['place' => $onsPlace])
@@ -64,18 +89,6 @@
                 data: 'ons_type',
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(oData.ons_type);
-                }
-            },
-            {
-                data: 'ons_code',
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(oData.ons_code);
-                }
-            },
-            {
-                data: 'ons_code_full',
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(oData.ons_code_full);
                 }
             },
             {

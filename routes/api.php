@@ -30,4 +30,9 @@
                 'as' => 'imports.places.geo.data-table'
             ]);
 
+            Route::get('imports/places/ons/{onsPlace}/{placesHubOnsType}', [
+                'uses' => 'Imports\Places\OnsController@dataTable',
+                'as' => 'imports.places.ons.data-table'
+            ]);
+
         });

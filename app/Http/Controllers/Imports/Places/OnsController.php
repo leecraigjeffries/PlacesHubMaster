@@ -58,6 +58,16 @@
          */
         public function show(OnsPlace $onsPlace): View
         {
-            return view('imports.places.ons.show', compact('onsPlace'));
+            $otherIpnIds = $onsPlace->whereType($onsPlace->type)
+                ->where('ons_id', $onsPlace->ons_id)
+                ->where('id', '!=', $onsPlace->id)
+                ->get();
+
+            $otherNames = $onsPlace->whereType($onsPlace->type)
+                ->where('ipn_id', $onsPlace->ipn_id)
+                ->where('id', '!=', $onsPlace->id)
+                ->get();
+
+            return view('imports.places.ons.show', compact('onsPlace', 'otherIpnIds', 'otherNames'));
         }
     }

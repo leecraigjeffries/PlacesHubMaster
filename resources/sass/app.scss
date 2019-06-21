@@ -241,6 +241,8 @@ table {
   font-size: 0.75em;
 }
 
+
+
 dl {
   width: 100%;
   overflow: hidden;
@@ -254,14 +256,6 @@ dt, dd {
   width: 50%;
   padding: 0.5em;
   margin-bottom: 0.125em;
-}
-
-.coord-link {
-  font-size: 10pt;
-
-  i {
-    margin-right: 0.25em;
-  }
 }
 
 .has-error {
@@ -283,3 +277,5 @@ dt, dd {
   color: #fff;
   padding: 16px;
 }
+
+@import "info";

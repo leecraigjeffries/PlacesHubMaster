@@ -54,6 +54,13 @@
         'ons_id' => 'ONS ID',
         'os_data' => 'OS Data',
         'os_type' => 'Type',
-        'os_id' => 'OS ID'
+        'os_id' => 'OS ID',
+        'district_plural' => 'Districts',
+        'local_admin_plural' => 'Local Admins',
+        'bua_plural' => 'Built-up Areas',
+        'buasd_plural' => 'Built-up Area Sub-divisions',
+        'locality_plural' => 'Localities',
+        'other_ipn_ids' => 'Other IPN IDs'
+
 
     ];

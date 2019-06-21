@@ -5,7 +5,7 @@
     use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
     use Illuminate\Database\Eloquent\Model;
 
-    class OsPlace extends Model
+    class OsmPlace extends Model
     {
         use SpatialTrait;
 
@@ -16,40 +16,27 @@
             'lat' => 'float',
             'lon' => 'float',
             'id' => 'string',
-            'district_id' => 'string',
+            'country_id' => 'string',
+            'state_id' => 'string',
             'county_id' => 'string',
-            'region_id' => 'string',
-            'macro_region_id' => 'string'
+            'city_id' => 'string',
+
         ];
 
         /**
          * @var array
          */
         protected $adminTypes = [
-            'macro_region',
-            'region',
+            'country',
+            'state',
             'county',
-            'district'
-        ];
-
-        /**
-         * @var array
-         */
-        protected $types = [
-            'macro_region',
-            'region',
-            'macro_county',
-            'county',
-            'district',
-            'local_admin',
-            'locality'
+            'city'
         ];
 
         /**
          * @var array
          */
         protected $childTypes = [
-            'macro_region' => [],
             'region' => [],
             'macro_county' => [],
             'county' => ['district', 'local_admin', 'bua', 'buasd', 'locality'],
@@ -64,7 +51,6 @@
          * @var array
          */
         protected $ratios = [
-            'macro_region' => 4,
             'region' => 4,
             'macro_county' => 3,
             'county' => 0.5,
@@ -182,22 +168,6 @@
         public function getTypeColumnAttribute(): string
         {
             return $this->type . '_id';
-        }
-
-        /**
-         * @return array
-         */
-        public function getTypes(): array
-        {
-            return $this->types;
-        }
-
-        /**
-         * @param array $types
-         */
-        public function setTypes(array $types): void
-        {
-            $this->types = $types;
         }
 
         /**

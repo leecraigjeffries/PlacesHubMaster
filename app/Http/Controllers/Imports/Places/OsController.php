@@ -41,7 +41,7 @@
 
             $results = $results->paginate(50);
 
-            $types = $osPlace->distinct('os_type')->pluck('os_type', 'os_type')->sort();
+            $types = $osPlace->distinct()->pluck('os_type', 'os_type')->sort();
 
             return view('imports.places.os.index', compact('results', 'types', 'request', 'osSearch'));
         }
@@ -53,5 +53,9 @@
         public function show(OsPlace $osPlace): View
         {
             return view('imports.places.os.show', compact('osPlace'));
+        }
+
+        public function showCountry(OsPlace $osPlace){
+            return $this->show($osPlace);
         }
     }
