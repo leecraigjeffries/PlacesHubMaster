@@ -51,6 +51,16 @@
         $trail->push(__('admin.import_os_places'));
     });
 
+    Breadcrumbs::for('admin.imports.places.osm.create', static function ($trail) {
+        $trail->parent('admin.home');
+        $trail->push(__('admin.import_osm_places'));
+    });
+
+    Breadcrumbs::for('admin.imports.places.osm.store', static function ($trail) {
+        $trail->parent('admin.home');
+        $trail->push(__('admin.import_osm_places'));
+    });
+
     /**
      * Imports
      */
@@ -96,5 +106,15 @@
                 $trail->push($place->{$type}->name, route('admin.imports.places.os.show', $place->{$type}));
             }
         }
+        $trail->push($place->name);
+    });
+
+    Breadcrumbs::for('admin.imports.places.osm.index', static function ($trail) {
+        $trail->push(__('placeshub.osm_data'), route('admin.imports.places.osm.index'));
+    });
+
+    Breadcrumbs::for('admin.imports.places.osm.show', static function ($trail, $place) {
+        $trail->parent('admin.imports.places.osm.index');
+
         $trail->push($place->name);
     });

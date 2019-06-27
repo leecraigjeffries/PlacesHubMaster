@@ -14,8 +14,7 @@
             'osm_type',
             'state_name',
             'city_name',
-            'county_name',
-            'state_type'
+            'county_name'
         ];
 
         /**
@@ -28,7 +27,7 @@
          */
         protected $headings = [
             'name',
-            'os_type'
+            'osm_type'
         ];
 
         /**
@@ -150,20 +149,15 @@
          */
         public function getAppends($override = []): array
         {
-            $appends = [
+            $appends = $override + [
                 'order_by' => $this->getOrderBy(),
                 'order' => $this->getOrder(),
-                'os_type' => $this->getInput('os_type'),
-                'county_name' => $this->getInput('county_name'),
-                'district_name' => $this->getInput('district_name'),
+                'osm_type' => $this->getInput('os_type'),
+                'city_name' => $this->getInput('county_name'),
+                'county_name' => $this->getInput('district_name'),
                 'name' => $this->getInput('name'),
-                'macro_region_name' => $this->getInput('macro_region_name'),
-                'region_name' => $this->getInput('macro_region_name'),
+                'state_name' => $this->getInput('macro_region_name')
             ];
-
-            foreach ($override as $key => $value) {
-                $appends[$key] = $value;
-            }
 
             return $appends;
         }

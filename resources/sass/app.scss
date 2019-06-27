@@ -201,7 +201,18 @@ table {
   col[data-name="ipn_id"] {
     width: 20%;
   }
+}
 
+#table-osm-places {
+  @extend %table-places;
+
+  col[data-name="name"] {
+    width: 40%;
+  }
+
+  col[data-name="osm_type"] {
+    width: 20%;
+  }
 }
 
 #table-geo-places {

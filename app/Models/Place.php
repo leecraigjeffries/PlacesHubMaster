@@ -1,11 +1,11 @@
 <?php
 
-    namespace App\Models\Imports;
+    namespace App\Models;
 
     use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
     use Illuminate\Database\Eloquent\Model;
 
-    class OsmPlace extends Model
+    class Place extends Model
     {
         use SpatialTrait;
 
@@ -40,25 +40,4 @@
          */
         public $incrementing = false;
 
-        protected $adminTypes = [
-            'city',
-            'county',
-            'state'
-        ];
-
-        /**
-         * @return int
-         */
-        public function getRatio(): int
-        {
-            return 4;
-        }
-
-        /**
-         * @return array
-         */
-        public function getAdminTypes(): array
-        {
-            return $this->adminTypes;
-        }
     }

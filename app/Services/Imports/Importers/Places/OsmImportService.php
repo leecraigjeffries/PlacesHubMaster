@@ -218,7 +218,6 @@
                     $this->count++;
 
                     $wiki_title = null;
-
                     if (strpos($line[11], 'en:') === 0) {
                         preg_match('/en:(.*)/', $line[11], $match);
                         $wiki_title = $match[1];
@@ -229,13 +228,13 @@
                         'name' => $line[0],
                         'lat' => $line[6],
                         'lon' => $line[5],
-                        'point' => new SpatialExpression(new Point($line[4], $line[5])),
+                        'point' => new SpatialExpression(new Point($line[6], $line[5])),
                         'network_type' => $line[1],
                         'class' => $line[3],
                         'osm_type' => $line[4],
-                        'city_name' => $line[7] ?: null,
-                        'county_name' => $line[8] ?: null,
-                        'state_name' => $line[9] ?: null,
+                        'city_name' => ($line[0] === $line[7]) ? null : $line[7] ?: null,
+                        'county_name' => ($line[0] === $line[8]) ? null : $line[8] ?: null,
+                        'state_name' => ($line[0] === $line[9]) ? null : $line[9] ?: null,
                         'wikidata_id' => $line[10] ?: null,
                         'wiki_title' => $wiki_title
                     ];
@@ -258,9 +257,9 @@
 
             fclose($handle);
 
-            if ($this->getWithUpdateParents() === true) {
-                $this->updateParents();
-            }
+//            if ($this->getWithUpdateParents() === true) {
+//                $this->updateParents();
+//            }
 
             return true;
         }
@@ -316,32 +315,5 @@
                             ] + $properties);
                 }
             }
-        }
-
-        /**
-         * @param string $osType
-         * @return string
-         */
-        private function getPlacesHubType(string $osType): ?string
-        {
-            switch ($osType) {
-                case 'Country':
-                    return 'macro_region';
-
-                case 'Region':
-                    return 'region';
-
-                case 'GreaterLondonAuthority':
-                case 'County':
-                case 'UnitaryAuthority':
-                    return 'county';
-
-                case 'District':
-                case 'MetropolitanDistrict':
-                case 'LondonBorough':
-                    return 'district';
-            }
-
-            return null;
         }
     }

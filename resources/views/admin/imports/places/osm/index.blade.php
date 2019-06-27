@@ -18,7 +18,7 @@
         <fieldset id="filter">
             <legend>Filter</legend>
             <div class="row">
-                @foreach(['name', 'macro_region_name', 'region_name', 'county_name', 'district_name'] as $field)
+                @foreach(['name', 'state_name', 'county_name', 'city_name'] as $field)
                     <div class="col-sm-6 col-md-4 col-lg-3 p-2">
                         <label for="{{ $field }}">@lang("placeshub.{$field}")</label>
                         <input name="{{ $field }}"
@@ -80,7 +80,7 @@
                 <th scope="col" @if($order_by === $osmSearch->getOrderBy()) class="active" @endif>
                     <a href="{{ route('admin.imports.places.osm.index', $osmSearch->getAppends([
                     'order_by' => $order_by,
-                    'order' => $osmSearch->getOrderOpposmite()
+                    'order' => $osmSearch->getOrderOpposite()
                     ])) }}">{{ $headingText }}
                         <i class="fas fa-sort ml-2"></i></a>
                 </th>
@@ -94,9 +94,9 @@
                     <a href="{{ route('admin.imports.places.osm.show', $result) }}">{{ $result->name }}</a>
                     <ul>
                         @foreach($result->getAdminTypes() as $type)
-                            @if($result->$type && $result->id !== $result->$type->id)
+                            @if($result->{$type . '_name'})
                                 <li>
-                                    <a href="{{ route('admin.imports.places.osm.show', $result->$type) }}">{{ $result->$type->name }}</a>
+                                    {{ $result->{$type . '_name'} }}
                                 </li>
                             @endif
                         @endforeach

@@ -152,17 +152,13 @@
          */
         public function getAppends($override = []): array
         {
-            $appends = [
+            $appends = $override + [
                 'order_by' => $this->getOrderBy(),
                 'order' => $this->getOrder(),
                 'ons_type' => $this->getInput('ons_type'),
                 'county_name' => $this->getInput('county_name'),
                 'district_name' => $this->getInput('district_name')
             ];
-
-            foreach ($override as $key => $value) {
-                $appends[$key] = $value;
-            }
 
             return $appends;
         }

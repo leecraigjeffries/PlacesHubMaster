@@ -60,7 +60,10 @@
         'bua_plural' => 'Built-up Areas',
         'buasd_plural' => 'Built-up Area Sub-divisions',
         'locality_plural' => 'Localities',
-        'other_ipn_ids' => 'Other IPN IDs'
-
+        'other_ipn_ids' => 'Other IPN IDs',
+        'state_name' => 'State Name',
+        'city_name' => 'City Name',
+        'osm_type' => 'OSM Type',
+        'osm_data' => 'Open Street Maps Data'
 
     ];

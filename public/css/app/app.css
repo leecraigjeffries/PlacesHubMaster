@@ -268,6 +268,7 @@ table th a:hover {
 
 #table-os-places ul,
 #table-geo-places ul,
+#table-osm-places ul,
 #table-ons-places ul {
   font-size: 0.675em;
   margin-bottom: 0;
@@ -276,12 +277,14 @@ table th a:hover {
 
 #table-os-places ul a,
 #table-geo-places ul a,
+#table-osm-places ul a,
 #table-ons-places ul a {
   color: #57636e;
 }
 
 #table-os-places ul li,
 #table-geo-places ul li,
+#table-osm-places ul li,
 #table-ons-places ul li {
   display: inline;
   margin: 0;
@@ -289,6 +292,7 @@ table th a:hover {
 
 #table-os-places ul li:before,
 #table-geo-places ul li:before,
+#table-osm-places ul li:before,
 #table-ons-places ul li:before {
   content: ">";
   margin: 0 4px;
@@ -296,6 +300,7 @@ table th a:hover {
 
 #table-os-places ul li:first-child:before,
 #table-geo-places ul li:first-child:before,
+#table-osm-places ul li:first-child:before,
 #table-ons-places ul li:first-child:before {
   content: "";
   margin: 0;
@@ -314,6 +319,14 @@ table th a:hover {
 }
 
 #table-ons-places col[data-name=ipn_id] {
+  width: 20%;
+}
+
+#table-osm-places col[data-name=name] {
+  width: 40%;
+}
+
+#table-osm-places col[data-name=osm_type] {
   width: 20%;
 }
 

@@ -13,5 +13,6 @@
         'file_exists_title' => 'File Found',
         'file_not_exists_title' => 'File Not Found',
         'file' => '&quot;:file&quot;',
+        'import_osm_places' => 'Import OSM Data'
 
     ];

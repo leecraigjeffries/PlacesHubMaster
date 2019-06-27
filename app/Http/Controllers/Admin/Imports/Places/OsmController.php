@@ -33,7 +33,6 @@
 
             $results = $osmPlace
                 ->orderBy($osmSearch->getOrderBy(), $osmSearch->getOrder())
-                ->with($osmPlace->getAdminTypes())
                 ->when($osmSearch->getOrderBy() !== $osmSearch->getDefaultOrderBy(),
                     static function ($query) use ($osmSearch) {
                         $query->orderBy($osmSearch->getDefaultOrderBy(), $osmSearch->getDefaultOrder());
