@@ -14,4 +14,12 @@
 
             $this->assertEquals('England', $place->name);
         }
+
+        /** @test */
+        public function it_can_have_child_types(): void
+        {
+            $place = new Place(['type' => 'local_admin']);
+
+            $this->assertEqualsCanonicalizing($place->getChildTypes(), ['locality', 'hood']);
+        }
     }

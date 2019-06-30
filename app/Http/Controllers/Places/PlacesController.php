@@ -9,6 +9,11 @@
     {
         public function show(Place $place): View
         {
-            return view('places.show', compact('place'));
+            $next = $place->next();
+            $previous = $place->previous();
+            $ratio = $place->getRatio();
+            $siblings = $place->siblings();
+
+            return view('places.show', compact('place', 'next', 'previous', 'ratio', 'siblings'));
         }
     }

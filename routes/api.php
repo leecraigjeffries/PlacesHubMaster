@@ -8,9 +8,9 @@
                 'as' => 'search.show'
             ]);
 
-            Route::get('data-tables/{place}/{type}', [
-                'uses' => 'PlacesController@dataTable',
-                'as' => 'places.data-table'
+            Route::get('data-tables/{place}', [
+                'uses' => 'Places\DataTableController@index',
+                'as' => 'places.data-table.index'
             ]);
 
             Route::get('places/approve/{place}', [

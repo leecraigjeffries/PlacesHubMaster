@@ -1,6 +1,8 @@
 <?php
 
 
+    use App\Models\Place;
+
     Route::get('/', static function () {
         return view('welcome');
     });
@@ -35,7 +37,7 @@
                                     'as' => 'index'
                                 ]);
                                 Route::get('{geoPlace}', [
-                                        'uses' => 'GeoController@show',
+                                    'uses' => 'GeoController@show',
                                     'as' => 'show'
                                 ]);
                             });
@@ -125,11 +127,51 @@
     /**
      * Places
      */
-    Route::group(['prefix' => 'places', 'as' => 'places.', 'namespace' => 'Places'],
-        static function () {
-            Route::get('{place}', ['uses' => 'PlacesController@show', 'as' => 'show']);
-            Route::get('', ['uses' => 'PlacesController@index', 'as' => 'index']);
+    Route::group(['prefix' => 'places', 'as' => 'places.', 'namespace' => 'Places'], static function () {
+        Route::get('{place}', ['uses' => 'PlacesController@show', 'as' => 'show']);
+        Route::get('', ['uses' => 'PlacesController@index', 'as' => 'index']);
+        Route::get('{place}/edit', ['uses' => 'PlacesController@edit', 'as' => 'edit', 'middleware' => 'role:mod']);
+
+        Route::group(['middleware' => 'role:mod'], static function () {
+
+            Route::patch('{place}', [
+                'uses' => 'PlacesController@update',
+                'as' => 'update'
+            ]);
+            Route::delete('{place}', [
+                'uses' => 'PlacesController@destroy',
+                'as' => 'destroy'
+            ]);
+            Route::get('{place}/create/{type}', [
+                    'uses' => 'PlacesController@create',
+                    'as' => 'create',
+                    'where' => [
+                        'type' => implode('|', Place::getTypes())
+                    ]
+                ]
+            );
+            Route::post('places/{place}/create/{type}', [
+                    'uses' => 'PlacesController@store',
+                    'as' => 'store',
+                    'where' => [
+                        'type' => implode('|', Place::getTypes())
+                    ]
+                ]
+            );
+
+            Route::group(['prefix' => 'move', 'as' => 'move.'], static function () {
+                Route::get('edit', ['uses' => 'MoveController@edit', 'as' => 'edit']);
+            });
+
+            Route::group(['prefix' => 'move-children', 'as' => 'move-children.'], static function () {
+                Route::get('edit', ['uses' => 'MoveChildrenController@edit', 'as' => 'edit']);
+            });
+
+            Route::group(['prefix' => 'change-type', 'as' => 'change-type.'], static function () {
+                Route::get('edit', ['uses' => 'ChangeTypeController@edit', 'as' => 'edit']);
+            });
         });
+    });
 
     /**
      * Import

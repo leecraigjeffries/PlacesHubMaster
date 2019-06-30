@@ -16,7 +16,16 @@
             Schema::create('places', static function (Blueprint $table) {
                 $table->increments('id');
 
-                foreach (config('placeshub.types') as $type) {
+                foreach ([
+                             'country',
+                             'macro_region',
+                             'region',
+                             'macro_county',
+                             'county',
+                             'district',
+                             'local_admin',
+                             'locality'
+                         ] as $type) {
                     $table->integer("{$type}_id")->unsigned()->nullable()->index();
                 }
 
@@ -43,6 +52,7 @@
                 $table->char('iso3166_2')->collation('ascii_bin')->nullable();
                 $table->text('notes')->collation('utf8mb4_unicode_ci')->nullable();
                 $table->softDeletes();
+                $table->string('delete_reason_type')->collation('ascii_bin')->nullable();
                 $table->timestamp('approved_at')->nullable();
                 $table->timestamps();
             });

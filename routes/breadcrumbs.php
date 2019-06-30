@@ -5,7 +5,7 @@
     });
 
     Breadcrumbs::for('places.show', static function ($trail, $place) {
-        foreach ($place->types() as $type) {
+        foreach ($place::getTypes() as $type) {
             if ($place->{$type . '_id'}) {
                 $trail->push($place->{$type}->name, route('places.show', $place->{$type}));
             }
