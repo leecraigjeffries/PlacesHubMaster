@@ -12,9 +12,9 @@
     {{ $place->name }}
     <button class="@if($place->approved_at) text-success @else text-danger @endif" id="approve">
         @if($place->approved_at)
-            <i class="far fa-check-circle"></i> <span>@lang('moderate.approved')</span>
+            <i class="far fa-check-circle"></i> <span>@lang('placeshub.approved')</span>
         @else
-            <i class="far fa-times-circle"></i> <span>@lang('moderate.pending')</span>
+            <i class="far fa-times-circle"></i> <span>@lang('placeshub.pending')</span>
         @endif
     </button>
 @endsection
@@ -33,337 +33,351 @@
                 @csrf
 
                 <div class="row">
-                    <div class="col-md-4 font-weight-bold pt-2">
-                        @lang('places.id')
-                    </div>
-                    <div class="col-md-8 pt-2">
-                        <a href="{!! route('places.show', $place) !!}">{{ $place->id }}</a>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 font-weight-bold pt-2">
-                        @lang('places.name')
-                    </div>
-                    <div class="col-md-8 pt-2">
-                        <input name="name" type="text" class="form-control form-control-sm" id="name"
-                               required="required" value="{{ $place->name }}">
+                    <label for="name" class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.name')
+                    </label>
+                    <div class="col-md-8">
+                        <input name="name"
+                               type="text"
+                               class="form-control form-control-sm"
+                               id="name"
+                               max="191"
+                               value="{{ $place->name }}"
+                               required>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 font-weight-bold pt-2">
-                        @lang('places.official_name')
-                    </div>
-                    <div class="col-md-8 pt-2">
-                        <input name="official_name" type="text" class="form-control form-control-sm" id="official-name" value="{{ $place->official_name }}">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 font-weight-bold pt-2">
-                        @lang('places.type')
-                    </div>
-                    <div class="col-md-8 pt-2">
-                        <span class="type">@lang("places.{$place->type}")</span>
+                    <label for="official-name" class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.official_name')
+                    </label>
+                    <div class="col-md-8">
+                        <input name="name"
+                               type="text"
+                               class="form-control form-control-sm"
+                               id="official-name"
+                               max="191"
+                               value="{{ $place->official_name }}">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 font-weight-bold pt-2">
-                        @lang('places.wikipedia_title')
-                    </div>
-                    <div class="col-md-8 pt-2">
-                        <div class="input-group input-group-sm mb-2">
+                    <label for="wiki-title" class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.wiki_title')
+                        <a href="https://en.wikipedia.org/w/index.php?search={{ $place->name }}"
+                           target="_blank"><i class="fas fa-search ml-2"></i></a>
+                    </label>
+                    <div class="col-md-8">
+                        <div class="input-group input-group-sm">
                             <div class="input-group-prepend">
                             <span class="input-group-text prepend">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="wikipedia_title_null"
-                                           name="wikipedia_title_null" @if(!$place->wikipedia_title) checked="checked"
-                                           @endif value="1">
+                                    <input type="checkbox"
+                                           class="custom-control-input"
+                                           id="wiki-title-null"
+                                           name="wiki_title_null"
+                                           @if(!$place->wiki_title) checked="checked" @endif
+                                           value="1">
                                     <label class="custom-control-label"
-                                           for="wikipedia_title_null">@lang('moderate.set_to_null')</label>
+                                           for="wiki-title-null">@lang('placeshub.set_to_null')</label>
                                 </div>
                             </span>
                             </div>
-                            <input name="wikipedia_title" type="text" class="form-control form-control-sm" id="wikipedia_title" value="{{ $place->wikipedia_title }}">
-                            @if($place->wikipedia_title)
-                                <div class="input-group-append">
+                            <input name="name"
+                                   type="text"
+                                   class="form-control form-control-sm"
+                                   id="wiki-title"
+                                   max="191"
+                                   value="{{ $place->wiki_title }}">
+
+                            <div class="input-group-append">
                                 <span class="input-group-text">
-                                        <a href="https://en.wikipedia.org/wiki/{{ $place->wikipedia_title }}"
+                                        <a href="https://en.wikipedia.org/wiki/{{ $place->wiki_title }}"
                                            target="_blank"><i class="fas fa-external-link-alt"></i></a>
                                 </span>
-                                </div>
-                            @endif
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 font-weight-bold pt-2">
-                        @lang('places.wikidata_id')
-                    </div>
-                    <div class="col-md-8 pt-2">
-                        <div class="input-group input-group-sm mb-2">
+                    <label for="wikidata-id" class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.wikidata_id')
+                        <a href="https://www.wikidata.org/w/index.php?search={{ $place->name }}"
+                           target="_blank"><i class="fas fa-search ml-2"></i></a>
+                    </label>
+                    <div class="col-md-8">
+                        <div class="input-group input-group-sm">
                             <div class="input-group-prepend">
-                                <span
-                                    class="input-group-text prepend">{!! Form::customCheckbox('wikidata_id_null', __('moderate.set_to_null'), 1, !$place->wikidata_id) !!}</span>
+                            <span class="input-group-text prepend">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox"
+                                           class="custom-control-input"
+                                           id="wikidata-id-null"
+                                           name="wikidata_id_null"
+                                           @if(!$place->wikidata_id) checked="checked" @endif
+                                           value="1">
+                                    <label class="custom-control-label"
+                                           for="wikidata-id-null">@lang('placeshub.set_to_null')</label>
+                                </div>
+                            </span>
                             </div>
-                            {!! Form::text('wikidata_id', $place->wikidata_id, ['id' => 'wikidata_id', 'class' => 'form-control form-control-sm']) !!}
-                            @if($place->wikidata_id)
-                                <div class="input-group-append">
+                            <input name="name"
+                                   type="text"
+                                   class="form-control form-control-sm"
+                                   id="wikidata-id"
+                                   max="191"
+                                   value="{{ $place->wikidata_id }}">
+
+                            <div class="input-group-append">
                                 <span class="input-group-text">
                                         <a href="https://www.wikidata.org/wiki/{{ $place->wikidata_id }}"
                                            target="_blank"><i class="fas fa-external-link-alt"></i></a>
                                 </span>
-                                </div>
-                            @endif
-                        </div>
-                        @if($place->wikipedia_wikidata_id || $place->osm_node_wikidata_id  || $place->osm_way_wikidata_id || $place->osm_relation_wikidata_id)
-                            <ul class="suggestions suggestions-wikidata-id">
-                                @if($place->wikipedia_wikidata_id && $place->wikipedia_wikidata_id !== $place->wikidata_id)
-                                    <li>
-                                        @lang('places.wikipedia_abbr'): {{ $place->wikipedia_wikidata_id}}
-                                        <span class="use" data-wikidata_id="{{ $place->wikipedia_wikidata_id}}"><i
-                                                class="fas fa-upload"></i></span>
-                                        <a href="https://www.wikidata.org/wiki/{{ $place->wikipedia_wikidata_id}}"
-                                           target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                    </li>
-                                @endif
-                                @if($place->osm_node_wikidata_id && $place->osm_node_wikidata_id !== $place->wikidata_id)
-                                    <li>
-                                        @lang('places.osm_abbr'): {{ $place->osm_node_wikidata_id}}
-                                        <span class="use" data-wikidata_id="{{ $place->osm_node_wikidata_id}}"><i
-                                                class="fas fa-upload"></i></span>
-                                        <a href="https://www.wikidata.org/wiki/{{ $place->osm_node_wikidata_id}}"
-                                           target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                    </li>
-                                @endif
-                                @if($place->osm_way_wikidata_id && $place->osm_way_wikidata_id !== $place->wikidata_id)
-                                    <li>
-                                        @lang('places.osm_abbr'): {{ $place->osm_way_wikidata_id}}
-                                        <span class="use" data-wikidata_id="{{ $place->osm_way_wikidata_id}}"><i
-                                                class="fas fa-upload"></i></span>
-                                        <a href="https://www.wikidata.org/wiki/{{ $place->osm_way_wikidata_id}}"
-                                           target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                    </li>
-                                @endif
-                                @if($place->osm_relation_wikidata_id && $place->osm_relation_wikidata_id !== $place->wikidata_id)
-                                    <li>
-                                        @lang('places.osm_abbr'): {{ $place->osm_relation_wikidata_id}}
-                                        <span class="use" data-wikidata_id="{{ $place->osm_relation_wikidata_id}}"><i
-                                                class="fas fa-upload"></i></span>
-                                        <a href="https://www.wikidata.org/wiki/{{ $place->osm_relation_wikidata_id}}"
-                                           target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                    </li>
-                                @endif
-                            </ul>
-                        @endif
-                    </div>
-                </div>
-
-                @foreach(['geonames_id', 'geonames_id_2', 'geonames_id_3', 'geonames_id_4'] as $property)
-                    <div class="row">
-                        <div class="col-md-4 font-weight-bold pt-2">
-                            @lang("places.{$property}")
-                        </div>
-                        <div class="col-md-8 pt-2">
-                            <div class="input-group input-group-sm mb-2">
-                                <div class="input-group-prepend">
-                                    <span
-                                        class="input-group-text prepend">{!! Form::customCheckbox("{$property}_null", __('moderate.set_to_null'), 1, !$place->$property) !!}</span>
-                                </div>
-                                {!! Form::text($property, $place->$property, ['id' => $property, 'class' => 'form-control form-control-sm']) !!}
-                                @if($place->$property)
-                                    <div class="input-group-append">
-                                    <span class="input-group-text">
-                                            <a href="https://www.geonames.org/{{ $place->$property }}"
-                                               target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                    </span>
-                                    </div>
-                                @endif
                             </div>
-                            @if($place->wikidata_geonames_id
-                             && $place->wikidata_geonames_id !== $place->geonames_id
-                             && $place->wikidata_geonames_id !== $place->geonames_id_2
-                             && $place->wikidata_geonames_id !== $place->geonames_id_3
-                             && $place->wikidata_geonames_id !== $place->geonames_id_4)
-                                <ul class="suggestions suggestions-{{ $property }}">
-                                    <li>
-                                        @lang('places.wikidata'): {{ $place->wikidata_geonames_id }}
-                                        <span class="use" data-geonames_id="{{ $place->wikidata_geonames_id }}"><i
-                                                class="fas fa-upload"></i></span>
-                                        <a href="https://www.geonames.org/{{ $place->wikidata_geonames_id }}"
-                                           target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                    </li>
-                                </ul>
-                            @endif
                         </div>
-                    </div>
-                @endforeach
-
-                <div class="row">
-                    <div class="col-md-4 font-weight-bold pt-2">
-                        @lang('places.osm_id')
-                    </div>
-                    <div class="col-md-8 pt-2">
-                        <div class="input-group input-group-sm mb-2">
-                            <div class="input-group-prepend">
-                                <span
-                                    class="input-group-text prepend">{!! Form::customCheckbox('osm_id_null', __('moderate.set_to_null'), 1, !$place->osm_id) !!}</span>
-                            </div>
-                            {!! Form::text('osm_id', $place->osm_id, ['id' => 'osm_id', 'class' => 'form-control form-control-sm']) !!}
-                            @if($place->osm_id)
-                                <div class="input-group-append">
-                                <span class="input-group-text">
-                                        <a href="https://www.openstreetmap.org/relation/{{ $place->osm_id }}"
-                                           target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                </span>
-                                </div>
-                                <div class="input-group-append">
-                                <span class="input-group-text">
-                                        <a href="https://www.openstreetmap.org/node/{{ $place->osm_id }}"
-                                           target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                </span>
-                                </div>
-                                <div class="input-group-append">
-                                <span class="input-group-text">
-                                        <a href="https://www.openstreetmap.org/way/{{ $place->osm_id }}"
-                                           target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                </span>
-                                </div>
-                            @endif
-                        </div>
-                        @if($place->wikidata_osm_id && $place->wikidata_osm_id !== $place->osm_id)
-                            <ul class="suggestions suggestions-osm-id">
-                                <li>
-                                    @lang('places.wikidata'): {{ $place->wikidata_osm_id }}
-                                    <span class="use" data-osm_id="{{ $place->wikidata_osm_id }}"><i
-                                            class="fas fa-upload"></i></span>
-                                    <a href="https://www.openstreetmap.org/node/{{ $place->wikidata_osm_id }}"
-                                       target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                </li>
-                            </ul>
-                        @endif
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 font-weight-bold pt-2">
-                        @lang('places.os_id')
-                    </div>
-                    <div class="col-md-8 pt-2">
-                        <div class="input-group input-group-sm mb-2">
+                    <label for="osm-id" class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.osm_id')
+                        <a href="https://www.openstreetmap.org/search?query={{ $place->name }}"
+                           target="_blank"><i class="fas fa-search ml-2"></i></a>
+                    </label>
+                    <div class="col-md-8">
+                        <div class="input-group input-group-sm">
                             <div class="input-group-prepend">
-                                <span
-                                    class="input-group-text prepend">{!! Form::customCheckbox('os_id_null', __('moderate.set_to_null'), 1, !$place->os_id) !!}</span>
+                            <span class="input-group-text prepend">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox"
+                                           class="custom-control-input"
+                                           id="osm-id-null"
+                                           name="osm_id_null"
+                                           @if(!$place->osm_id) checked="checked" @endif
+                                           value="1">
+                                    <label class="custom-control-label"
+                                           for="osm-id-null">@lang('placeshub.set_to_null')</label>
+                                </div>
+                            </span>
                             </div>
-                            {!! Form::text('os_id', $place->os_id, ['id' => 'os_id', 'class' => 'form-control form-control-sm']) !!}
-                            @if($place->os_id)
-                                <div class="input-group-append">
+                            <input name="name"
+                                   type="text"
+                                   class="form-control form-control-sm"
+                                   id="osm-id"
+                                   max="191"
+                                   value="{{ $place->osm_id }}">
+
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                        <a href="https://www.openstreetmap.org/{{ $place->osm_network_type }}/{{ $place->osm_id }}"
+                                           target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label for="os-id" class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.os_id')
+                        <a href="{{ route('admin.imports.places.os.index', ['name' => $place->name]) }}"
+                           target="_blank"><i class="fas fa-search ml-2"></i></a>
+                    </label>
+                    <div class="col-md-8">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text prepend">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox"
+                                           class="custom-control-input"
+                                           id="os-id-null"
+                                           name="os_id_null"
+                                           @if(!$place->os_id) checked="checked" @endif
+                                           value="1">
+                                    <label class="custom-control-label"
+                                           for="os-id-null">@lang('placeshub.set_to_null')</label>
+                                </div>
+                            </span>
+                            </div>
+                            <input name="name"
+                                   type="text"
+                                   class="form-control form-control-sm"
+                                   id="os-id"
+                                   max="191"
+                                   value="{{ $place->os_id }}">
+
+                            <div class="input-group-append">
                                 <span class="input-group-text">
                                         <a href="http://data.ordnancesurvey.co.uk/doc/{{ $place->os_id }}"
                                            target="_blank"><i class="fas fa-external-link-alt"></i></a>
                                 </span>
-                                </div>
-                                <div class="input-group-append">
+                            </div>
+
+                            <div class="input-group-append">
                                 <span class="input-group-text">
                                         <a href="http://data.ordnancesurvey.co.uk/doc/{{ $place->os_id }}.json"
-                                           target="_blank"
-                                           class="badge badge-pill">json</a>
+                                           target="_blank">json</a>
                                 </span>
-                                </div>
-                            @endif
+                            </div>
                         </div>
-                        @if($place->wikidata_os_id && $place->wikidata_os_id !== $place->os_id)
-                            <ul class="suggestions suggestions-os-id">
-                                <li>
-                                    @lang('places.wikidata'): {{ $place->wikidata_os_id }}
-                                    <span class="use" data-os_id="{{ $place->wikidata_os_id }}"><i
-                                            class="fas fa-upload"></i></span>
-                                    <a href="http://data.ordnancesurvey.co.uk/doc/{{ $place->wikidata_os_id }}"
-                                       target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                </li>
-                            </ul>
-                        @endif
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 font-weight-bold pt-2">
-                        @lang('places.ons_id')
-                    </div>
-                    <div class="col-md-8 pt-2">
-                        <div class="input-group input-group-sm mb-2">
+                    <label for="ons-id" class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.ons_id')
+                        <a href="{{ route('admin.imports.places.ons.index', ['name' => $place->name]) }}"
+                           target="_blank"><i class="fas fa-search ml-2"></i></a>
+                    </label>
+                    <div class="col-md-8">
+                        <div class="input-group input-group-sm">
                             <div class="input-group-prepend">
-                                <span
-                                    class="input-group-text prepend">{!! Form::customCheckbox('ons_id_null', __('moderate.set_to_null'), 1, !$place->ons_id) !!}</span>
+                            <span class="input-group-text prepend">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox"
+                                           class="custom-control-input"
+                                           id="ons-id-null"
+                                           name="ons_id_null"
+                                           @if(!$place->ons_id) checked="checked" @endif
+                                           value="1">
+                                    <label class="custom-control-label"
+                                           for="ons-id-null">@lang('placeshub.set_to_null')</label>
+                                </div>
+                            </span>
                             </div>
-                            {!! Form::text('ons_id', $place->ons_id, ['id' => 'ons_id', 'class' => 'form-control form-control-sm']) !!}
-                            @if($place->ons_id)
-                                <div class="input-group-append">
+                            <input name="name"
+                                   type="text"
+                                   class="form-control form-control-sm"
+                                   id="ons-id"
+                                   max="191"
+                                   value="{{ $place->ons_id }}">
+
+                            <div class="input-group-append">
                                 <span class="input-group-text">
-                                        <a href="http://statistics.data.gov.uk/doc/statistical-geography/{{ $place->ons_id }}"
+                                        <a href="http://data.ordnancesurvey.co.uk/doc/{{ $place->ons_id }}"
                                            target="_blank"><i class="fas fa-external-link-alt"></i></a>
                                 </span>
-                                </div>
-                                <div class="input-group-append">
+                            </div>
+
+                            <div class="input-group-append">
                                 <span class="input-group-text">
                                         <a href="http://statistics.data.gov.uk/boundaries/{{ $place->ons_id }}.json"
-                                           target="_blank"
-                                           class="badge badge-pill">json</a>
+                                           target="_blank">json</a>
                                 </span>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 font-weight-bold pt-2">
-                        @lang('places.ipn_id')
-                    </div>
-                    <div class="col-md-8 pt-2">
-                        <div class="input-group input-group-sm mb-2">
-                            <div class="input-group-prepend">
-                                <span
-                                    class="input-group-text prepend">{!! Form::customCheckbox('ipn_id_null', __('moderate.set_to_null'), 1, !$place->ipn_id) !!}</span>
                             </div>
-                            {!! Form::text('ipn_id', $place->ipn_id, ['id' => 'ipn_id', 'class' => 'form-control form-control-sm']) !!}
-                            @if($place->ipn_id)
-                                <div class="input-group-append">
-                                <span class="input-group-text">
-                                        <a href="https://www.wikidata.org/wiki/{{ $place->ipn_id }}"
-                                           target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                </span>
-                                </div>
-                            @endif
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 font-weight-bold pt-2">
-                        @lang('places.lat')
-                    </div>
-                    <div class="col-md-8 pt-2">
-                        {!! Form::number('lat', null, ['class' => 'form-control form-control-sm w-50', 'max' => 90, 'min' => -90, 'step' => 0.000001, 'id' => 'lat']) !!}
+                    <label for="ipn-id" class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.ipn_id')
+                    </label>
+                    <div class="col-md-8">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text prepend">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox"
+                                           class="custom-control-input"
+                                           id="ipn-id-null"
+                                           name="ipn_id_null"
+                                           @if(!$place->ipn_id) checked="checked" @endif
+                                           value="1">
+                                    <label class="custom-control-label"
+                                           for="ipn-id-null">@lang('placeshub.set_to_null')</label>
+                                </div>
+                            </span>
+                            </div>
+                            <input name="name"
+                                   type="text"
+                                   class="form-control form-control-sm"
+                                   id="ipn-id"
+                                   max="191"
+                                   value="{{ $place->ipn_id }}">
+                        </div>
                     </div>
                 </div>
+
+                @foreach(['geo_id', 'geo_id_2', 'geo_id_3', 'geo_id_4'] as $col)
+                    <div class="row">
+                        <label for="{{ str_replace('_', '-', $col) }}" class="col-md-4 font-weight-bold pt-1">
+                            @lang("placeshub.{$col}")
+                            <a href="{{ route('admin.imports.places.geo.index', ['name' => $place->name]) }}"
+                               target="_blank"><i class="fas fa-search ml-2"></i></a>
+                        </label>
+                        <div class="col-md-8">
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                            <span class="input-group-text prepend">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox"
+                                           class="custom-control-input"
+                                           id="{{ str_replace('_', '-', $col) }}-null"
+                                           name="{{ $col }}_null"
+                                           @if(!$place->$col) checked="checked" @endif
+                                           value="1">
+                                    <label class="custom-control-label"
+                                           for="{{ str_replace('_', '-', $col) }}-null">@lang('placeshub.set_to_null')</label>
+                                </div>
+                            </span>
+                                </div>
+                                <input name="name"
+                                       type="text"
+                                       class="form-control form-control-sm"
+                                       id="{{ str_replace('_', '-', $col) }}"
+                                       max="191"
+                                       value="{{ $place->$col }}">
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+
                 <div class="row">
-                    <div class="col-md-4 font-weight-bold pt-2">
-                        @lang('places.lon')
-                    </div>
-                    <div class="col-md-8 pt-2">
-                        {!! Form::number('lon', null, ['class' => 'form-control form-control-sm w-50', 'max' => 180, 'min' => -180, 'step' => 0.000001, 'id' => 'lon']) !!}
+                    <label for="lat" class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.lat')
+                    </label>
+                    <div class="col-md-8">
+                        <input name="lat"
+                               type="number"
+                               class="form-control form-control-sm w-50"
+                               max="90"
+                               min="-90"
+                               step="0.000001"
+                               id="lat"
+                               value="{!! $place->lat !!}">
                     </div>
                 </div>
+
                 <div class="row">
-                    <div class="offset-4 pl-3 pt-2">
-                        <button class="btn btn-primary" type="submit">@lang('places.update')</button>
+                    <label for="lon" class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.lon')
+                    </label>
+                    <div class="col-md-8">
+                        <input name="lon"
+                               type="number"
+                               class="form-control form-control-sm w-50"
+                               max="90"
+                               min="-90"
+                               step="0.000001"
+                               id="lon"
+                               value="{!! $place->lon !!}">
                     </div>
                 </div>
-            {!! Form::close() !!}
+
+                <div class="row">
+                    <div class="col p-2 text-center">
+                        <button type="submit"
+                                class="btn btn-primary">@lang('placeshub.update')</button>
+                    </div>
+                </div>
+
+
+            </form>
+
+
         </div>
         <div class="col-lg">
             @if($place->lat)
@@ -394,31 +408,5 @@
                 }
             })
         });
-
-
-        $(".suggestions-wikipedia-title li span.use").on("click", function () {
-            $("#wikipedia_title").val($(this).data("wikipedia_title"))
-        });
-        $(".suggestions-wikidata-id li span.use").on("click", function () {
-            $("#wikidata_id").val($(this).data("wikidata_id"))
-        });
-        $(".suggestions-geonames_id li span.use").on("click", function () {
-            $("#geonames_id").val($(this).data("geonames_id"))
-        });
-        $(".suggestions-geonames_id_2 li span.use").on("click", function () {
-            $("#geonames_id_2").val($(this).data("geonames_id"))
-        });
-        $(".suggestions-geonames_id_3 li span.use").on("click", function () {
-            $("#geonames_id_3").val($(this).data("geonames_id"))
-        });
-        $(".suggestions-geonames_id_4 li span.use").on("click", function () {
-            $("#geonames_id_4").val($(this).data("geonames_id"))
-        });
-        $(".suggestions-os-id li span.use").on("click", function () {
-            $("#os_id").val($(this).data("os_id"))
-        });
-        $(".suggestions-osm-id li span.use").on("click", function () {
-            $("#osm_id").val($(this).data("osm_id"))
-        })
     </script>
 @endsection

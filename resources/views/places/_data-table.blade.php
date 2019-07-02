@@ -1,16 +1,20 @@
 <div class="row py-4">
     <div class="col">
 
-        <h3>@lang("places.{$type}_plural") @hasrole('mod') <a href="{{ route('places.create', [$place, $type]) }}">@lang('places.add_type', ['type' => $type])</a> @endhasrole</h3>
+        <h3 class="d-inline-block">@lang("placeshub.{$type}_plural")</h3>
+        @hasrole('mod')
+        <a href="{{ route('places.create', [$place, $type]) }}"
+           class="btn btn-primary btn-sm mb-3">@lang('placeshub.add_type', ['type' => __("placeshub.$type")])</a>
+        @endhasrole
 
         <table id="list_{!! $type !!}" class="table table-striped table-bordered table-hover w-100">
             <thead class="thead-dark">
             <tr>
                 <th>@lang('placeshub.name')</th>
                 <th>@lang('placeshub.approved')</th>
-                <th>@lang('placeshub.wikipedia_abbr')</th>
+                <th>@lang('placeshub.wiki_abbr')</th>
                 <th>@lang('placeshub.wikidata')</th>
-                <th>@lang('placeshub.geonames_abbr')</th>
+                <th>@lang('placeshub.geo_abbr')</th>
                 <th>@lang('placeshub.os_abbr')</th>
                 <th>@lang('placeshub.ons_abbr')</th>
                 <th>@lang('placeshub.osm_abbr')</th>

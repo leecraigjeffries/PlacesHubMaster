@@ -31,10 +31,9 @@
         <form name="search" id="search" action="{{ route('places.index') }}" method="GET" class="form-inline">
             <input class="form-control"
                    type="text"
-                   placeholder="@lang('places.search')&hellip;"
+                   placeholder="@lang('placeshub.search')&hellip;"
                    name="name"
-                   autocomplete="off"
-            >
+                   autocomplete="off">
             <button type="submit"><i class="fas fa-search"></i></button>
             <div id="results"></div>
         </form>

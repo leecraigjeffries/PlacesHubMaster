@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col mb-3">
-        <h3 class="mt-3 mb-0">@lang('places.siblings')</h3>
+        <h3 class="mt-3 mb-0">@lang('placeshub.siblings')</h3>
         <div class="siblings">
             @if(count($siblings))
                 <ul class="p-0">

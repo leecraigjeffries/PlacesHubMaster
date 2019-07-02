@@ -37,12 +37,6 @@
          */
         public $timestamps = false;
 
-        /**
-         * @var bool
-         */
-        public $incrementing = false;
-
-
         protected static $types = [
             'country',
             'macro_region',
@@ -135,7 +129,7 @@
         }
 
         /**
-         * Associated Types (using "type")
+         * Get types.
          *
          * @param bool $withId
          *
@@ -188,7 +182,7 @@
          * @param bool $withId
          * @return array
          */
-        private static function getTypesWithoutLastElement(bool $withId = false): array
+        public static function getTypesWithoutLastElement(bool $withId = false): array
         {
             $types = static::getTypes($withId);
 
@@ -200,10 +194,10 @@
         /**
          * @return mixed
          */
-        public function siblings()
+        public function getSiblings()
         {
-            $query = $this->where('id', '!=', $this->id)
-                ->where('type', $this->type);
+            $query = $this->where('id', '<>', $this->id)
+                ->whereType($this->type);
 
             foreach (self::getTypesWithoutLastElement(true) as $col) {
                 $query = $query->where($col, $this->{$col});
@@ -217,7 +211,7 @@
          *
          * @return mixed
          */
-        public function next()
+        public function getNext()
         {
             $query = $this->where('id', '<>', $this->id)
                 ->where('type', $this->type)
@@ -235,7 +229,7 @@
          *
          * @return mixed
          */
-        public function previous()
+        public function getPrevious()
         {
             $query = $this->where('id', '<>', $this->id)
                 ->where('type', $this->type)
@@ -267,7 +261,7 @@
         public function juniorTypes(bool $includeThis = false): array
         {
             return array_slice(
-                static::getTypesWithoutLastElement(),
+                static::getTypes(),
                 array_search($this->type, self::getTypes(), true) + ($includeThis === false ? 1 : 0)
             );
         }
@@ -279,7 +273,7 @@
         public function seniorColumns(bool $includeThis = false): array
         {
             return array_slice(
-                static::getTypesWithoutLastElement(true),
+                static::getTypes(true),
                 0,
                 array_search($this->type, static::getTypes(), true) + ($includeThis === false ? 0 : 1)
             );

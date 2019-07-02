@@ -1,5 +1,6 @@
 <?php
 
+    use App\Models\Place;
     use Illuminate\Support\Facades\Schema;
     use Illuminate\Database\Schema\Blueprint;
     use Illuminate\Database\Migrations\Migration;
@@ -16,29 +17,20 @@
             Schema::create('places', static function (Blueprint $table) {
                 $table->increments('id');
 
-                foreach ([
-                             'country',
-                             'macro_region',
-                             'region',
-                             'macro_county',
-                             'county',
-                             'district',
-                             'local_admin',
-                             'locality'
-                         ] as $type) {
-                    $table->integer("{$type}_id")->unsigned()->nullable()->index();
+                foreach (Place::getTypesWithoutLastElement(true) as $column) {
+                    $table->integer($column)->unsigned()->nullable()->index();
                 }
 
                 $table->string('type', 12)->collation('ascii_bin');
                 $table->string('type_2', 12)->collation('ascii_bin')->nullable();
                 $table->string('name')->collation('utf8mb4_unicode_ci');
                 $table->string('official_name')->collation('utf8mb4_unicode_ci')->nullable();
-                $table->string('wikipedia_title')->collation('utf8mb4_bin')->nullable();
+                $table->string('wiki_title')->collation('utf8mb4_bin')->nullable();
                 $table->string('wikidata_id')->collation('ascii_bin')->nullable();
-                $table->integer('geonames_id')->unsigned()->nullable();
-                $table->integer('geonames_id_2')->unsigned()->nullable();
-                $table->integer('geonames_id_3')->unsigned()->nullable();
-                $table->integer('geonames_id_4')->unsigned()->nullable();
+                $table->integer('geo_id')->unsigned()->nullable();
+                $table->integer('geo_id_2')->unsigned()->nullable();
+                $table->integer('geo_id_3')->unsigned()->nullable();
+                $table->integer('geo_id_4')->unsigned()->nullable();
                 $table->bigInteger('osm_id')->unsigned()->nullable();
                 $table->string('os_id', 23)->collation('utf8mb4_bin')->nullable();
                 $table->char('ons_id', 9)->collation('ascii_bin')->nullable();

@@ -2,7 +2,7 @@
 
     namespace App\Repositories;
 
-    use App\Http\Requests\Api\SearchRequest;
+    use App\Http\Requests\Api\ShowRequest;
     use App\Http\Requests\Places\IndexRequest;
     use App\Models\Place;
     use Illuminate\Contracts\Pagination\LengthAwarePaginator;
