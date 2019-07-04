@@ -24,7 +24,7 @@
         }
 
         $trail->push($place->name, route('places.show', $place));
-        $trail->push(__('moderate.summary'));
+        $trail->push(__('placeshub.summary'));
     });
 
     Breadcrumbs::for('places.create', static function ($trail, $place, $type) {

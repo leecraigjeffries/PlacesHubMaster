@@ -6,10 +6,11 @@
     use Cviebrock\EloquentSluggable\Sluggable;
     use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
     use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\SoftDeletes;
 
     class Place extends Model
     {
-        use SpatialTrait, Sluggable, DefinesRelationships;
+        use SpatialTrait, Sluggable, DefinesRelationships, SoftDeletes;
 
         /**
          * @var array
@@ -17,7 +18,6 @@
         protected $casts = [
             'lat' => 'float',
             'lon' => 'float',
-            'id' => 'string'
         ];
 
         /**

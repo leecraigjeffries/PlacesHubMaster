@@ -147,7 +147,8 @@
                     'as' => 'create',
                     'where' => [
                         'type' => implode('|', Place::getTypes())
-                    ]
+                    ],
+                    'middleware' => 'role:mod'
                 ]
             );
             Route::post('places/{place}/create/{type}', [

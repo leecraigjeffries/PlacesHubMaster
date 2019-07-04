@@ -20,9 +20,9 @@
             ]);
 
             Route::get('extractor/wikipedia', [
-                'uses' => 'ExtractorController@wikipediaTitles',
+                'uses' => 'Extractors\WikiController@infobox',
                 'as' => 'extractor.wikipedia-titles',
-                'middleware' => 'auth',
+//                'middleware' => ['auth:api', 'role:mod'],
             ]);
 
             Route::get('admin/imports/places/geo/{geoPlace}/{placesHubGeoType}', [

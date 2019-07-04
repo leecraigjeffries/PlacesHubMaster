@@ -113,6 +113,7 @@
         'update' => 'Update',
         'wikipedia_extractor' => 'Wikipedia Extractor',
         'title' => 'Title',
+        'back' => 'Back',
 
         'cannot_contain_wiki' => 'Cannot contain # < > [ ] |',
         'divided_by_pipe' => 'Separate keys with |',
@@ -127,6 +128,9 @@
         'query' => 'Query',
         'template' => 'Template',
         'star_split' => 'Star split',
+        'add_row' => 'Add row',
+        'wanted_keys' => 'Wanted keys',
+        'category' => 'Category',
 
         /*
          * Places

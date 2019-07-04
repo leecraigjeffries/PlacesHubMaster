@@ -9,7 +9,7 @@
 @endsection
 
 @section('heading')
-    @lang('moderate.create_type', ['type' => __("places.{$type}")])
+    @lang('placeshub.create_type', ['type' => __("placeshub.{$type}")])
 @endsection
 
 @section('admin.content')
@@ -26,7 +26,8 @@
                     <div class="col">
                         <input type="text" name="title" id="title" class="form-control"
                                placeholder="e.g. United States topic">
-                        <small id="emailHelp" class="form-text text-muted">@lang('placeshub.cannot_contain_wiki')</small>
+                        <small id="emailHelp"
+                               class="form-text text-muted">@lang('placeshub.cannot_contain_wiki')</small>
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -73,7 +74,7 @@
                     class="fas fa-arrow-down"></i> @lang('placeshub.send_to_list')</button>
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="name-only" name="name_only">
-                <label class="custom-control-label" for="customCheck1">@lang('placeshub.name_only')</label>
+                <label class="custom-control-label" for="name-only">@lang('placeshub.name_only')</label>
             </div>
         </div>
     </div>
@@ -93,7 +94,7 @@
             </div>
         </div>
         <div id="pl-rows">
-            @if(old('title') or old('name'))
+            @if(old('title') || old('name'))
                 @foreach(old('title') as $key => $title)
                     @include('places._create-row')
                 @endforeach
@@ -103,7 +104,8 @@
         </div>
         <div class="row">
             <div class="col">
-                <button class="btn-btn-primary" id="pl-add-row"><i class="fas fa-plus"></i> @lang('placeshub.add_row')</button>
+                <button class="btn btn-primary" id="pl-add-row"><i class="fas fa-plus"></i> @lang('placeshub.add_row')
+                </button>
             </div>
         </div>
         <div class="text-center">
@@ -117,7 +119,7 @@
     <script id="pl-add-row-template" type="text/x-jsrender">
         <div class="row mb-3 pl-add-row">
             <div class="col-5">
-                <input type="text" name="title[]" placeholder="@lang('places.title')" @unlessrole('mod') required="required" @endunlessrole value="@{{:title}}" class="form-control">
+                <input type="text" name="title[]" placeholder="@lang('places.title')" value="@{{:title}}" class="form-control">
             </div>
             <div class="col-5">
                 <input type="text" name="name[]" placeholder="@lang('places.name')" required="required" value="@{{:name}}" class="form-control">
@@ -127,6 +129,7 @@
             </div>
         </div>
     </div>
+
 
 
     </script>

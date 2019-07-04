@@ -2,9 +2,11 @@
 
     namespace App\Http\Controllers\Places;
 
-    use App\Http\Requests\Places\PlaceStoreRequest;
+    use App\Http\Requests\Places\StoreRequest;
     use App\Models\Place;
+    use App\Services\Places\PlaceService;
     use Illuminate\Contracts\View\View;
+    use Illuminate\Support\Arr;
 
     class PlacesController
     {
@@ -35,9 +37,9 @@
             return view('places.create', compact('place', 'type'));
         }
 
-        public function store(PlaceStoreRequest $request, Place $place, $type)
+        public function store(StoreRequest $request, Place $place, string $type, PlaceService $placeService): View
         {
-            $entries = $this->service->store($place, $type, $request);
+            $entries = $placeService->store($place, $type, $request);
 
             return view('places.store', compact('entries', 'place'));
         }

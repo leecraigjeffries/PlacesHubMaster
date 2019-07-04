@@ -4,10 +4,14 @@
       <w>admd</w>
       <w>buasd</w>
       <w>coord</w>
+      <w>csrf</w>
       <w>ctylt</w>
       <w>debugbar</w>
+      <w>endisset</w>
       <w>geonames</w>
+      <w>infobox</w>
       <w>lonb</w>
+      <w>navbar</w>
       <w>placeshub</w>
       <w>sluggable</w>
       <w>strtoupper</w>
