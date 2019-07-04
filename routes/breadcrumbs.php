@@ -14,6 +14,30 @@
         $trail->push($place->name);
     });
 
+    Breadcrumbs::for('places.store', static function ($trail, $place) {
+        $trail->parent('home');
+
+        foreach ($place->getTypes() as $type) {
+            if ($place->{$type . '_id'}) {
+                $trail->push($place->{$type}->name, route('places.show', $place->{$type}));
+            }
+        }
+
+        $trail->push($place->name, route('places.show', $place));
+        $trail->push(__('moderate.summary'));
+    });
+
+    Breadcrumbs::for('places.create', static function ($trail, $place, $type) {
+        foreach ($place->seniorTypes() as $seniorType) {
+            if ($place->{$seniorType . '_id'}) {
+                $trail->push($place->{$seniorType}->name, route('places.show', $place->{$seniorType}));
+            }
+        }
+
+        $trail->push($place->name, route('places.show', $place));
+        $trail->push(__('placeshub.create_type', ['type' => __("placeshub.{$type}")]));
+    });
+
     /**
      * Admin
      */

@@ -270,6 +270,19 @@
          * @param bool $includeThis
          * @return array
          */
+        public function seniorTypes(bool $includeThis = false): array
+        {
+            return array_slice(
+                static::getTypes(),
+                0,
+                array_search($this->type, static::getTypes(), true) + ($includeThis === false ? 0 : 1)
+            );
+        }
+
+        /**
+         * @param bool $includeThis
+         * @return array
+         */
         public function seniorColumns(bool $includeThis = false): array
         {
             return array_slice(

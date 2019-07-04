@@ -1,4 +1,4 @@
-@extends('mod.layout')
+@extends('admin.layout')
 
 @section('title')
     {!! Breadcrumbs::view('app._title', 'places.create', $place, $type) !!}
@@ -12,21 +12,21 @@
     @lang('moderate.create_type', ['type' => __("places.{$type}")])
 @endsection
 
-@section('mod.content')
+@section('admin.content')
 
     <a href="{{ route('places.show', $place) }}">Back</a>
 
-    <h2 class="mt-3">@lang('moderate.wikipedia_extractor')</h2>
+    <h2 class="mt-3">@lang('placeshub.wikipedia_extractor')</h2>
 
     <div class="row">
         <div class="col-md-6">
             <form action="{{ route('api.extractor.wikipedia-titles') }}" name="wikipedia_query" method="GET">
                 <div class="row">
-                    <label for="title" class="font-weight-bold col-5 col-form-label">@lang('places.title')</label>
+                    <label for="title" class="font-weight-bold col-5 col-form-label">@lang('placeshub.title')</label>
                     <div class="col">
                         <input type="text" name="title" id="title" class="form-control"
                                placeholder="e.g. United States topic">
-                        <small id="emailHelp" class="form-text text-muted">@lang('moderate.cannot_contain_wiki')</small>
+                        <small id="emailHelp" class="form-text text-muted">@lang('placeshub.cannot_contain_wiki')</small>
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -34,21 +34,21 @@
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="type1" name="type" class="custom-control-input" checked="checked"
                                    value="template">
-                            <label class="custom-control-label" for="type1">@lang('moderate.template')</label>
+                            <label class="custom-control-label" for="type1">@lang('placeshub.template')</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="type2" name="type" class="custom-control-input" value="category">
-                            <label class="custom-control-label" for="type2">@lang('moderate.category')</label>
+                            <label class="custom-control-label" for="type2">@lang('placeshub.category')</label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row mt-3">
                     <label for="wanted_keys"
-                           class="font-weight-bold col-5 col-form-label">@lang('moderate.wanted_keys')</label>
+                           class="font-weight-bold col-5 col-form-label">@lang('placeshub.wanted_keys')</label>
                     <div class="col">
                         <input type="text" name="wanted_keys" id="wanted_keys" class="form-control"
                                placeholder="e.g. list1">
-                        <small id="emailHelp" class="form-text text-muted">@lang('moderate.divided_by_pipe')</small>
+                        <small id="emailHelp" class="form-text text-muted">@lang('placeshub.divided_by_pipe')</small>
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -56,13 +56,13 @@
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="star_split" name="star_split"
                                    value="true">
-                            <label for="star_split" class="custom-control-label">@lang('moderate.star_split')</label>
+                            <label for="star_split" class="custom-control-label">@lang('placeshub.star_split')</label>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col text-center">
-                        <button type="submit" class="btn btn-primary">@lang('moderate.query')</button>
+                        <button type="submit" class="btn btn-primary">@lang('placeshub.query')</button>
                     </div>
                 </div>
             </form>
@@ -70,10 +70,10 @@
         <div class="col-md-6">
             <textarea name="pl-links" id="pl-links" class="form-control" rows="12"></textarea>
             <button class="btn btn-primary mt-3" id="pl-send-to-list"><i
-                    class="fas fa-arrow-down"></i> @lang('moderate.send_to_list')</button>
+                    class="fas fa-arrow-down"></i> @lang('placeshub.send_to_list')</button>
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="name-only" name="name_only">
-                <label class="custom-control-label" for="customCheck1">Name Only</label>
+                <label class="custom-control-label" for="customCheck1">@lang('placeshub.name_only')</label>
             </div>
         </div>
     </div>
@@ -84,10 +84,10 @@
         @csrf
         <div class="row">
             <div class="col text-center font-weight-bold">
-                @lang('places.title')
+                @lang('placeshub.wiki_title')
             </div>
             <div class="col text-center font-weight-bold">
-                @lang('places.name')
+                @lang('placeshub.name')
             </div>
             <div class="col">
             </div>
@@ -103,7 +103,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <button class="btn-btn-primary" id="pl-add-row"><i class="fas fa-plus"></i> @lang('moderate.add_row')</button>
+                <button class="btn-btn-primary" id="pl-add-row"><i class="fas fa-plus"></i> @lang('placeshub.add_row')</button>
             </div>
         </div>
         <div class="text-center">
@@ -139,7 +139,6 @@
     <script>
         function addRow(name, title) {
             $("#pl-rows").append($.templates("#pl-add-row-template").render({"name": name, "title": title}));
-            $("#pl-add-row").hide()
         }
 
         $(document).on("click", ".pl-delete-row", function () {

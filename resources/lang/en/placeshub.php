@@ -111,6 +111,22 @@
         'lat' => 'Lat',
         'lon' => 'Lon',
         'update' => 'Update',
+        'wikipedia_extractor' => 'Wikipedia Extractor',
+        'title' => 'Title',
+
+        'cannot_contain_wiki' => 'Cannot contain # < > [ ] |',
+        'divided_by_pipe' => 'Separate keys with |',
+        'create_type' => 'Create :type',
+        'summary' => 'Summary',
+        'duplicates' => 'Duplicates',
+        'fails' => 'Failures',
+        'successes' => 'Successes',
+        'place_names' => 'Place Names&hellip;',
+        'name_only' => 'Name only',
+        'send_to_list' => 'Send to list',
+        'query' => 'Query',
+        'template' => 'Template',
+        'star_split' => 'Star split',
 
         /*
          * Places

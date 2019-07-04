@@ -15,9 +15,15 @@
                 'type' => 'macro_region',
                 'slug' => 'england'
             ]);
-            
+
             $response = $this->get('places/england');
 
             $response->assertStatus(200);
+        }
+
+        /** @test */
+        public function a_place_can_be_created(): void
+        {
+
         }
     }

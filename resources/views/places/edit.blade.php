@@ -250,7 +250,8 @@
                                    type="text"
                                    class="form-control form-control-sm"
                                    id="ons-id"
-                                   max="191"
+                                   max="9"
+                                   pattern="^(E|W|S)?[0-9]*$"
                                    value="{{ $place->ons_id }}">
 
                             <div class="input-group-append">
@@ -294,7 +295,8 @@
                                    type="text"
                                    class="form-control form-control-sm"
                                    id="ipn-id"
-                                   max="191"
+                                   max="10"
+                                   pattern="^(IPN)?[0-9]*$"
                                    value="{{ $place->ipn_id }}">
                         </div>
                     </div>
