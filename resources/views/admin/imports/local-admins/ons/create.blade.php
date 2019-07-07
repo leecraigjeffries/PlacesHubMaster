@@ -1,15 +1,15 @@
 @extends('admin.layout')
 
 @section('title')
-    {!! Breadcrumbs::view('app._title', 'admin.imports.places.ons.create') !!}
+    {!! Breadcrumbs::view('app._title', 'admin.imports.local-admins.ons.create') !!}
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('admin.imports.places.ons.create') !!}
+    {!! Breadcrumbs::render('admin.imports.local-admins.ons.create') !!}
 @endsection
 
 @section('heading')
-    @lang('admin.import_ons_places')
+    @lang('placeshub.import_ons_local_admins')
 @endsection
 
 @section('admin.content')
@@ -31,7 +31,7 @@
 
         </div>
         <div class="col">
-            <form name="store" method="POST" action="{{ route('admin.imports.places.ons.store') }}">
+            <form name="store" method="POST" action="{{ route('admin.imports.local-admins.ons.store') }}">
                 @csrf
                 <button type="submit" class="btn btn-primary">@lang('placeshub.import')</button>
             </form>

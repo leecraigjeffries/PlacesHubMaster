@@ -1,7 +1,9 @@
-<?php
+<?php /** @noinspection AdditionOperationOnArraysInspection */
 
     namespace App\Services\Places;
 
+    use App\Http\Requests\Places\StoreRequest;
+    use App\Http\Requests\Places\UpdateRequest;
     use App\Models\Place;
     use App\Services\Extractors\Extractor;
     use Arr;
@@ -53,21 +55,22 @@
         /**
          * @param Place $place
          * @param string $type
-         * @param $request
+         * @param StoreRequest $request
          *
          * @return stdClass|null
+         * @throws \GuzzleHttp\Exception\GuzzleException
          */
-        public function store(Place $place, string $type, $request): ?stdClass
+        public function store(Place $place, string $type, StoreRequest $request): ?stdClass
         {
             foreach ($request->name as $key => $name) {
 
                 $title = $request->title[$key];
-                $info = [];
+                $wiki = [];
 
                 if ($title) {
-                    $info = $this->extractor->wiki()->getInfo($title);
+                    $wiki = $this->extractor->wiki()->getInfo($title);
 
-                    if (!$info) {
+                    if ($wiki['wiki_missing']) {
                         $this->fails[] = $this->place->make(['name' => $name, 'title' => $title]);
                         continue;
                     }
@@ -82,10 +85,11 @@
                     [
                         'name' => $name,
                         'wiki_title' => $title,
+                        'wikidata_id' => $wiki['wiki_wikidata_id'] ?? null,
                         'type' => $type,
-                        'lat' => $info['wiki_lat'] ?? null,
-                        'lon' => $info['wiki_lon'] ?? null,
-                        $place->type . '_id' => $place->id,
+                        'lat' => $wiki['wiki_lat'] ?? null,
+                        'lon' => $wiki['wiki_lon'] ?? null,
+                        $place->type_column => $place->id,
                     ],
                     Arr::only(
                         $place->toArray(),
@@ -121,6 +125,38 @@
                         ->orWhere('official_name', $name);
                 })
                 ->first();
+        }
+
+        /**
+         * @param Place $place
+         * @param UpdateRequest $request
+         * @return Place
+         */
+        public function update(Place $place, UpdateRequest $request): Place
+        {
+            $update_data = $request->only(['name', 'official_name']);
+
+            $update_data = $this->extractor->getInfoFromRequest($request) + $update_data;
+
+            $place->update(Arr::only($update_data, [
+                'wikidata_id',
+                'wiki_title',
+                'ons_id',
+                'os_id',
+                'ipn_id',
+                'name',
+                'official_name',
+                'lat',
+                'lon',
+                'geo_id',
+                'geo_id_2',
+                'geo_id_3',
+                'geo_id_4',
+                'osm_id',
+                'osm_network_type'
+            ]));
+
+            return $place;
         }
 
         /**

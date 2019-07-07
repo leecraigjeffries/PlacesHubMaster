@@ -1,11 +1,11 @@
 @extends('admin.layout')
 
 @section('title')
-    {!! Breadcrumbs::view('app._title', 'admin.imports.places.ons.store') !!}
+    {!! Breadcrumbs::view('app._title', 'admin.imports.local-admins.ons.store') !!}
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('admin.imports.places.ons.store') !!}
+    {!! Breadcrumbs::render('admin.imports.local-admins.ons.store') !!}
 @endsection
 
 @section('heading')

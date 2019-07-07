@@ -2,7 +2,6 @@
 
     namespace App\Rules;
 
-    use App\Contracts\Extractors\ExtractorContract;
     use App\Services\Extractors\WikiExtractor;
     use Illuminate\Contracts\Validation\Rule;
 
@@ -17,9 +16,10 @@
          */
         public function passes($attribute, $value): bool
         {
+            return false;
             $info = app(WikiExtractor::class)->getInfo($value);
-
-            return !$info['wiki_missing'];
+            dd(!$info['wiki_redirect']);
+            return (!$info['wiki_missing'] || !$info['wiki_redirect']);
         }
 
         /**

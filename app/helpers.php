@@ -82,7 +82,7 @@
 
         $name = str_replace(['.', '!', '-', ' '], ['', '', '%', '%'], $name);
 
-        return "%{$name}%";
+        return "{$name}%";
     }
 
     /**

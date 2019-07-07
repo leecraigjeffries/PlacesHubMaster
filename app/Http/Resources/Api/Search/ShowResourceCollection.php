@@ -21,7 +21,7 @@
 
                 $item->link = route('places.show', $item);
 
-                foreach (Place::getTypesWithoutLastElement() as $type) {
+                foreach (Place::typesWithoutLastElement() as $type) {
                     if ($item->$type) {
                         $item->$type->link = route('places.show', $item->$type);
                         unset($item->$type->type, $item->$type->slug, $item->$type->id);
@@ -38,7 +38,7 @@
                     $item->local_admin
                 ];
 
-                foreach (Place::getTypesWithoutLastElement() as $type) {
+                foreach (Place::typesWithoutLastElement() as $type) {
                     unset($item->$type, $item->{"{$type}_id"});
                 }
 

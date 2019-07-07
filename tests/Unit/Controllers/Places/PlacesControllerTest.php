@@ -20,10 +20,4 @@
 
             $response->assertStatus(200);
         }
-
-        /** @test */
-        public function a_place_can_be_created(): void
-        {
-
-        }
     }

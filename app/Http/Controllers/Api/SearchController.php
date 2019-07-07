@@ -18,9 +18,9 @@
 
         public function show(ShowRequest $request): ShowResourceCollection
         {
-            $types = $this->place::getTypesWithoutLastElement();
+            $types = $this->place::typesWithoutLastElement();
 
-            $results = $this->place->select(array_merge(['id', 'name', 'type', 'slug'], $this->place::getTypesWithoutLastElement(true)))
+            $results = $this->place->select(array_merge(['id', 'name', 'type', 'slug'], $this->place::typesWithoutLastElement(true)))
                 ->where('name', 'like', prepare_name_for_search($request->input('name')))
                 ->orWhere('official_name', 'like', prepare_name_for_search($request->input('name')))
                 ->orderBy('name')

@@ -58,6 +58,7 @@
         'os_id' => 'OS ID',
         'bua_plural' => 'Built-up Areas',
         'buasd_plural' => 'Built-up Area Sub-divisions',
+        'compare_ons_local_admins' => 'Compare ONS Local Admins',
         'other_ipn_ids' => 'Other IPN IDs',
         'state_name' => 'State Name',
         'city_name' => 'City Name',
@@ -77,6 +78,7 @@
         'file_not_exists_title' => 'File Not Found',
         'file' => '&quot;:file&quot;',
         'import_osm_places' => 'Import OSM Data',
+        'import_ons_local_admins' => 'Import ONS Local Admins',
 
         'delete_reasons' => [
             'duplicate' => 'Duplicate',
@@ -97,6 +99,12 @@
         'wikidata_id' => 'Wikidata ID',
         'wiki_title' => 'Wiki Title',
         'geo_abbr' => 'Geo',
+        'pending' => 'Pending',
+        'osm_network_type' => 'OSM Network Type',
+        'delete_reason' => 'Delete Reason',
+        'trash' => 'Trash',
+        'soft_delete' => 'Soft Delete',
+        'delete_reason_type' => 'Reason Type',
         'os_abbr' => 'OS',
         'ons_abbr' => 'ONS',
         'osm_abbr' => 'OSM',

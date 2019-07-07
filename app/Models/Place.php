@@ -123,7 +123,7 @@
          *
          * @return mixed
          */
-        public function getRatio()
+        public function ratio()
         {
             return self::$ratios[$this->type];
         }
@@ -135,7 +135,7 @@
          *
          * @return array
          */
-        public static function getTypes(bool $withId = false): array
+        public static function types(bool $withId = false): array
         {
             if ($withId === true) {
                 foreach (static::$types as $type) {
@@ -150,7 +150,7 @@
         /**
          * @return array
          */
-        public function getChildTypes(): array
+        public function childTypes(): array
         {
             return static::$childTypes[$this->type];
         }
@@ -158,7 +158,7 @@
         /**
          * @return array
          */
-        public function getParentTypes(): array
+        public function parentTypes(): array
         {
             foreach (static::$childTypes as $parent_type => $children) {
                 if (in_array($this->type, $children, true)) {
@@ -170,21 +170,35 @@
         }
 
         /**
+         * @return Place|null
+         */
+        public function parent(): ?Place
+        {
+            foreach ($this->seniorColumnsReversed() as $col) {
+                if ($this->$col) {
+                    return $this->find($this->$col);
+                }
+            }
+
+            return null;
+        }
+
+        /**
          * @param string $type
          * @return bool
          */
         public function isValidChildType(string $type): bool
         {
-            return in_array($type, $this->getChildTypes(), true);
+            return in_array($type, $this->childTypes(), true);
         }
 
         /**
          * @param bool $withId
          * @return array
          */
-        public static function getTypesWithoutLastElement(bool $withId = false): array
+        public static function typesWithoutLastElement(bool $withId = false): array
         {
-            $types = static::getTypes($withId);
+            $types = static::types($withId);
 
             array_pop($types);
 
@@ -194,12 +208,12 @@
         /**
          * @return mixed
          */
-        public function getSiblings()
+        public function siblings()
         {
             $query = $this->where('id', '<>', $this->id)
                 ->whereType($this->type);
 
-            foreach (self::getTypesWithoutLastElement(true) as $col) {
+            foreach (self::typesWithoutLastElement(true) as $col) {
                 $query = $query->where($col, $this->{$col});
             }
 
@@ -211,13 +225,13 @@
          *
          * @return mixed
          */
-        public function getNext()
+        public function next()
         {
             $query = $this->where('id', '<>', $this->id)
                 ->where('type', $this->type)
                 ->where('name', '>', $this->name);
 
-            foreach (self::getTypesWithoutLastElement(true) as $col) {
+            foreach (self::typesWithoutLastElement(true) as $col) {
                 $query = $query->where($col, $this->{$col});
             }
 
@@ -229,13 +243,13 @@
          *
          * @return mixed
          */
-        public function getPrevious()
+        public function previous()
         {
             $query = $this->where('id', '<>', $this->id)
                 ->where('type', $this->type)
                 ->where('name', '<', $this->name);
 
-            foreach (self::getTypesWithoutLastElement(true) as $col) {
+            foreach (self::typesWithoutLastElement(true) as $col) {
                 $query = $query->where($col, $this->{$col});
             }
 
@@ -249,8 +263,8 @@
         public function juniorColumns(bool $includeThis = false): array
         {
             return array_slice(
-                static::getTypesWithoutLastElement(true),
-                array_search($this->type, self::getTypes(), true) + ($includeThis === false ? 1 : 0)
+                static::typesWithoutLastElement(true),
+                array_search($this->type, self::types(), true) + ($includeThis === false ? 1 : 0)
             );
         }
 
@@ -261,8 +275,8 @@
         public function juniorTypes(bool $includeThis = false): array
         {
             return array_slice(
-                static::getTypes(),
-                array_search($this->type, self::getTypes(), true) + ($includeThis === false ? 1 : 0)
+                static::types(),
+                array_search($this->type, self::types(), true) + ($includeThis === false ? 1 : 0)
             );
         }
 
@@ -273,9 +287,9 @@
         public function seniorTypes(bool $includeThis = false): array
         {
             return array_slice(
-                static::getTypes(),
+                static::types(),
                 0,
-                array_search($this->type, static::getTypes(), true) + ($includeThis === false ? 0 : 1)
+                array_search($this->type, static::types(), true) + ($includeThis === false ? 0 : 1)
             );
         }
 
@@ -286,9 +300,9 @@
         public function seniorColumns(bool $includeThis = false): array
         {
             return array_slice(
-                static::getTypes(true),
+                static::types(true),
                 0,
-                array_search($this->type, static::getTypes(), true) + ($includeThis === false ? 0 : 1)
+                array_search($this->type, static::types(), true) + ($includeThis === false ? 0 : 1)
             );
         }
 

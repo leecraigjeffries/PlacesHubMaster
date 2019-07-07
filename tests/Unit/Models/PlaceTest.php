@@ -23,7 +23,7 @@
         {
             $place = new Place(['type' => 'local_admin']);
 
-            $this->assertEqualsCanonicalizing($place->getChildTypes(), ['locality', 'hood']);
+            $this->assertEqualsCanonicalizing($place->childTypes(), ['locality', 'hood']);
         }
 
         /** @test */
@@ -47,9 +47,9 @@
                 'type' => 'macro_region'
             ]);
 
-            $this->assertCount(1, $firstSibling->getSiblings());
+            $this->assertCount(1, $firstSibling->siblings());
 
-            $this->assertEquals($firstSibling->getSiblings()->first()->name, $secondSibling->name);
+            $this->assertEquals($firstSibling->siblings()->first()->name, $secondSibling->name);
         }
 
         /** @test */

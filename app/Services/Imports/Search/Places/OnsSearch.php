@@ -153,12 +153,13 @@
         public function getAppends($override = []): array
         {
             $appends = $override + [
-                'order_by' => $this->getOrderBy(),
-                'order' => $this->getOrder(),
-                'ons_type' => $this->getInput('ons_type'),
-                'county_name' => $this->getInput('county_name'),
-                'district_name' => $this->getInput('district_name')
-            ];
+                    'order_by' => $this->getOrderBy(),
+                    'order' => $this->getOrder(),
+                    'ons_type' => $this->getInput('ons_type'),
+                    'county_name' => $this->getInput('county_name'),
+                    'district_name' => $this->getInput('district_name'),
+                    'name' => $this->getInput('name')
+                ];
 
             return $appends;
         }

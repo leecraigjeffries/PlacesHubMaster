@@ -1,8 +1,8 @@
-<div class="row">
-    <div class="col mb-3">
-        <h3 class="mt-3 mb-0">@lang('placeshub.siblings')</h3>
-        <div class="siblings">
-            @if(count($siblings))
+@if(count($siblings))
+    <div class="row">
+        <div class="col mb-3">
+            <h3 class="mt-3 mb-0">@lang('placeshub.siblings')</h3>
+            <div class="siblings">
                 <ul class="p-0">
                     @foreach($siblings as $sibling)
                         <li>
@@ -13,9 +13,7 @@
                         </li>
                     @endforeach
                 </ul>
-            @else
-                <em>@lang('places.none')</em>
-            @endif
+            </div>
         </div>
     </div>
-</div>
+@endif

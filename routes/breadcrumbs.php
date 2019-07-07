@@ -4,8 +4,11 @@
         $trail->push(__('placeshub.home'), route('home'));
     });
 
+    /**
+     * Places
+     */
     Breadcrumbs::for('places.show', static function ($trail, $place) {
-        foreach ($place::getTypes() as $type) {
+        foreach ($place::types() as $type) {
             if ($place->{$type . '_id'}) {
                 $trail->push($place->{$type}->name, route('places.show', $place->{$type}));
             }
@@ -17,7 +20,7 @@
     Breadcrumbs::for('places.store', static function ($trail, $place) {
         $trail->parent('home');
 
-        foreach ($place->getTypes() as $type) {
+        foreach ($place->types() as $type) {
             if ($place->{$type . '_id'}) {
                 $trail->push($place->{$type}->name, route('places.show', $place->{$type}));
             }
@@ -38,51 +41,71 @@
         $trail->push(__('placeshub.create_type', ['type' => __("placeshub.{$type}")]));
     });
 
+    Breadcrumbs::for('places.move-children.edit', static function ($trail, $place) {
+        $trail->push($place->name, route('places.show', $place));
+        $trail->push(__('placeshub.move_children'));
+    });
+
     /**
      * Admin
      */
     Breadcrumbs::for('admin.home', static function ($trail) {
-        $trail->push(__('admin.home'), route('admin.home'));
+        $trail->push(__('placeshub.home'), route('admin.home'));
     });
 
     Breadcrumbs::for('admin.imports.places.geo.create', static function ($trail) {
         $trail->parent('admin.home');
-        $trail->push(__('admin.import_geo_places'));
+        $trail->push(__('placeshub.import_geo_places'));
     });
 
     Breadcrumbs::for('admin.imports.places.geo.store', static function ($trail) {
         $trail->parent('admin.home');
-        $trail->push(__('admin.import_geo_places'));
+        $trail->push(__('placeshub.import_geo_places'));
     });
 
     Breadcrumbs::for('admin.imports.places.ons.create', static function ($trail) {
         $trail->parent('admin.home');
-        $trail->push(__('admin.import_ons_places'));
+        $trail->push(__('placeshub.import_ons_places'));
+    });
+
+    Breadcrumbs::for('admin.imports.local-admins.ons.create', static function ($trail) {
+        $trail->parent('admin.home');
+        $trail->push(__('placeshub.import_ons_local_admins'));
+    });
+
+    Breadcrumbs::for('admin.imports.local-admins.ons.compare', static function ($trail) {
+        $trail->parent('admin.home');
+        $trail->push(__('placeshub.compare_ons_local_admins'));
+    });
+
+    Breadcrumbs::for('admin.imports.local-admins.ons.store', static function ($trail) {
+        $trail->parent('admin.home');
+        $trail->push(__('placeshub.import_ons_local_admins'));
     });
 
     Breadcrumbs::for('admin.imports.places.ons.store', static function ($trail) {
         $trail->parent('admin.home');
-        $trail->push(__('admin.import_ons_places'));
+        $trail->push(__('placeshub.import_ons_places'));
     });
 
     Breadcrumbs::for('admin.imports.places.os.create', static function ($trail) {
         $trail->parent('admin.home');
-        $trail->push(__('admin.import_os_places'));
+        $trail->push(__('placeshub.import_os_places'));
     });
 
     Breadcrumbs::for('admin.imports.places.os.store', static function ($trail) {
         $trail->parent('admin.home');
-        $trail->push(__('admin.import_os_places'));
+        $trail->push(__('placeshub.import_os_places'));
     });
 
     Breadcrumbs::for('admin.imports.places.osm.create', static function ($trail) {
         $trail->parent('admin.home');
-        $trail->push(__('admin.import_osm_places'));
+        $trail->push(__('placeshub.import_osm_places'));
     });
 
     Breadcrumbs::for('admin.imports.places.osm.store', static function ($trail) {
         $trail->parent('admin.home');
-        $trail->push(__('admin.import_osm_places'));
+        $trail->push(__('placeshub.import_osm_places'));
     });
 
     /**

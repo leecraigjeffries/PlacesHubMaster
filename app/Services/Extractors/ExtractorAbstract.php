@@ -3,10 +3,17 @@
     namespace App\Services\Extractors;
 
     use Exception;
+    use GuzzleHttp\Client;
+    use GuzzleHttp\Exception\GuzzleException;
 
     abstract class ExtractorAbstract
     {
         protected $client;
+
+        public function __construct(Client $client)
+        {
+            $this->client = $client;
+        }
 
         /**
          * Try to get an XML response.
@@ -15,6 +22,7 @@
          * @param string $id
          *
          * @return array
+         * @throws GuzzleException
          */
         public function tryGetXmlResponse(string $uri_key, string $id = ''): array
         {
@@ -57,6 +65,7 @@
          * @param string $id
          *
          * @return array
+         * @throws GuzzleException
          */
         public function tryGetJsonResponse(string $uri_key, string $id = ''): array
         {
@@ -86,6 +95,7 @@
          * @param string $id
          *
          * @return mixed
+         * @throws GuzzleException
          */
         public function tryGetResponse(string $uri_key, string $id = '')
         {

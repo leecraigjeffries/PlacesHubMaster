@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col pb-3">
-        @foreach($place->getchildTypes() as $type)
+        @foreach($place->childTypes() as $type)
             <a class="btn btn-primary mr-2 btn-sm"
                href="{{ route('places.create', [$place, $type]) }}">@lang('placeshub.add_type', ['type' => __("placeshub.{$type}")])</a>
         @endforeach
@@ -23,7 +23,7 @@
                href="{{ route('places.move-children.edit', $place) }}">@lang('placeshub.move_children')
             </a>
             <a class="dropdown-item"
-               href="{{ route('places.change-type.edit', $place) }}">@lang('placeshub.change_type')
+               href="{{ route('places.type.edit', $place) }}">@lang('placeshub.change_type')
             </a>
 
             <div class="dropdown-divider"></div>

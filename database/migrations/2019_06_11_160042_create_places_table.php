@@ -17,7 +17,7 @@
             Schema::create('places', static function (Blueprint $table) {
                 $table->increments('id');
 
-                foreach (Place::getTypesWithoutLastElement(true) as $column) {
+                foreach (Place::typesWithoutLastElement(true) as $column) {
                     $table->integer($column)->unsigned()->nullable()->index();
                 }
 

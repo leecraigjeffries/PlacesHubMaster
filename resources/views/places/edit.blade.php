@@ -21,6 +21,12 @@
 
 @section('places.content')
 
+    <div class="row mb-3">
+        <div class="col">
+            <a href="{{ route('places.show', $place) }}">@lang('placeshub.back')</a>
+        </div>
+    </div>
+
     @include('places._moderate-menu')
 
     @include('places._next-previous')
@@ -52,7 +58,7 @@
                         @lang('placeshub.official_name')
                     </label>
                     <div class="col-md-8">
-                        <input name="name"
+                        <input name="official_name"
                                type="text"
                                class="form-control form-control-sm"
                                id="official-name"
@@ -83,19 +89,21 @@
                                 </div>
                             </span>
                             </div>
-                            <input name="name"
+                            <input name="wiki_title"
                                    type="text"
                                    class="form-control form-control-sm"
                                    id="wiki-title"
                                    max="191"
                                    value="{{ $place->wiki_title }}">
 
-                            <div class="input-group-append">
+                            @if($place->wiki_title)
+                                <div class="input-group-append">
                                 <span class="input-group-text">
                                         <a href="https://en.wikipedia.org/wiki/{{ $place->wiki_title }}"
                                            target="_blank"><i class="fas fa-external-link-alt"></i></a>
                                 </span>
-                            </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -122,19 +130,21 @@
                                 </div>
                             </span>
                             </div>
-                            <input name="name"
+                            <input name="wikidata_id"
                                    type="text"
                                    class="form-control form-control-sm"
                                    id="wikidata-id"
                                    max="191"
                                    value="{{ $place->wikidata_id }}">
 
-                            <div class="input-group-append">
+                            @if($place->wikidata_id)
+                                <div class="input-group-append">
                                 <span class="input-group-text">
                                         <a href="https://www.wikidata.org/wiki/{{ $place->wikidata_id }}"
                                            target="_blank"><i class="fas fa-external-link-alt"></i></a>
                                 </span>
-                            </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -161,19 +171,54 @@
                                 </div>
                             </span>
                             </div>
-                            <input name="name"
-                                   type="text"
+                            <input name="osm_id"
+                                   type="number"
                                    class="form-control form-control-sm"
                                    id="osm-id"
-                                   max="191"
                                    value="{{ $place->osm_id }}">
 
-                            <div class="input-group-append">
+                            @if($place->osm_id)
+                                <div class="input-group-append">
                                 <span class="input-group-text">
                                         <a href="https://www.openstreetmap.org/{{ $place->osm_network_type }}/{{ $place->osm_id }}"
                                            target="_blank"><i class="fas fa-external-link-alt"></i></a>
                                 </span>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label for="osm-network-type" class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.osm_network_type')
+                        <a href="{{ route('admin.imports.places.osm.index', ['name' => $place->name]) }}"
+                           target="_blank"><i class="fas fa-search ml-2"></i></a>
+                    </label>
+                    <div class="col-md-8">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text prepend">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox"
+                                           class="custom-control-input"
+                                           id="osm-network-type-null"
+                                           name="osm_network_type_null"
+                                           @if(!$place->osm_network_type) checked="checked" @endif
+                                           value="1">
+                                    <label class="custom-control-label"
+                                           for="osm-network-type-null">@lang('placeshub.set_to_null')</label>
+                                </div>
+                            </span>
                             </div>
+                            <!-- todo: change to select -->
+                            <input name="osm_network_type"
+                                   type="text"
+                                   class="form-control form-control-sm"
+                                   id="osm-network-type"
+                                   max="9"
+                                   pattern="^(node|relation|way)$"
+                                   value="{{ $place->osm_network_type }}">
                         </div>
                     </div>
                 </div>
@@ -200,26 +245,28 @@
                                 </div>
                             </span>
                             </div>
-                            <input name="name"
+                            <input name="os_id"
                                    type="text"
                                    class="form-control form-control-sm"
                                    id="os-id"
                                    max="191"
                                    value="{{ $place->os_id }}">
 
-                            <div class="input-group-append">
+                            @if($place->os_id)
+                                <div class="input-group-append">
                                 <span class="input-group-text">
                                         <a href="http://data.ordnancesurvey.co.uk/doc/{{ $place->os_id }}"
                                            target="_blank"><i class="fas fa-external-link-alt"></i></a>
                                 </span>
-                            </div>
+                                </div>
 
-                            <div class="input-group-append">
+                                <div class="input-group-append">
                                 <span class="input-group-text">
                                         <a href="http://data.ordnancesurvey.co.uk/doc/{{ $place->os_id }}.json"
                                            target="_blank">json</a>
                                 </span>
-                            </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -246,7 +293,7 @@
                                 </div>
                             </span>
                             </div>
-                            <input name="name"
+                            <input name="ons_id"
                                    type="text"
                                    class="form-control form-control-sm"
                                    id="ons-id"
@@ -254,19 +301,21 @@
                                    pattern="^(E|W|S)?[0-9]*$"
                                    value="{{ $place->ons_id }}">
 
-                            <div class="input-group-append">
+                            @if($place->ons_id)
+                                <div class="input-group-append">
                                 <span class="input-group-text">
-                                        <a href="http://data.ordnancesurvey.co.uk/doc/{{ $place->ons_id }}"
+                                        <a href="http://statistics.data.gov.uk/doc/statistical-geography/{{ $place->ons_id }}"
                                            target="_blank"><i class="fas fa-external-link-alt"></i></a>
                                 </span>
-                            </div>
+                                </div>
 
-                            <div class="input-group-append">
+                                <div class="input-group-append">
                                 <span class="input-group-text">
                                         <a href="http://statistics.data.gov.uk/boundaries/{{ $place->ons_id }}.json"
                                            target="_blank">json</a>
                                 </span>
-                            </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -291,7 +340,7 @@
                                 </div>
                             </span>
                             </div>
-                            <input name="name"
+                            <input name="ipn_id"
                                    type="text"
                                    class="form-control form-control-sm"
                                    id="ipn-id"
@@ -325,12 +374,21 @@
                                 </div>
                             </span>
                                 </div>
-                                <input name="name"
-                                       type="text"
+
+                                <input name="{{ $col }}"
+                                       type="number"
                                        class="form-control form-control-sm"
                                        id="{{ str_replace('_', '-', $col) }}"
-                                       max="191"
                                        value="{{ $place->$col }}">
+
+                                @if($place->$col)
+                                    <div class="input-group-append">
+                                <span class="input-group-text">
+                                        <a href="https://www.geonames.org/{{ $place->$col }}"
+                                           target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                                </span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -390,25 +448,44 @@
 
     @include('places._siblings')
 
+    @foreach($place->childTypes() as $childType)
+        @include('places._data-table', ['type' => $childType])
+    @endforeach
+
 @endsection
 
 @section('javascript')
     @parent
+
+    @include('places._data-table-columns')
+
     <script>
         $("#approve").on("click", function () {
             $.ajax({
                 url: "{{ route('api.places.approve', $place) }}"
             }).done(function (data) {
                 if (data.data.approved === true) {
-                    $("#approve").html("<i class=\"far fa-check-circle\"></i> <span>@lang('moderate.approved')</span>")
+                    $("#approve").html("<i class=\"far fa-check-circle\"></i> <span>@lang('placeshub.approved')</span>")
                         .removeClass("text-danger")
                         .addClass("text-success")
                 } else {
-                    $("#approve").html("<i class=\"far fa-times-circle\"></i> <span>@lang('moderate.pending')</span>")
+                    $("#approve").html("<i class=\"far fa-times-circle\"></i> <span>@lang('placeshub.pending')</span>")
                         .removeClass("text-success")
                         .addClass("text-danger")
                 }
             })
         });
+
+        // TODO: osm network type to select box
+        ['wiki_title', 'wikidata_id', 'osm_id', 'osm_network_type', 'os_id', 'ons_id', 'ipn_id', 'geo_id', 'geo_id_2', 'geo_id_3', 'geo_id_4'].forEach(function (inputName) {
+            let inputBox = $("input[name='" + inputName + "']");
+            inputBox.on("focus input keyup", function () {
+                if (inputBox.val().length > 0) {
+                    $("input[name='" + inputName + "_null']").prop("checked", false);
+                } else {
+                    $("input[name='" + inputName + "_null']").prop("checked", true);
+                }
+            })
+        })
     </script>
 @endsection

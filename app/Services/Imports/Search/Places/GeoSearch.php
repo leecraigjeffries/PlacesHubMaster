@@ -163,7 +163,9 @@
                 'adm1_name' => $this->getInput('adm1_name'),
                 'adm2_name' => $this->getInput('adm2_name'),
                 'adm3_name' => $this->getInput('adm3_name'),
-                'adm4_name' => $this->getInput('adm4_name')
+                'adm4_name' => $this->getInput('adm4_name'),
+                'name' => $this->getInput('name')
+
             ];
 
             foreach ($override as $key => $value) {

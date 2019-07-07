@@ -4,6 +4,7 @@
 
     use Carbon\Carbon;
     use GuzzleHttp\Client;
+    use GuzzleHttp\Exception\GuzzleException;
     use Illuminate\Support\Arr;
     use Illuminate\Support\Str;
 
@@ -15,18 +16,14 @@
             'unparsed' => 'https://en.wikipedia.org/w/api.php?action=query&formatversion=2&format=json&export&titles={id}',
             'parsed' => 'https://en.wikipedia.org/w/api.php?action=parse&formatversion=2&format=json&section=0&uselang=en&prop=text&page={id}',
             'info' => 'https://en.wikipedia.org/w/api.php?action=query&formatversion=2&format=json&prop=pageprops&ppprop=wikibase_item&titles={id}',
-            'info_coords' => 'https://en.wikipedia.org/w/api.php?action=query&formatversion=2&format=json&prop=pageprops|coordinates&ppprop=wikibase_item&titles={id}',
+            'info_coords' => 'https://en.wikipedia.org/w/api.php?redirects&action=query&formatversion=2&format=json&prop=pageprops|coordinates&ppprop=wikibase_item&titles={id}',
             'category' => 'https://en.wikipedia.org/w/api.php?action=query&formatversion=2&format=json&list=categorymembers&cmlimit=500&cmtype=page&cmtitle={id}',
         ];
-
-        public function __construct(Client $client)
-        {
-            $this->client = $client;
-        }
 
         /**
          * @param string $title
          * @return array
+         * @throws GuzzleException
          */
         public function getInfo(string $title): array
         {
@@ -69,7 +66,7 @@
                     }
                 }
             }
-
+//dd($infoArray);
             return $infoArray;
         }
 
@@ -93,6 +90,7 @@
          * @param string $continue
          * @param array $infoArray
          * @return array
+         * @throws GuzzleException
          */
         public function getCategoryList(
             string $title,
