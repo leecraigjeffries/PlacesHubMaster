@@ -157,21 +157,22 @@
                 Route::post('demote/{place}', ['uses' => 'TypeController@demote', 'as' => 'demote']);
             });
 
+
             /**
              * Move
              */
             Route::group(['prefix' => 'move', 'as' => 'move.'], static function () {
-                Route::get('search/{place}', ['uses' => 'MoveController@search', 'as' => 'search']);
-                Route::get('{place}', ['uses' => 'MoveController@edit', 'as' => 'edit']);
-                Route::patch('{place}/{destination}', ['uses' => 'MoveController@update', 'as' => 'update']);
+                Route::get('{place}', ['uses' => 'MoveController@selectType', 'as' => 'select-type']);
+                Route::patch('{place}/{type}/{destination}', ['uses' => 'MoveController@update', 'as' => 'update']);
             });
 
             /**
              * Move Children
              */
             Route::group(['prefix' => 'move-children', 'as' => 'move-children.'], static function () {
-                Route::get('{place}', ['uses' => 'MoveChildrenController@edit', 'as' => 'edit']);
-                Route::patch('{place}/{destination}', ['uses' => 'MoveChildrenController@update', 'as' => 'update']);
+                Route::get('select-type/{place}', ['uses' => 'MoveChildrenController@selectType', 'as' => 'select-type']);
+                Route::get('select-parent/{place}', ['uses' => 'MoveChildrenController@selectParent', 'as' => 'select-parent']);
+                Route::patch('{place}/{destination}/{type}', ['uses' => 'MoveChildrenController@update', 'as' => 'update']);
             });
 
             Route::patch('{place}', [

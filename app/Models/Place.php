@@ -2,6 +2,7 @@
 
     namespace App\Models;
 
+    use App\Exceptions\Models\Place\EndBeforeStartException;
     use App\Traits\DefinesRelationships;
     use Cviebrock\EloquentSluggable\Sluggable;
     use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
@@ -129,6 +130,42 @@
         }
 
         /**
+         * @param string $start
+         * @param string $end
+         * @param bool $incStart
+         * @param bool $incEnd
+         * @return array
+         * @throws EndBeforeStartException
+         */
+        public static function sliceTypes(
+            string $start,
+            string $end,
+            bool $incStart = false,
+            bool $incEnd = false
+        ): array {
+            if($start === $end){
+                return [];
+            }
+
+            if(array_search($start, self::types(), true) > array_search($end, self::types(), true)){
+                throw new EndBeforeStartException('End comes before Start');
+            }
+
+            $tempArray = array_slice(
+                self::types(),
+                array_search($start, self::types(), true) + ($incStart ? 0 : 1)
+            );
+
+            $tempArray = array_slice(
+                $tempArray,
+                0,
+                array_search($end, $tempArray, true) + ($incEnd ? 1 : 0)
+            );
+
+            return $tempArray;
+        }
+
+        /**
          * Get types.
          *
          * @param bool $withId
@@ -156,12 +193,15 @@
         }
 
         /**
+         * @param string|null $type
          * @return array
          */
-        public function parentTypes(): array
+        public function parentTypes(?string $type = null): array
         {
+            $type = $type ?: $this->type;
+
             foreach (static::$childTypes as $parent_type => $children) {
-                if (in_array($this->type, $children, true)) {
+                if (in_array($type, $children, true)) {
                     $parents[] = $parent_type;
                 }
             }

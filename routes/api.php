@@ -19,7 +19,7 @@
                 'middleware' => ['auth:api', 'role:mod']
             ]);
 
-            Route::get('places/move-children/search/{place}', [
+            Route::get('places/move-children/search/{place}/{type}', [
                 'uses' => 'Places\MoveChildrenController@search',
                 'as' => 'places.move-children.search',
 //                'middleware' => ['auth:api', 'role:mod']

@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Api\Places\Move;
+namespace App\Http\Requests\Places\MoveChildren;
 
+use App\Models\Place;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class SearchRequest extends FormRequest
+class SelectParentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +26,9 @@ class SearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-//            'q' => [
-//                'string',
-//                'max:191',
-//                // TODO Delete this
-//                'nullable',
-//                'sometimes'
-//            ]
+            'type' => [
+                Rule::in(array_merge(['all'], $this->route('place')->childTypes()))
+            ]
         ];
     }
 }

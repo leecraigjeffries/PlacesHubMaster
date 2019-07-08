@@ -8,16 +8,22 @@ body {
 }
 
 body {
-  align-items: stretch;
+  -webkit-box-align: stretch;
+          align-items: stretch;
+  display: -webkit-box;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
 }
 
 body #copyright {
   background-image: linear-gradient(155deg, #111416, #21252a);
   color: #fff;
+  display: -webkit-box;
   display: flex;
-  flex: 1 1;
+  -webkit-box-flex: 1;
+          flex: 1 1;
   padding: 30px;
 }
 
@@ -32,7 +38,8 @@ body #copyright div:not(:first-child) {
 
 body #copyright > div {
   flex-basis: 0;
-  flex-grow: 1;
+  -webkit-box-flex: 1;
+          flex-grow: 1;
 }
 
 body #copyright > div ul {
@@ -43,6 +50,7 @@ body #copyright > div ul {
 }
 
 nav {
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#1a1e22), to(#252b30));
   background-image: linear-gradient(to top, #1a1e22, #252b30);
 }
 
@@ -166,7 +174,9 @@ select {
 }
 
 #app {
-  align-items: stretch;
+  -webkit-box-align: stretch;
+          align-items: stretch;
+  display: -webkit-box;
   display: flex;
   flex-wrap: nowrap;
 }
@@ -192,7 +202,8 @@ select {
 
 #content-wrapper {
   background-color: #F1F5F8;
-  flex: 1;
+  -webkit-box-flex: 1;
+          flex: 1;
 }
 
 main {
@@ -392,6 +403,57 @@ dd {
   border-width: 4px 0 0 0;
   color: #fff;
   padding: 16px;
+}
+
+#parent-results .result {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #e5e5e5;
+  list-style-type: none;
+  margin: 0;
+  padding: 0.25em 0.5em;
+}
+
+#parent-results .result:hover {
+  background-color: #F1F5F8;
+}
+
+#parent-results .result em {
+  color: #4e555b;
+  font-size: 10pt;
+}
+
+#parent-results .result > span {
+  display: block;
+}
+
+#parent-results .result > span > a {
+  color: #1f2327;
+  font-size: 1em;
+}
+
+#parent-results .result ul {
+  font-size: 0.675em;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+#parent-results .result ul a {
+  color: #57636e;
+}
+
+#parent-results .result ul li {
+  display: inline;
+  margin: 0;
+}
+
+#parent-results .result ul li:before {
+  content: ">";
+  margin: 0 4px;
+}
+
+#parent-results .result ul li:first-child:before {
+  content: "";
+  margin: 0;
 }
 
 .siblings {

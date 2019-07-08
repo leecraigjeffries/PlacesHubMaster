@@ -34,6 +34,9 @@
         'order' => 'Order',
         'asc' => 'Ascending',
         'desc' => 'Descending',
+        'all' => 'All',
+        'move_children_select_type' => 'Move Children: Select Type',
+        'move_children_select_parent' => 'Select parent for :type',
 
         'geo_data' => 'Geonames Data',
         'geo_places_name' => 'Name',

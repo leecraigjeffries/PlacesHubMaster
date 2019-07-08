@@ -48,7 +48,7 @@
                 }
             }).done(function (data) {
                 if (data.data.length > 0) {
-                    data.data.map(function(el){
+                    data.data.map(function (el) {
                         el.name = el.name.replace(new RegExp(search_val, "i"), "<b>$&</b>");
                         return el
                     });

@@ -41,9 +41,14 @@
         $trail->push(__('placeshub.create_type', ['type' => __("placeshub.{$type}")]));
     });
 
-    Breadcrumbs::for('places.move-children.edit', static function ($trail, $place) {
+    Breadcrumbs::for('places.move-children.select-type', static function ($trail, $place) {
         $trail->push($place->name, route('places.show', $place));
-        $trail->push(__('placeshub.move_children'));
+        $trail->push(__('placeshub.move_children_select_type'));
+    });
+
+    Breadcrumbs::for('places.move-children.select-parent', static function ($trail, $place, $type) {
+        $trail->push($place->name, route('places.show', $place));
+        $trail->push(__('placeshub.move_children_select_parent', compact('type')));
     });
 
     /**

@@ -113,10 +113,4 @@
             return $this->hasMany(static::class, $this->type_column)
                 ->where('type', 'hood');
         }
-
-        public function childRelationship(string $type)
-        {
-            return $this->hasMany(static::class, $this->type_column)
-                ->where('type', $type);
-        }
     }

@@ -11,16 +11,15 @@
                 id="moderate-menu"
                 data-toggle="dropdown"
                 aria-haspopup="true"
-                aria-expanded="false"
-        >
+                aria-expanded="false">
             @lang('placeshub.moderate')
         </button>
         <div class="dropdown-menu" aria-labelledby="moderate-menu">
             <a class="dropdown-item"
-               href="{{ route('places.move.edit', $place) }}">@lang('placeshub.move')
+               href="{{ route('places.move.select-type', $place) }}">@lang('placeshub.move')
             </a>
             <a class="dropdown-item"
-               href="{{ route('places.move-children.edit', $place) }}">@lang('placeshub.move_children')
+               href="{{ route('places.move-children.select-type', $place) }}">@lang('placeshub.move_children')
             </a>
             <a class="dropdown-item"
                href="{{ route('places.type.edit', $place) }}">@lang('placeshub.change_type')
@@ -37,8 +36,7 @@
             <button type="submit"
                     class="dropdown-item d-block w-100 text-danger"
                     data-toggle="modal"
-                    data-target="#delete-modal"
-            ><i class="fas fa-trash-alt mr-2"></i>@lang('placeshub.delete')
+                    data-target="#delete-modal"><i class="fas fa-trash-alt mr-2"></i>@lang('placeshub.delete')
             </button>
         </div>
     </div>
