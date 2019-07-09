@@ -78,6 +78,7 @@
         'import_success' => 'Import Success',
         'rows_added' => ':rows rows added',
         'file_exists_title' => 'File Found',
+        'close' => 'Close',
         'file_not_exists_title' => 'File Not Found',
         'file' => '&quot;:file&quot;',
         'import_osm_places' => 'Import OSM Data',
@@ -87,6 +88,7 @@
             'duplicate' => 'Duplicate',
             'invalid' => 'Invalid',
             'translation' => 'Translation',
+            'deprecated' => 'Deprecated'
         ],
 
         'set_to_null' => 'Set to null',

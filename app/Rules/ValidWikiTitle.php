@@ -16,9 +16,8 @@
          */
         public function passes($attribute, $value): bool
         {
-            return false;
             $info = app(WikiExtractor::class)->getInfo($value);
-            dd(!$info['wiki_redirect']);
+
             return (!$info['wiki_missing'] || !$info['wiki_redirect']);
         }
 

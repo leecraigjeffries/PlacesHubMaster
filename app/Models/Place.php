@@ -5,7 +5,9 @@
     use App\Exceptions\Models\Place\EndBeforeStartException;
     use App\Traits\DefinesRelationships;
     use Cviebrock\EloquentSluggable\Sluggable;
+    use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialExpression;
     use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
+    use Grimzy\LaravelMysqlSpatial\Types\Point;
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -135,7 +137,6 @@
          * @param bool $incStart
          * @param bool $incEnd
          * @return array
-         * @throws EndBeforeStartException
          */
         public static function sliceTypes(
             string $start,
@@ -143,12 +144,12 @@
             bool $incStart = false,
             bool $incEnd = false
         ): array {
-            if($start === $end){
+            if ($start === $end) {
                 return [];
             }
 
-            if(array_search($start, self::types(), true) > array_search($end, self::types(), true)){
-                throw new EndBeforeStartException('End comes before Start');
+            if (array_search($start, self::types(), true) > array_search($end, self::types(), true)) {
+                return [];
             }
 
             $tempArray = array_slice(
@@ -363,5 +364,33 @@
         public function getTypeColumnAttribute(): string
         {
             return $this->type . '_id';
+        }
+
+        /**
+         * @return array
+         */
+        public function childCount(): array
+        {
+            $counts = [];
+            foreach ($this->juniorTypes() as $juniorType) {
+                $query = $this->where($this->type_column, $this->id)
+                    ->whereType($juniorType);
+
+                foreach ($this::sliceTypes($this->type, $juniorType) as $middleType) {
+                    $query = $query->whereNull("{$middleType}_id");
+                }
+
+                $counts[$juniorType] = $query->count();
+            }
+
+            return $counts;
+        }
+
+        public function setLatAttribute($lat): void
+        {
+            $this->attributes['point'] = new SpatialExpression(new Point(
+                $lat,
+                $this->attribute['lon']
+            ));
         }
     }

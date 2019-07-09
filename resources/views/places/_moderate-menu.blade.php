@@ -73,8 +73,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="delete-reason">@lang('placeshub.delete_reason')</label>
-                        <textarea name="delete_reason" id="delete-reason" class="form-control"></textarea>
+                        <label for="notes">@lang('placeshub.delete_reason')</label>
+                        <textarea name="notes" id="notes" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

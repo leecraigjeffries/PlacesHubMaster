@@ -2,10 +2,12 @@
 
     namespace App\Http\Controllers\Places;
 
+    use App\Http\Requests\Places\DestroyRequest;
     use App\Http\Requests\Places\StoreRequest;
     use App\Http\Requests\Places\UpdateRequest;
     use App\Models\Place;
     use App\Services\Places\PlaceService;
+    use Exception;
     use Illuminate\Contracts\View\View;
     use Illuminate\Http\RedirectResponse;
 
@@ -67,5 +69,26 @@
             $entries = $placeService->store($place, $type, $request);
 
             return view('places.store', compact('entries', 'place'));
+        }
+
+        /**
+         * @param Place $place
+         * @param DestroyRequest $request
+         *
+         * @return RedirectResponse
+         * @throws Exception
+         */
+        public function destroy(Place $place, DestroyRequest $request): RedirectResponse
+        {
+            $parent = $place->parent();
+
+            if ($request->input('type') === 'soft') {
+                $place->update($request->only(['delete_reason', 'delete_reason_type']));
+                $place->delete();
+            } else {
+                $place->forceDelete();
+            }
+
+            return redirect()->route('places.show', $parent);
         }
     }

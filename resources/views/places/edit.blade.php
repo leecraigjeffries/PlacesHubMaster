@@ -21,7 +21,7 @@
 
 @section('places.content')
 
-    <div class="row mb-3">
+    <div class="row mb-2">
         <div class="col">
             <a href="{{ route('places.show', $place) }}">@lang('placeshub.back')</a>
         </div>
@@ -48,7 +48,7 @@
                                class="form-control form-control-sm"
                                id="name"
                                max="191"
-                               value="{{ $place->name }}"
+                               value="{{ old('name') ?? $place->name }}"
                                required>
                     </div>
                 </div>
@@ -63,7 +63,16 @@
                                class="form-control form-control-sm"
                                id="official-name"
                                max="191"
-                               value="{{ $place->official_name }}">
+                               value="{{ old('official_name') ?? $place->official_name }}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.type')
+                    </div>
+                    <div class="col-md-8">
+                        @lang("placeshub.{$place->type}")
                     </div>
                 </div>
 
@@ -94,7 +103,7 @@
                                    class="form-control form-control-sm"
                                    id="wiki-title"
                                    max="191"
-                                   value="{{ $place->wiki_title }}">
+                                   value="{{ old('wiki_title') ?? $place->wiki_title }}">
 
                             @if($place->wiki_title)
                                 <div class="input-group-append">
@@ -135,7 +144,7 @@
                                    class="form-control form-control-sm"
                                    id="wikidata-id"
                                    max="191"
-                                   value="{{ $place->wikidata_id }}">
+                                   value="{{ old('wikidata_id') ?? $place->wikidata_id }}">
 
                             @if($place->wikidata_id)
                                 <div class="input-group-append">
@@ -175,7 +184,7 @@
                                    type="number"
                                    class="form-control form-control-sm"
                                    id="osm-id"
-                                   value="{{ $place->osm_id }}">
+                                   value="{{ old('osm_id') ?? $place->osm_id }}">
 
                             @if($place->osm_id)
                                 <div class="input-group-append">
@@ -218,7 +227,7 @@
                                    id="osm-network-type"
                                    max="9"
                                    pattern="^(node|relation|way)$"
-                                   value="{{ $place->osm_network_type }}">
+                                   value="{{ old('osm_network_type') ?? $place->osm_network_type }}">
                         </div>
                     </div>
                 </div>
@@ -250,7 +259,7 @@
                                    class="form-control form-control-sm"
                                    id="os-id"
                                    max="191"
-                                   value="{{ $place->os_id }}">
+                                   value="{{ old('os_id') ?? $place->os_id }}">
 
                             @if($place->os_id)
                                 <div class="input-group-append">
@@ -298,8 +307,8 @@
                                    class="form-control form-control-sm"
                                    id="ons-id"
                                    max="9"
-                                   pattern="^(E|W|S)?[0-9]*$"
-                                   value="{{ $place->ons_id }}">
+                                   pattern="^(E|W|S)?[0-9]{8}$"
+                                   value="{{ old('ons_id') ?? $place->ons_id }}">
 
                             @if($place->ons_id)
                                 <div class="input-group-append">
@@ -346,7 +355,7 @@
                                    id="ipn-id"
                                    max="10"
                                    pattern="^(IPN)?[0-9]*$"
-                                   value="{{ $place->ipn_id }}">
+                                   value="{{ old('ipn_id') ?? $place->ipn_id }}">
                         </div>
                     </div>
                 </div>
@@ -379,7 +388,7 @@
                                        type="number"
                                        class="form-control form-control-sm"
                                        id="{{ str_replace('_', '-', $col) }}"
-                                       value="{{ $place->$col }}">
+                                       value="{{ old($col) ?? $place->$col }}">
 
                                 @if($place->$col)
                                     <div class="input-group-append">
@@ -407,7 +416,7 @@
                                min="-90"
                                step="0.000001"
                                id="lat"
-                               value="{!! $place->lat !!}">
+                               value="{!! old('lat') ?? $place->lat !!}">
                     </div>
                 </div>
 
@@ -423,7 +432,7 @@
                                min="-90"
                                step="0.000001"
                                id="lon"
-                               value="{!! $place->lon !!}">
+                               value="{!! old('lon') ?? $place->lon !!}">
                     </div>
                 </div>
 

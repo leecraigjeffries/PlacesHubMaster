@@ -36,18 +36,23 @@
     @parent
     <script id="move-search-template" type="text/x-jsrender">
 <div class="result">
-   <span><a href="@{{:uri}}">@{{:name}}</a> <em>(@{{:type}})</em></span>
-   @{{if parents.length}}
-       <ul>
-           @{{for parents}}
-               <li>
-                   <a href="@{{>uri}}">@{{>name}}</a>
-               </li>
-           @{{/for}}
-       </ul>
-   @{{/if}}
-</div>
-
+   <form action="@{{:uri}}" method="POST">
+   @csrf
+        @method('PATCH')
+        <span>
+        <button type="submit" class="btn btn-secondary btn-sm">@{{:name}}</a></button> <em>(@{{:type}})</em>
+        </span>
+        </form>
+        @{{if parents.length}}
+            <ul>
+                @{{for parents}}
+                    <li>
+                        <a href="@{{>uri}}">@{{>name}}</a>
+                    </li>
+                @{{/for}}
+            </ul>
+        @{{/if}}
+     </div>
     </script>
     <script type="text/javascript">
         $("#q").on("keyup input focus", $.debounce(400, function () {
