@@ -2,16 +2,19 @@
 
     namespace App\Http\Controllers\Places;
 
+    use App\Http\Controllers\Controller;
     use App\Http\Requests\Places\DestroyRequest;
+    use App\Http\Requests\Places\IndexRequest;
     use App\Http\Requests\Places\StoreRequest;
     use App\Http\Requests\Places\UpdateRequest;
     use App\Models\Place;
+    use App\Services\Places\PlaceSearch;
     use App\Services\Places\PlaceService;
     use Exception;
     use Illuminate\Contracts\View\View;
     use Illuminate\Http\RedirectResponse;
 
-    class PlacesController
+    class PlacesController extends Controller
     {
         /**
          * @param Place $place
@@ -90,5 +93,34 @@
             }
 
             return redirect()->route('places.show', $parent);
+        }
+
+        /**
+         * @param Place $place
+         * @param IndexRequest $request
+         * @return View
+         */
+        public function index(Place $place, IndexRequest $request): View
+        {
+            $placeSearch = app(PlaceSearch::class, ['inputs' => $request->all()]);
+
+            $results = $place->orderBy($placeSearch->getOrderBy(), $placeSearch->getOrder())
+                ->when($placeSearch->getOrderBy() !== $placeSearch->getDefaultOrderBy(),
+                    static function ($query) use ($placeSearch) {
+                        $query->orderBy($placeSearch->getDefaultOrderBy(), $placeSearch->getDefaultOrder());
+                    })
+                ->when($request->input('name') !== null, static function ($query) use ($request) {
+                    $query->where('name', 'like', prepare_name_for_search($request->input('name')));
+                })
+                ->when($request->input('type') !== null, static function ($query) use ($request) {
+                    $query->where('type', $request->input('type'));
+                })
+                ->with($place::types());
+
+            $results = $results->paginate(50);
+
+            $types = $place->distinct('type')->pluck('type', 'type')->sort();
+
+            return view('places.index', compact('results', 'types', 'request', 'placeSearch'));
         }
     }

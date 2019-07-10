@@ -36,8 +36,7 @@
         {
             $geoSearch = app(GeoSearch::class, ['inputs' => $request->all()]);
 
-            $results = $geoPlace
-                ->orderBy($geoSearch->getOrderBy(), $geoSearch->getOrder())
+            $results = $geoPlace->orderBy($geoSearch->getOrderBy(), $geoSearch->getOrder())
                 ->when($geoSearch->getOrderBy() !== $geoSearch->getDefaultOrderBy(),
                     static function ($query) use ($geoSearch) {
                         $query->orderBy($geoSearch->getDefaultOrderBy(), $geoSearch->getDefaultOrder());

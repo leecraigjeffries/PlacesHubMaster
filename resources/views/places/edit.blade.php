@@ -72,7 +72,7 @@
                         @lang('placeshub.type')
                     </div>
                     <div class="col-md-8">
-                        @lang("placeshub.{$place->type}")
+                        <span class="badge badge-sm badge-success">@lang("placeshub.{$place->type}")</span>
                     </div>
                 </div>
 
@@ -435,6 +435,46 @@
                                value="{!! old('lon') ?? $place->lon !!}">
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.point')
+                    </div>
+                    <div class="col-md-8">
+                        @if($place->point)
+                            <i class="far fa-check-circle text-success"></i>
+                        @else
+                            <i class="far fa-times-circle text-danger"></i>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.polygon')
+                    </div>
+                    <div class="col-md-8">
+                        @if($place->polygon)
+                            <i class="far fa-check-circle text-success"></i>
+                        @else
+                            <i class="far fa-times-circle text-danger"></i>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 font-weight-bold pt-1">
+                        @lang('placeshub.multipolygon')
+                    </div>
+                    <div class="col-md-8">
+                        @if($place->multipolygon)
+                            <i class="far fa-check-circle text-success"></i>
+                        @else
+                            <i class="far fa-times-circle text-danger"></i>
+                        @endif
+                    </div>
+                </div>
+
 
                 <div class="row">
                     <div class="col p-2 text-center">

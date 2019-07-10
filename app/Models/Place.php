@@ -392,5 +392,7 @@
                 $lat,
                 $this->attribute['lon']
             ));
+
+            $this->attributes['lat'] = $lat;
         }
     }

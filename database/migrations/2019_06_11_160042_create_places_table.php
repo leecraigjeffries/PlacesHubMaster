@@ -35,7 +35,7 @@
                 $table->string('os_id', 23)->collation('utf8mb4_bin')->nullable();
                 $table->char('ons_id', 9)->collation('ascii_bin')->nullable();
                 $table->char('ipn_id', 10)->collation('ascii_bin')->nullable();
-                $table->string('slug')->collation('ascii_bin');
+                $table->string('slug')->collation('ascii_bin')->index();
                 $table->decimal('lat', 8, 6)->nullable();
                 $table->decimal('lon', 9, 6)->nullable();
                 $table->point('point')->nullable();

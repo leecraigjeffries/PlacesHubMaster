@@ -1,10 +1,10 @@
 <?php
 
-    namespace App\Services\Imports\Search\Places;
+    namespace App\Services\Places;
 
     use Illuminate\Support\Collection;
 
-    class GeoSearch
+    class PlaceSearch
     {
         /**
          * @var array

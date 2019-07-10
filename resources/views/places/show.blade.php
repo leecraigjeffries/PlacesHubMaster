@@ -125,14 +125,38 @@
                     @endif
                 @endforeach
 
-                @if($place->point)
-                    <dt>
-                        @lang('placeshub.point')
-                    </dt>
-                    <dd>
-                        {{ $place->point->toWKT() }}
-                    </dd>
-                @endif
+                <dt>
+                    @lang('placeshub.point')
+                </dt>
+                <dd>
+                    @if($place->point)
+                        <i class="far fa-check-circle text-success"></i>
+                    @else
+                        <i class="far fa-times-circle text-danger"></i>
+                    @endif
+                </dd>
+
+                <dt>
+                    @lang('placeshub.polygon')
+                </dt>
+                <dd>
+                    @if($place->polygon)
+                        <i class="far fa-check-circle text-success"></i>
+                    @else
+                        <i class="far fa-times-circle text-danger"></i>
+                    @endif
+                </dd>
+
+                <dt>
+                    @lang('placeshub.multipolygon')
+                </dt>
+                <dd>
+                    @if($place->multipolygon)
+                        <i class="far fa-check-circle text-success"></i>
+                    @else
+                        <i class="far fa-times-circle text-danger"></i>
+                    @endif
+                </dd>
 
                 @if($place->iso3166_2)
                     <dt>

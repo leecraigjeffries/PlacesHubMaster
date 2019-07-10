@@ -45,6 +45,10 @@
         'adm3_name' => 'ADM3 Name',
         'adm4_name' => 'ADM4 Name',
         'adm5_name' => 'ADM5 Name',
+        'point' => 'Point',
+        'polygon' => 'Polygon',
+        'multipolygon' => 'Multipolygon',
+        'dump' => 'Dump',
 
         'ons_data' => 'Office for National Statistics Data',
         'ons_type' => 'ONS Type',

@@ -51,6 +51,10 @@
         $trail->push(__('placeshub.move_children_select_parent', compact('type')));
     });
 
+    Breadcrumbs::for('places.index', static function ($trail) {
+        $trail->push(__('placeshub.places_index'));
+    });
+
     /**
      * Admin
      */

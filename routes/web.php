@@ -20,6 +20,16 @@
             /**
              * Imports
              */
+            Route::group(['prefix' => 'dumps', 'as' => 'dumps.', 'namespace' => 'Dumps'], static function () {
+                Route::get('places', ['uses' => 'PlacesController@create', 'as' => 'places.create']);
+                Route::post('places', ['uses' => 'PlacesController@store', 'as' => 'places.store']);
+
+            });
+
+
+            /**
+             * Imports
+             */
             Route::group(['prefix' => 'imports', 'as' => 'imports.', 'namespace' => 'Imports'], static function () {
                 Route::group(['prefix' => 'local-admins', 'as' => 'local-admins.', 'namespace' => 'LocalAdmins'],
                     static function () {
