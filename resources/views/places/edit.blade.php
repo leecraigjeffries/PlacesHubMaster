@@ -320,7 +320,14 @@
 
                                 <div class="input-group-append">
                                 <span class="input-group-text">
-                                        <a href="http://statistics.data.gov.uk/boundaries/{{ $place->ons_id }}.json"
+                                        <a href="http://statistics.data.gov.uk/doc/statistical-geography/{{ $place->ons_id }}/geometry.json"
+                                           target="_blank">boundary</a>
+                                </span>
+                                </div>
+
+                                <div class="input-group-append">
+                                <span class="input-group-text">
+                                        <a href="http://statistics.data.gov.uk/doc/statistical-geography/{{ $place->ons_id }}.json"
                                            target="_blank">json</a>
                                 </span>
                                 </div>

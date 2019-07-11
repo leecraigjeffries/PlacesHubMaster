@@ -174,3 +174,16 @@
 
         $trail->push($place->name);
     });
+
+    /**
+     * Extractor Import
+     */
+    Breadcrumbs::for('admin.extractor-import.osni.edit', function ($trail) {
+        $trail->parent('admin.home');
+        $trail->push(__('placeshub.osni'));
+    });
+
+    Breadcrumbs::for('admin.extractor-import.ons.edit', function ($trail) {
+        $trail->parent('admin.home');
+        $trail->push(__('placeshub.ons'));
+    });

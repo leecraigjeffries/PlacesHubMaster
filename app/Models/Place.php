@@ -388,10 +388,12 @@
 
         public function setLatAttribute($lat): void
         {
-            $this->attributes['point'] = new SpatialExpression(new Point(
-                $lat,
-                $this->attribute['lon']
-            ));
+            if($lat) {
+                $this->attributes['point'] = new SpatialExpression(new Point(
+                    $lat,
+                    $this->attributes['lon']
+                ));
+            }
 
             $this->attributes['lat'] = $lat;
         }

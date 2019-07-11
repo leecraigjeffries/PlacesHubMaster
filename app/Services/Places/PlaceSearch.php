@@ -11,13 +11,9 @@
          */
         protected $validOrderBy = [
             'name',
-            'geo_type',
-            'geo_code',
-            'geo_code_full',
-            'adm1_name',
-            'adm2_name',
-            'adm3_name',
-            'adm4_name'
+            'type',
+            'ons_id',
+            'os_id'
         ];
 
         /**
@@ -30,9 +26,13 @@
          */
         protected $headings = [
             'name',
-            'geo_type',
-            'geo_code',
-            'geo_code_full'
+            'type',
+            'wiki_title',
+            'wikidata_id',
+            'osm_id',
+            'os_id',
+            'ons_id',
+            'geo_id'
         ];
 
         /**
@@ -157,11 +157,7 @@
             $appends = [
                 'order_by' => $this->getOrderBy(),
                 'order' => $this->getOrder(),
-                'geo_type' => $this->getInput('geo_type'),
-                'adm1_name' => $this->getInput('adm1_name'),
-                'adm2_name' => $this->getInput('adm2_name'),
-                'adm3_name' => $this->getInput('adm3_name'),
-                'adm4_name' => $this->getInput('adm4_name'),
+                'type' => $this->getInput('type'),
                 'name' => $this->getInput('name')
 
             ];

@@ -14,7 +14,7 @@ class PlacesExport implements FromCollection
     /**
     * @return Collection
     */
-    public function collection()
+    public function collection(): Collection
     {
         return Place::all();
     }

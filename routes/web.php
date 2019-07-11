@@ -18,6 +18,23 @@
             Route::get('', ['uses' => 'AdminController@home', 'as' => 'home']);
 
             /**
+             * Extractor Import
+             */
+            Route::group([
+                'prefix' => 'extractor-import',
+                'as' => 'extractor-import.',
+                'namespace' => 'ExtractorImport'
+            ], static function () {
+                // OSNI
+                Route::get('osni', ['uses' => 'OsniController@edit', 'as' => 'osni.edit']);
+                Route::patch('osni', ['uses' => 'OsniController@update', 'as' => 'osni.update']);
+
+                // ONS
+                Route::get('ons', ['uses' => 'OnsController@edit', 'as' => 'ons.edit']);
+                Route::patch('ons', ['uses' => 'OnsController@update', 'as' => 'ons.update']);
+            });
+
+            /**
              * Imports
              */
             Route::group(['prefix' => 'dumps', 'as' => 'dumps.', 'namespace' => 'Dumps'], static function () {
@@ -180,9 +197,12 @@
              * Move Children
              */
             Route::group(['prefix' => 'move-children', 'as' => 'move-children.'], static function () {
-                Route::get('select-type/{place}', ['uses' => 'MoveChildrenController@selectType', 'as' => 'select-type']);
-                Route::get('select-parent/{place}', ['uses' => 'MoveChildrenController@selectParent', 'as' => 'select-parent']);
-                Route::patch('{place}/{destination}/{type}', ['uses' => 'MoveChildrenController@update', 'as' => 'update']);
+                Route::get('select-type/{place}',
+                    ['uses' => 'MoveChildrenController@selectType', 'as' => 'select-type']);
+                Route::get('select-parent/{place}',
+                    ['uses' => 'MoveChildrenController@selectParent', 'as' => 'select-parent']);
+                Route::patch('{place}/{destination}/{type}',
+                    ['uses' => 'MoveChildrenController@update', 'as' => 'update']);
             });
 
             Route::patch('{place}', [

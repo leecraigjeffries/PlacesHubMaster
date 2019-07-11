@@ -7,7 +7,7 @@
     use App\Models\Imports\OnsPlace;
     use App\Services\Imports\Importers\Places\OnsImportService;
     use App\Services\Imports\Search\Places\OnsSearch;
-    use Illuminate\View\View;
+    use Illuminate\Contracts\View\View;
 
     class OnsController extends Controller
     {
@@ -144,6 +144,29 @@
             $rowCount = $this->onsPlace->count();
 
             return view('admin.imports.places.ons.store', compact('rowCount', 'importSuccess'));
+        }
+
+        public function compare(Place $place):View
+        {
+            app('debugbar')->disable();
+
+            $onsAll = $this->onsPlace
+                ->whereNotNull('ons_id')
+                ->pluck('ons_id');
+
+            $placeExtra = $place->whereNotIn('ons_id', $onsAll)
+                ->orderBy('ons_id')
+                ->get();
+
+            $placeAll = $place->whereNotNull('ons_id')
+                ->pluck('ons_id');
+
+            $onsExtra = $this->onsPlace
+                ->whereNotIn('ons_id', $placeAll)
+                ->orderBy('ons_id')
+                ->get();
+
+            return view('admin.imports.places.ons.compare', compact('onsExtra', 'placeExtra'));
         }
 
     }

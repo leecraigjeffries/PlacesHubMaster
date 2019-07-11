@@ -247,6 +247,42 @@ table {
   }
 }
 
+#table-places {
+  @extend %table-places;
+
+  col[data-name="name"] {
+    width: 30%;
+  }
+
+  col[data-name="type"] {
+    width: 10%;
+  }
+
+  col[data-name="wiki_title"] {
+    width: 10%;
+  }
+
+  col[data-name="wikidata_id"] {
+    width: 10%;
+  }
+
+  col[data-name="osm_id"] {
+    width: 10%;
+  }
+
+  col[data-name="os_id"] {
+    width: 10%;
+  }
+
+  col[data-name="ons_id"] {
+    width: 10%;
+  }
+
+  col[data-name="geo_id"] {
+    width: 10%;
+  }
+}
+
 .case-sensitive {
   color: #b23942;
   font-size: 0.75em;

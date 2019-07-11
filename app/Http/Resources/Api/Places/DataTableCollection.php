@@ -17,7 +17,7 @@
             foreach ($this->collection as $item) {
                 $item->link = route('places.show', ['place' => $item]);
             }
-
+//dd($this->collection);
             return [
                 'data' => $this->collection,
             ];

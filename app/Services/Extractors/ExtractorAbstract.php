@@ -65,7 +65,6 @@
          * @param string $id
          *
          * @return array
-         * @throws GuzzleException
          */
         public function tryGetJsonResponse(string $uri_key, string $id = ''): array
         {
@@ -82,7 +81,7 @@
 
                 return [];
 
-            } catch (Exception $exception) {
+            } catch (GuzzleException $exception) {
                 return [];
             }
         }
@@ -95,7 +94,6 @@
          * @param string $id
          *
          * @return mixed
-         * @throws GuzzleException
          */
         public function tryGetResponse(string $uri_key, string $id = '')
         {
@@ -112,7 +110,7 @@
 
                 return null;
 
-            } catch (Exception $exception) {
+            } catch (GuzzleException $exception) {
                 return null;
             }
         }

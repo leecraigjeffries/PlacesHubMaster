@@ -1,7 +1,7 @@
 @extends('app.content')
 
 @section('heading')
-    @lang('placeshub.geo_data')
+    @lang('placeshub.places_index')
 @endsection
 
 @section('title')
@@ -28,45 +28,34 @@
                                value="{{ old($field) ?: $request->input($field) }}">
                     </div>
                 @endforeach
-                @foreach([] as $field)
-                    <div class="col-sm-6 col-md-4 col-lg-3 p-2">
-                        <label for="{{ $field }}">@lang("placeshub.{$field}") <span class="case-sensitive">(Case Sensitive [A-Z0-9-])</span></label>
-                        <input name="{{ $field }}"
-                               id="{{ $field }}"
-                               class="form-control form-control-sm"
-                               placeholder="Search&hellip;"
-                               value="{{ old($field) ?: $request->input($field) }}"
-                               pattern="[A-Z0-9-]*">
-                    </div>
-                @endforeach
                 <div class="col-sm-6 col-md-4 col-lg-3 p-2">
                     <label for="type">@lang('placeshub.type')</label>
                     <select class="custom-select custom-select-sm" name="type" id="type">
                         <option value="">All</option>
                         @foreach($types as $key => $val)
                             <option
-                                value="{{ $key }}" {{ ((old('type') ?: $request->input('type')) === $key ? 'selected' : '') }}>{{ $val }}</option>
+                                value="{{ $key }}" {{ ((old('type') ?: $request->input('type')) === $key ? 'selected' : '') }}>@lang("placeshub.{$val}")</option>
                         @endforeach
                     </select>
                 </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 p-2">
-                        <label for="order_by">@lang('placeshub.order_by')</label>
-                        <select class="custom-select custom-select-sm" name="order_by" id="order_by">
-                            @foreach($placeSearch->getOrderByTranslated() as $key => $val)
-                                <option
-                                    value="{{ $key }}" {{ ((old('order_by') ?: $placeSearch->getOrderBy() ?: $placeSearch->getDefaultOrderBy()) === $key ? 'selected' : '') }}>{{ $val }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 p-2">
-                        <label for="order">@lang('placeshub.order')</label>
-                        <select class="custom-select custom-select-sm" name="order" id="order">
-                            @foreach($placeSearch->getOrderTranslated() as $key => $val)
-                                <option
-                                    value="{{ $key }}" {{ ((old('order') ?: $placeSearch->getOrder() ?: $placeSearch->getDefaultOrder()) === $key ? 'selected' : '') }}>{{ $val }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 p-2">
+                    <label for="order_by">@lang('placeshub.order_by')</label>
+                    <select class="custom-select custom-select-sm" name="order_by" id="order_by">
+                        @foreach($placeSearch->getOrderByTranslated() as $key => $val)
+                            <option
+                                value="{{ $key }}" {{ ((old('order_by') ?: $placeSearch->getOrderBy() ?: $placeSearch->getDefaultOrderBy()) === $key ? 'selected' : '') }}>{{ $val }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 p-2">
+                    <label for="order">@lang('placeshub.order')</label>
+                    <select class="custom-select custom-select-sm" name="order" id="order">
+                        @foreach($placeSearch->getOrderTranslated() as $key => $val)
+                            <option
+                                value="{{ $key }}" {{ ((old('order') ?: $placeSearch->getOrder() ?: $placeSearch->getDefaultOrder()) === $key ? 'selected' : '') }}>{{ $val }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
             <div class="row">
                 <div class="col text-center">
@@ -103,6 +92,9 @@
             <tr>
                 <td>
                     <a href="{{ route('places.show', $result) }}">{{ $result->name }}</a>
+                    @if($result->official_name)<em>
+                        <small>({{ $result->official_name }})</small>
+                    </em>@endif
                     <ul>
                         @foreach($result->parentTypes() as $type)
                             @if($result->$type && $result->id !== $result->$type->id)
@@ -114,7 +106,64 @@
                     </ul>
                 </td>
                 <td>
-                    <a href="{{ route('places.index', ['type' => $result->type]) }}">{{ $result->type }}</a>
+                    <a href="{{ route('places.index', ['type' => $result->type]) }}">@lang("placeshub.{$result->type}")</a>
+                </td>
+                <td>
+                    @if($result->wiki_title)
+                        <a href="https://en.wikipedia.org/wiki/{{ $result->wiki_title }}"
+                           class="badge badge-success"
+                           target="_blank">@lang('placeshub.wiki_title')</a>
+                    @endif
+                </td>
+                <td>
+                    @if($result->wikidata_id)
+                        <a href="https://www.wikidata.org/wiki/{{ $result->wikidata_id }}"
+                           class="badge badge-success"
+                           target="_blank">@lang('placeshub.wikidata')</a>
+                    @endif
+                </td>
+                <td>
+                    @if($result->osm_id)
+                        <a href="https://www.openstreetmap.org/{{ $result->osm_network_type }}/{{ $result->osm_id }}"
+                           class="badge badge-success"
+                           target="_blank">@lang('placeshub.osm_id')</a>
+                    @endif
+                </td>
+                <td>
+                    @if($result->os_id)
+                        <a href="http://data.ordnancesurvey.co.uk/doc/{{ $result->os_id }}"
+                           class="badge badge-success"
+                           target="_blank">@lang('placeshub.os_id')</a>
+                    @endif
+                </td>
+                <td>
+                    @if($result->ons_id)
+                        <a href="http://statistics.data.gov.uk/doc/statistical-geography/{{ $result->ons_id }}"
+                           class="badge badge-success"
+                           target="_blank">@lang('placeshub.ons_id')</a>
+                    @endif
+                </td>
+                <td>
+                    @if($result->geo_id)
+                        <a href="https://www.geonames.org/{{ $result->geo_id }}"
+                           class="badge badge-success"
+                           target="_blank">@lang('placeshub.geo_id')</a>
+                    @endif
+                    @if($result->geo_id_2)
+                        <a href="https://www.geonames.org/{{ $result->geo_id_2 }}"
+                           class="badge badge-success"
+                           target="_blank">@lang('placeshub.geo_id_2')</a>
+                    @endif
+                    @if($result->geo_id_3)
+                        <a href="https://www.geonames.org/{{ $result->geo_id_3 }}"
+                           class="badge badge-success"
+                           target="_blank">@lang('placeshub.geo_id_3')</a>
+                    @endif
+                    @if($result->geo_id_4)
+                        <a href="https://www.geonames.org/{{ $result->geo_id_4 }}"
+                           class="badge badge-success"
+                           target="_blank">@lang('placeshub.geo_id_4')</a>
+                    @endif
                 </td>
             </tr>
         @endforeach

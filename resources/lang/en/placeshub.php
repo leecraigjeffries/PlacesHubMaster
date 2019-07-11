@@ -49,6 +49,11 @@
         'polygon' => 'Polygon',
         'multipolygon' => 'Multipolygon',
         'dump' => 'Dump',
+        'places_index' => 'Placeshub Search',
+        'extractor_import_osni' => 'Extractor Import OSNI',
+        'select_date' => 'Select Date',
+        'limit' => 'Limit',
+        'osni' => 'OSNI',
 
         'ons_data' => 'Office for National Statistics Data',
         'ons_type' => 'ONS Type',

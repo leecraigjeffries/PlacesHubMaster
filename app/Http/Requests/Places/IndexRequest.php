@@ -3,6 +3,7 @@
 
     namespace App\Http\Requests\Places;
 
+    use App\Models\Place;
     use App\Rules\Order;
     use App\Services\Imports\Importers\Places\GeoImportService;
     use Illuminate\Foundation\Http\FormRequest;
@@ -29,18 +30,22 @@
         {
             $rules = [
                 'name' => [
-                    'sometimes',
                     'nullable',
                     'string',
                     'max:191'
                 ],
                 'order_by' => [
                     Rule::in([
-                        'name'
+                        'name',
+                        'type'
                     ])
                 ],
                 'order' => [
                     new Order
+                ],
+                'type' => [
+                    Rule::in(Place::types()),
+                    'nullable'
                 ]
             ];
 

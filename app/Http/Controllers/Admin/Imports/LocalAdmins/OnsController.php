@@ -80,7 +80,7 @@
                 ->whereNotIn('id', $placeAll)
                 ->orderBy('id')
                 ->get();
-//dd($onsExtra);
+
             return view('admin.imports.local-admins.ons.compare', compact('onsExtra', 'placeExtra'));
         }
 

@@ -277,6 +277,7 @@ table th a:hover {
   padding: 8px;
 }
 
+#table-places ul,
 #table-os-places ul,
 #table-geo-places ul,
 #table-osm-places ul,
@@ -286,6 +287,7 @@ table th a:hover {
   padding: 0;
 }
 
+#table-places ul a,
 #table-os-places ul a,
 #table-geo-places ul a,
 #table-osm-places ul a,
@@ -293,6 +295,7 @@ table th a:hover {
   color: #57636e;
 }
 
+#table-places ul li,
 #table-os-places ul li,
 #table-geo-places ul li,
 #table-osm-places ul li,
@@ -301,6 +304,7 @@ table th a:hover {
   margin: 0;
 }
 
+#table-places ul li:before,
 #table-os-places ul li:before,
 #table-geo-places ul li:before,
 #table-osm-places ul li:before,
@@ -309,6 +313,7 @@ table th a:hover {
   margin: 0 4px;
 }
 
+#table-places ul li:first-child:before,
 #table-os-places ul li:first-child:before,
 #table-geo-places ul li:first-child:before,
 #table-osm-places ul li:first-child:before,
@@ -363,6 +368,38 @@ table th a:hover {
 
 #table-os-places col[data-name=os_type] {
   width: 40%;
+}
+
+#table-places col[data-name=name] {
+  width: 30%;
+}
+
+#table-places col[data-name=type] {
+  width: 10%;
+}
+
+#table-places col[data-name=wiki_title] {
+  width: 10%;
+}
+
+#table-places col[data-name=wikidata_id] {
+  width: 10%;
+}
+
+#table-places col[data-name=osm_id] {
+  width: 10%;
+}
+
+#table-places col[data-name=os_id] {
+  width: 10%;
+}
+
+#table-places col[data-name=ons_id] {
+  width: 10%;
+}
+
+#table-places col[data-name=geo_id] {
+  width: 10%;
 }
 
 .case-sensitive {

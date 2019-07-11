@@ -66,6 +66,22 @@
                 $places = $places->whereNull($col);
             }
 
-            return $places->get();
+            return $places->get([
+                'name',
+                'slug',
+                'wiki_title',
+                'wikidata_id',
+                'osm_id',
+                'ons_id',
+                'os_id',
+                'ipn_id',
+                'geo_id',
+                'geo_id_2',
+                'geo_id_3',
+                'geo_id_4',
+                'lat',
+                'lon',
+                'approved_at',
+            ]);
         }
     }
