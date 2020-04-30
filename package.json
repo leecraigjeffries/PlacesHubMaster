@@ -22,7 +22,7 @@
         "bootstrap": "^4.3.1",
         "datatables.net-bs4": "^1.10.19",
         "flatpickr": "^4.5.7",
-        "jquery": "^3.4.1",
+        "jquery": "^3.5.0",
         "jsrender": "^1.0.3",
         "paginationjs": "^2.1.4"
     }
